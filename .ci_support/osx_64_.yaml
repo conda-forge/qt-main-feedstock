@@ -24,6 +24,8 @@ icu:
 - '68'
 jpeg:
 - '9'
+krb5:
+- '1.19'
 libpng:
 - '1.6'
 macos_machine:
@@ -37,6 +39,8 @@ openssl:
 pin_run_as_build:
   jpeg:
     max_pin: x
+  krb5:
+    max_pin: x.x
   libpng:
     max_pin: x.x
   nspr:
@@ -56,3 +60,5 @@ zip_keys:
   - cxx_compiler_version
 zlib:
 - '1.2'
+zstd:
+- '1.5'

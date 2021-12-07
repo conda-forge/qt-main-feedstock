@@ -1,5 +1,5 @@
-About qt
-========
+About qt-main
+=============
 
 Home: http://qt.io
 
@@ -82,28 +82,28 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-qt-green.svg)](https://anaconda.org/conda-forge/qt) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/qt.svg)](https://anaconda.org/conda-forge/qt) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/qt.svg)](https://anaconda.org/conda-forge/qt) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/qt.svg)](https://anaconda.org/conda-forge/qt) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-qt--main-green.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) |
 
-Installing qt
-=============
+Installing qt-main
+==================
 
-Installing `qt` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `qt-main` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `qt` can be installed with:
+Once the `conda-forge` channel has been enabled, `qt-main` can be installed with:
 
 ```
-conda install qt
+conda install qt-main
 ```
 
-It is possible to list all of the versions of `qt` available on your platform with:
+It is possible to list all of the versions of `qt-main` available on your platform with:
 
 ```
-conda search qt --channel conda-forge
+conda search qt-main --channel conda-forge
 ```
 
 
@@ -146,17 +146,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating qt-feedstock
-=====================
+Updating qt-main-feedstock
+==========================
 
-If you would like to improve the qt recipe or build a new
+If you would like to improve the qt-main recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/qt-feedstock are
+Note that all branches in the conda-forge/qt-main-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.

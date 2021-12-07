@@ -18,6 +18,8 @@ icu:
 - '68'
 jpeg:
 - '9'
+krb5:
+- '1.19'
 libpng:
 - '1.6'
 openssl:
@@ -27,6 +29,8 @@ pin_run_as_build:
     max_pin: x
   jpeg:
     max_pin: x
+  krb5:
+    max_pin: x.x
   libpng:
     max_pin: x.x
   sqlite:
@@ -39,3 +43,5 @@ target_platform:
 - win-64
 zlib:
 - '1.2'
+zstd:
+- '1.5'
