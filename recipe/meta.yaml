@@ -1,4 +1,4 @@
-{% set name = "qt" %}
+{% set name = "qt-main" %}
 {% set version = "5.15.2" %}
 
 package:
@@ -45,7 +45,7 @@ build:
   number: 0
   detect_binary_files_with_prefix: true
   run_exports:
-    - {{ pin_subpackage('qt', max_pin='x.x') }}
+    - {{ pin_subpackage('qt-main', max_pin='x.x') }}
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
     - /usr/lib/libcups.2.dylib  # [osx]
@@ -57,12 +57,14 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - sysroot_linux-64 2.17              # [linux]
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
     - {{ cdt('libx11-devel') }}          # [linux]
     - {{ cdt('libxext') }}               # [linux]
     - {{ cdt('libxext-devel') }}         # [linux]
     - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
+    - {{ cdt('mesa-libegl') }}           # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
@@ -92,6 +94,7 @@ requirements:
     - {{ cdt('expat-devel') }}           # [linux]
     - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
+    - {{ cdt('libglvnd-egl') }}          # [linux]
     - {{ cdt('libxkbcommon-devel') }}    # [linux]
     - {{ cdt('xcb-util-devel') }}        # [linux]
     - {{ cdt('xcb-util-image-devel') }}  # [linux]
@@ -160,13 +163,17 @@ requirements:
     - clangdev
     - libclang
     - libcups                            # [linux]
+    - zstd
+    - alsa-lib                           # [linux]
+    - krb5
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     - {{ pin_compatible("libclang") }}
-  run_constrained:                                            # [osx]
+  run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx]
+    - qt {{ version }}
 
 test:
   requires:
