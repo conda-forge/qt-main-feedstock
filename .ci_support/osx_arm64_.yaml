@@ -19,7 +19,7 @@ gst_plugins_base:
 gstreamer:
 - '1.18'
 icu:
-- '68'
+- '69'
 jpeg:
 - '9'
 krb5:
