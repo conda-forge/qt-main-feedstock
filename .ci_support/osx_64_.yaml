@@ -1,7 +1,7 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.13'
-MACOSX_SDK_VERSION:
 - '10.14'
+MACOSX_SDK_VERSION:
+- '10.15'
 c_compiler:
 - clang
 c_compiler_version:
@@ -16,16 +16,10 @@ cxx_compiler_version:
 - '12'
 glib:
 - '2'
-gst_plugins_base:
-- '1.18'
-gstreamer:
-- '1.20'
 icu:
 - '69'
 jpeg:
 - '9'
-krb5:
-- '1.19'
 libpng:
 - '1.6'
 macos_machine:
@@ -36,11 +30,13 @@ nss:
 - '3'
 openssl:
 - 1.1.1
+pcre2:
+- '10.37'
+perl:
+- 5.32.1
 pin_run_as_build:
   jpeg:
     max_pin: x
-  krb5:
-    max_pin: x.x
   libpng:
     max_pin: x.x
   nspr:
