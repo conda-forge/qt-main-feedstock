@@ -1,3 +1,8 @@
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/yasm/source/patched-yasm/config
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/sqlite/src
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/icu/source
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/breakpad/breakpad/autotools
 set -exou
 
 # Compile
