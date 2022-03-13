@@ -1,5 +1,3 @@
-alsa_lib:
-- 1.2.3
 c_compiler:
 - gcc
 c_compiler_version:
@@ -26,16 +24,10 @@ freetype:
 - '2'
 glib:
 - '2'
-gst_plugins_base:
-- '1.18'
-gstreamer:
-- '1.20'
 icu:
 - '69'
 jpeg:
 - '9'
-krb5:
-- '1.19'
 libevent:
 - 2.1.10
 libpng:
@@ -48,6 +40,10 @@ nss:
 - '3'
 openssl:
 - 1.1.1
+pcre2:
+- '10.37'
+perl:
+- 5.32.1
 pin_run_as_build:
   dbus:
     max_pin: x
@@ -57,8 +53,6 @@ pin_run_as_build:
     max_pin: x
   jpeg:
     max_pin: x
-  krb5:
-    max_pin: x.x
   libevent:
     max_pin: x.x.x
   libpng:
