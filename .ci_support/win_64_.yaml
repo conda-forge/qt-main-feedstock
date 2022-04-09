@@ -11,11 +11,11 @@ cxx_compiler:
 glib:
 - '2'
 gst_plugins_base:
-- '1.18'
+- '1.20'
 gstreamer:
 - '1.20'
 icu:
-- '69'
+- '70'
 jpeg:
 - '9'
 krb5:
