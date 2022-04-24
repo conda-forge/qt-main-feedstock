@@ -69,16 +69,12 @@ pin_run_as_build:
     max_pin: x
   nss:
     max_pin: x
-  readline:
-    max_pin: x
   sqlite:
     max_pin: x
   zlib:
     max_pin: x.x
 pulseaudio:
 - '14.0'
-readline:
-- '8'
 sqlite:
 - '3'
 target_platform:
