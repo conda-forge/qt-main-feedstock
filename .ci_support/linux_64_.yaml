@@ -27,11 +27,11 @@ freetype:
 glib:
 - '2'
 gst_plugins_base:
-- '1.18'
+- '1.20'
 gstreamer:
 - '1.20'
 icu:
-- '69'
+- '70'
 jpeg:
 - '9'
 krb5:
@@ -69,14 +69,12 @@ pin_run_as_build:
     max_pin: x
   nss:
     max_pin: x
-  readline:
-    max_pin: x
   sqlite:
     max_pin: x
   zlib:
     max_pin: x.x
-readline:
-- '8'
+pulseaudio:
+- '14.0'
 sqlite:
 - '3'
 target_platform:

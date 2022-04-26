@@ -8,7 +8,7 @@ conda_forge_output_validation: true
 os_version:
   linux_64: cos7
 provider:
-  linux_aarch64: azure
+  linux_aarch64: default
 test_on_native_only: true
 github:
   branch_name: main
