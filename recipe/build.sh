@@ -217,6 +217,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -shared \
                 -nomake examples \
                 -nomake tests \
+                -make tools \
                 -verbose \
                 -skip wayland \
                 -skip qtwebengine \
