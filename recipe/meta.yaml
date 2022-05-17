@@ -216,6 +216,8 @@ test:
     - test/qml.qrc
     - test/qrc_qml.cpp
     - test/qtwebengine.pro
+    - test/test_qmimedatabase.pro
+    - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
   commands:

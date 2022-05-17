@@ -1,8 +1,6 @@
 #include <QMimeDatabase>
-#include <cassert>
 
-
-int main(int argc, char *argv[]) {
+int main() {
     QMimeDatabase db;
-    assert(db.allMimeTypes().size() > 0);
+    return (db.allMimeTypes().size() > 0)? 0: 1;
 }
