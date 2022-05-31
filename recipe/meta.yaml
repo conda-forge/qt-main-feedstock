@@ -14,6 +14,7 @@ source:
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
       - patches/0004-qtbase-never-enable-new-dtags.patch
       - patches/0009-qtbase-fix-hardcoded-sysroot-path.patch
+      - patches/0031-qtbase-fix-internal-mimetypes-db-on-windows.patch
       # - patches/0005-qtbase-link-xcb-shm.patch
       # - patches/0006-qtbase-Do-not-set-PKG_CONFIG_SYSROOT_DIR-when-sysroo.patch
       # - patches/0007-qtbase-Disable-kTLSProtocol13-for-macOS-10.12.patch
@@ -45,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -215,6 +216,8 @@ test:
     - test/qml.qrc
     - test/qrc_qml.cpp
     - test/qtwebengine.pro
+    - test/test_qmimedatabase.pro
+    - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
   commands:
