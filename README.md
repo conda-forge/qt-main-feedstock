@@ -1,6 +1,6 @@
 About qt-main
 =============
-
+ 
 Home: https://qt.io
 
 Package license: LGPL-3.0-only
