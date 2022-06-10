@@ -170,6 +170,8 @@ requirements:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
+    # Adding the following xcb-util run requirements resolves issue
+    # https://github.com/conda-forge/qt-main-feedstock/issues/32
     - xcb-util                           # [linux]
     - xcb-util-wm                        # [linux]
     - xcb-util-keysyms                   # [linux]
