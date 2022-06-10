@@ -172,11 +172,11 @@ requirements:
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
     # https://github.com/conda-forge/qt-main-feedstock/issues/32
-    - xcb-util                           # [linux]
-    - xcb-util-wm                        # [linux]
-    - xcb-util-keysyms                   # [linux]
-    - xcb-util-image                     # [linux]
-    - xcb-util-renderutil                # [linux]
+    - xcb-util                           # [linux and not aarch64]
+    - xcb-util-wm                        # [linux and not aarch64]
+    - xcb-util-keysyms                   # [linux and not aarch64]
+    - xcb-util-image                     # [linux and not aarch64]
+    - xcb-util-renderutil                # [linux and not aarch64]
     - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
