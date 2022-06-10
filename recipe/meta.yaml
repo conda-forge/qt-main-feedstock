@@ -46,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -224,6 +224,8 @@ test:
     # sql plugin
     - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
     - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
+    - ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found"    # [linux]
+    - test ! $(ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found")    # [linux]
 
 about:
   home: https://qt.io
