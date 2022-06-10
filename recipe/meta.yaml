@@ -224,8 +224,6 @@ test:
     # sql plugin
     - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
     - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
-    - ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found"    # [linux]
-    - test ! $(ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found")    # [linux]
 
 about:
   home: https://qt.io

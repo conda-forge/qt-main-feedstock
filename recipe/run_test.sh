@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 ls
 cd test
@@ -18,3 +18,7 @@ qmake test_qmimedatabase.pro
 make
 ./test_qmimedatabase
 make clean
+
+ldd "${PREFIX}/plugins/platforms/libqxcb.so"
+ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found"
+test ! $(ldd "${PREFIX}/plugins/platforms/libqxcb.so" | grep "not found")
