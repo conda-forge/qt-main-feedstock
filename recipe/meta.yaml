@@ -171,12 +171,14 @@ requirements:
     - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
+    # that may exhibit as segfault due to missing libraries
+    # in some lighter weight linux installations
     # https://github.com/conda-forge/qt-main-feedstock/issues/32
-    - xcb-util                           # [linux and not aarch64]
-    - xcb-util-wm                        # [linux and not aarch64]
-    - xcb-util-keysyms                   # [linux and not aarch64]
-    - xcb-util-image                     # [linux and not aarch64]
-    - xcb-util-renderutil                # [linux and not aarch64]
+    - xcb-util                           # [linux]
+    - xcb-util-wm                        # [linux]
+    - xcb-util-keysyms                   # [linux]
+    - xcb-util-image                     # [linux]
+    - xcb-util-renderutil                # [linux]
     - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
