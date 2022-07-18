@@ -8,8 +8,11 @@ jobs:
     vmImage: windows-2019
   strategy:
     matrix:
-      win_64_:
-        CONFIG: win_64_
+      win_64_openssl1.1.1:
+        CONFIG: win_64_openssl1.1.1
+        UPLOAD_PACKAGES: 'True'
+      win_64_openssl3:
+        CONFIG: win_64_openssl3
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
   variables:
@@ -53,10 +56,12 @@ jobs:
         call activate base
         run_conda_forge_build_setup
       displayName: conda-forge build setup
-    
 
     - script: |
         call activate base
+        if EXIST LICENSE.txt (
+          copy LICENSE.txt "recipe\\recipe-scripts-license.txt"
+        )
         conda.exe mambabuild "recipe" -m .ci_support\%CONFIG%.yaml --suppress-variables
       displayName: Build recipe
       env:

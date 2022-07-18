@@ -2,6 +2,7 @@ __migrator:
   build_number: 1
   kind: version
   migration_number: 1
-alsa_lib:
-- 1.2.6
-migrator_ts: 1639542038.0768828
+migrator_ts: 1631932209.13688
+openssl:
+- 1.1.1
+- '3'
