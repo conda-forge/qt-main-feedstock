@@ -1,5 +1,5 @@
 {% set name = "qt-main" %}
-{% set version = "5.15.3" %}
+{% set version = "5.15.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,14 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: b7412734698a87f4a0ae20751bab32b1b07fdc351476ad8e35328dbe10efdedb
+    sha256: 615ff68d7af8eef3167de1fd15eac1b150e1fd69d1e2f4239e54447e7797253b
     patches:
       # qtbase
       - patches/0002-qtbase-osx-allow-any-xcrun-in-PATH.patch
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
       - patches/0004-qtbase-never-enable-new-dtags.patch
       - patches/0009-qtbase-fix-hardcoded-sysroot-path.patch
+      - patches/0031-qtbase-fix-internal-mimetypes-db-on-windows.patch
       # - patches/0005-qtbase-link-xcb-shm.patch
       # - patches/0006-qtbase-Do-not-set-PKG_CONFIG_SYSROOT_DIR-when-sysroo.patch
       # - patches/0007-qtbase-Disable-kTLSProtocol13-for-macOS-10.12.patch
@@ -45,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -169,6 +170,15 @@ requirements:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
+    # Adding the following xcb-util run requirements resolves issue
+    # that may exhibit as segfault due to missing libraries
+    # in some lighter weight linux installations
+    # https://github.com/conda-forge/qt-main-feedstock/issues/32
+    - xcb-util                           # [linux]
+    - xcb-util-wm                        # [linux]
+    - xcb-util-keysyms                   # [linux]
+    - xcb-util-image                     # [linux]
+    - xcb-util-renderutil                # [linux]
     - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
@@ -215,6 +225,8 @@ test:
     - test/qml.qrc
     - test/qrc_qml.cpp
     - test/qtwebengine.pro
+    - test/test_qmimedatabase.pro
+    - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
   commands:
