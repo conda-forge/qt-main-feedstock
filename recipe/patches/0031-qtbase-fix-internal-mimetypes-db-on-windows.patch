@@ -1,0 +1,12 @@
+diff --git a/src/corelib/mimetypes/mime/generate.pl b/src/corelib/mimetypes/mime/generate.pl
+index 4f2d7d5f2b..c2f96c3dd6 100644
+--- a/qtbase/src/corelib/mimetypes/mime/generate.pl
++++ b/qtbase/src/corelib/mimetypes/mime/generate.pl
+@@ -81,6 +81,7 @@ if (checkCommand("xmlstarlet")) {
+ if ($cmd) {
+     # Run the command and read everything
+     open CMD, "$cmd |";
++    binmode CMD;
+     $data = <CMD>;
+     close CMD;
+     die("Failed to run $cmd") if ($? >> 8);
