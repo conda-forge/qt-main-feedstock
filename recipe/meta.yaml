@@ -11,7 +11,6 @@ source:
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
-      - patches/0004-qtbase-never-enable-new-dtags.patch
       - patches/0009-qtbase-fix-hardcoded-sysroot-path.patch
       - patches/0031-qtbase-fix-internal-mimetypes-db-on-windows.patch
       # - patches/0005-qtbase-link-xcb-shm.patch
