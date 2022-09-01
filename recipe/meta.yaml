@@ -230,9 +230,32 @@ test:
     - test/test_qmimedatabase.cpp
     - test/CMakeLists.txt
   commands:
-    # sql plugin
-    - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
-    - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
+    {% set qt_libs = ["3DCore",
+                      "Core",
+                      "Gui",
+                      "Charts",
+                      "DataVisualization",
+                      "Network",
+                      "OpenGL",
+                      "OpenGLWidgets",
+                      "PrintSupport",
+                      "ShaderTools",
+                      "Svg",
+                      "Test",
+                      "Qml",
+                      "Widgets",
+                      "Xml"] %}
+    {% for each_qt_lib in qt_libs %}
+    - test -d $PREFIX/include/qt6/Qt{{ each_qt_lib }}  # [unix]
+    - test -f $PREFIX/lib/libQt6{{ each_qt_lib }}${SHLIB_EXT}  # [unix]
+    - if not exist %PREFIX%\\Library\\include\\qt6\\Qt{{ each_qt_lib }} exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\Qt6{{ each_qt_lib }}.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\Qt6{{ each_qt_lib }}.dll exit 1  # [win]
+    {% endfor %}
+    - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so  # [linux]
+    - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
+    - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
+    - ${PREFIX}/lib/qt6/bin/qsb --version  # [unix]
 
 about:
   home: https://qt.io
