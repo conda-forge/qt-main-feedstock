@@ -220,18 +220,15 @@ test:
     - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - make                               # [unix]
+    - cmake
   files:
-    - test/hello.pro
     - test/main-qtwebengine.cpp
     - test/main.cpp
     - test/main.qml
     - test/qml.qrc
     - test/qrc_qml.cpp
-    - test/qtwebengine.pro
-    - test/test_qmimedatabase.pro
     - test/test_qmimedatabase.cpp
-    - xcodebuild
-    - xcrun
+    - test/CMakeLists.txt
   commands:
     # sql plugin
     - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
