@@ -17,17 +17,6 @@ source:
       # - patches/0008-qtbase-Define-kIOSurfaceSuccess-if-it-is-not-defined.patch
       # - patches/9999-qtbase-use-better-gcc-optimize-size.patch
 
-      # The following patches are required to cross-compile Qt host tools (osx)
-      # to work both on x86_64 and arm64
-      - patches/0005-Add-arm64-support-for-host-tools.patch             # [arm64]
-      - patches/0006-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
-      - patches/0007-Make-qml-host-tools-to-be-arm64-compatiible.patch  # [arm64]
-      - patches/0008-Make-repc-arm64-compatible.patch                   # [arm64]
-      - patches/0009-Enable-arm64-support-for-qgltf.patch               # [arm64]
-      - patches/0010-Enable-arm64-support-for-qtscxmlc.patch            # [arm64]
-      # https://bugreports.qt.io/browse/QTBUG-76777
-      # - patches/qcore_for_sdk_10_13_1.patch
-
       # qtwinextras
       # - patches/0001-shobjidl-Fix-compile-guard-around-SHARDAPPIDINFOLINK.patch
 
@@ -125,6 +114,23 @@ requirements:
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [arm64]
     - clangdev                          # [arm64]
+    # native libs
+    - icu                               # [build_platform != target_platform]
+    - double-conversion                 # [build_platform != target_platform]
+    - glib                              # [build_platform != target_platform]
+    - gst-plugins-base                  # [build_platform != target_platform]
+    - gstreamer                         # [build_platform != target_platform]
+    - zlib                              # [build_platform != target_platform]
+    - openssl                           # [build_platform != target_platform]
+    - zstd                              # [build_platform != target_platform]
+    - krb5                              # [build_platform != target_platform]
+    - jpeg                              # [build_platform != target_platform]
+    - libpng                            # [build_platform != target_platform]
+    - sqlite                            # [build_platform != target_platform]
+    - nspr                              # [build_platform != target_platform]
+    - nss                               # [build_platform != target_platform]
+    - mysql-devel                       # [build_platform != target_platform]
+    - postgresql                        # [build_platform != target_platform]
   host:
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
