@@ -1,0 +1,28 @@
+diff --git a/src/multimedia/platform/gstreamer/audio/qgstreameraudiosink.cpp b/src/multimedia/platform/gstreamer/audio/qgstreameraudiosink.cpp
+index 3bf5b59..364ea61 100644
+--- a/qtmultimedia/src/multimedia/platform/gstreamer/audio/qgstreameraudiosink.cpp
++++ b/qtmultimedia/src/multimedia/platform/gstreamer/audio/qgstreameraudiosink.cpp
+@@ -45,7 +45,11 @@
+ #include "qgstreameraudiosink_p.h"
+ #include "qgstreameraudiodevice_p.h"
+ #include <sys/types.h>
++#ifdef _WIN32
++#include <io.h>
++#else
+ #include <unistd.h>
++#endif
+ 
+ #include <private/qgstpipeline_p.h>
+ #include <private/qgstappsrc_p.h>
+diff --git a/src/multimedia/platform/gstreamer/audio/qgstreameraudiosource.cpp b/src/multimedia/platform/gstreamer/audio/qgstreameraudiosource.cpp
+index ffa4026..738cf48 100644
+--- a/qtmultimedia/src/multimedia/platform/gstreamer/audio/qgstreameraudiosource.cpp
++++ b/qtmultimedia/src/multimedia/platform/gstreamer/audio/qgstreameraudiosource.cpp
+@@ -45,7 +45,6 @@
+ #include "qgstreameraudiosource_p.h"
+ #include "qgstreameraudiodevice_p.h"
+ #include <sys/types.h>
+-#include <unistd.h>
+ 
+ #include <gst/gst.h>
+ Q_DECLARE_OPAQUE_POINTER(GstSample *);
