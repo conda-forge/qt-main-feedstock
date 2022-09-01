@@ -1,13 +1,13 @@
 {% set name = "qt-main" %}
-{% set version = "5.15.4" %}
+{% set version = "6.4.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: 615ff68d7af8eef3167de1fd15eac1b150e1fd69d1e2f4239e54447e7797253b
+  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+    md5: b45c32495e87cffa4739b24b5d062c50
     patches:
       # qtbase
       - patches/0002-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -46,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 2
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -109,6 +109,7 @@ requirements:
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
+    - cmake
     - ninja
     - ruby >=2.5                         # [linux]
     - bison                              # [linux]
@@ -118,7 +119,6 @@ requirements:
     - m2-bison                           # [win]
     - m2-flex                            # [win]
     - m2-patch                           # [win]
-    - jom                                # [win]
     - curl                               # [win]
     - perl 5
     # libclang is required in order to enable simultaneous x86_64 and
@@ -166,6 +166,7 @@ requirements:
     - zstd
     - alsa-lib                           # [linux]
     - krb5
+    - double-conversion
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
