@@ -10,7 +10,6 @@ source:
     md5: b45c32495e87cffa4739b24b5d062c50
     patches:
       # qtbase
-      - patches/0002-qtbase-osx-allow-any-xcrun-in-PATH.patch
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
       - patches/0004-qtbase-never-enable-new-dtags.patch
       - patches/0009-qtbase-fix-hardcoded-sysroot-path.patch
