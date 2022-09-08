@@ -23,11 +23,11 @@ bash $MINIFORGE_FILE -b -p ${MINIFORGE_HOME}
 source ${MINIFORGE_HOME}/etc/profile.d/conda.sh
 conda activate base
 
-echo -e "\n\nInstalling ['conda-forge-ci-setup=3'] and conda-build."
+echo -e "\n\nInstalling ['liblief=0.11.5', 'conda-forge-ci-setup=3'] and conda-build."
 mamba install --update-specs --quiet --yes --channel conda-forge \
-    conda-build pip boa conda-forge-ci-setup=3
+    conda-build pip boa liblief=0.11.5 conda-forge-ci-setup=3
 mamba update --update-specs --yes --quiet --channel conda-forge \
-    conda-build pip boa conda-forge-ci-setup=3
+    conda-build pip boa liblief=0.11.5 conda-forge-ci-setup=3
 
 
 
@@ -60,6 +60,10 @@ if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]]; then
     EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --no-test"
 fi
 
+
+if [[ -f LICENSE.txt ]]; then
+  cp LICENSE.txt "recipe/recipe-scripts-license.txt"
+fi
 
 if [[ "${BUILD_WITH_CONDA_DEBUG:-0}" == 1 ]]; then
     if [[ "x${BUILD_OUTPUT_ID:-}" != "x" ]]; then
