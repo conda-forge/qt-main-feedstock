@@ -123,11 +123,25 @@ requirements:
     # native libs
     - icu                               # [build_platform != target_platform]
     - double-conversion                 # [build_platform != target_platform]
+    - libtiff                           # [build_platform != target_platform]
+    - libwebp                           # [build_platform != target_platform]
+    - dbus                              # [build_platform != target_platform and linux]
+    - fontconfig                        # [build_platform != target_platform and linux]
+    - freetype                          # [build_platform != target_platform and linux]
+    - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
     - gst-plugins-base                  # [build_platform != target_platform]
     - gstreamer                         # [build_platform != target_platform]
+    - pulseaudio                        # [build_platform != target_platform and linux]
+    - libxml2                           # [build_platform != target_platform and linux]
+    - libxkbcommon                      # [build_platform != target_platform and linux]
+    - expat                             # [build_platform != target_platform and linux]
+    - libevent                          # [build_platform != target_platform and linux]
     - zlib                              # [build_platform != target_platform]
+    - libxcb                            # [build_platform != target_platform and linux]
+    - libdrm                            # [build_platform != target_platform and linux]
     - openssl                           # [build_platform != target_platform]
+    - libcups                           # [build_platform != target_platform and linux]
     - zstd                              # [build_platform != target_platform]
     - krb5                              # [build_platform != target_platform]
     - jpeg                              # [build_platform != target_platform]
@@ -137,12 +151,14 @@ requirements:
     - nss                               # [build_platform != target_platform]
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
+    - pcre2                             # [build_platform != target_platform]
   host:
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
     - dbus                               # [linux]
     - fontconfig                         # [linux]
     - freetype                           # [linux]
+    - harfbuzz
     - glib
     - gst-plugins-base
     - gstreamer
@@ -161,8 +177,10 @@ requirements:
     - sqlite
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
+    - pcre2
     - zlib
     - libxcb                             # [linux]
+    - libdrm                             # [linux]
     - openssl
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
@@ -175,6 +193,9 @@ requirements:
     - alsa-lib                           # [linux]
     - krb5
     - double-conversion
+    - libtiff
+    - libwebp
+    - assimp
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
@@ -198,9 +219,11 @@ test:
     - {{ compiler('cxx') }}
     - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
     - {{ cdt('libx11-devel') }}          # [linux]
+    - {{ cdt('libxext') }}               # [linux]
     - {{ cdt('libxext-devel') }}         # [linux]
     - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
+    - {{ cdt('mesa-libegl') }}           # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
@@ -215,16 +238,28 @@ test:
     - {{ cdt('pciutils-devel') }}        # [linux]
     - {{ cdt('libxscrnsaver-devel') }}   # [linux]
     - {{ cdt('libxtst-devel') }}         # [linux]
+    - {{ cdt('libselinux') }}            # [linux]
     - {{ cdt('libselinux-devel') }}      # [linux]
     - {{ cdt('libxdamage') }}            # [linux]
     - {{ cdt('libxdamage-devel') }}      # [linux]
     - {{ cdt('libxfixes') }}             # [linux]
     - {{ cdt('libxfixes-devel') }}       # [linux]
     - {{ cdt('libxxf86vm') }}            # [linux]
+    - {{ cdt('libxxf86vm-devel') }}      # [linux]
+    - {{ cdt('libsm-devel') }}           # [linux]
+    - {{ cdt('libice-devel') }}          # [linux]
     - {{ cdt('libxcb') }}                # [linux]
+    - {{ cdt('libxcb-devel') }}          # [linux]
     - {{ cdt('expat-devel') }}           # [linux]
     - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
+    - {{ cdt('libglvnd-egl') }}          # [linux]
+    - {{ cdt('libxkbcommon-devel') }}    # [linux]
+    - {{ cdt('xcb-util-devel') }}        # [linux]
+    - {{ cdt('xcb-util-image-devel') }}  # [linux]
+    - {{ cdt('xcb-util-keysyms-devel') }}     # [linux]
+    - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
+    - {{ cdt('xcb-util-wm-devel') }}          # [linux]
     - make                               # [unix]
     - cmake
   files:
