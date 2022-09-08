@@ -1,0 +1,13 @@
+diff --git a/src/plugins/position/CMakeLists.txt b/src/plugins/position/CMakeLists.txt
+index 9ec78b81..9f19d605 100644
+--- a/qtpositioning/src/plugins/position/CMakeLists.txt
++++ b/qtpositioning/src/plugins/position/CMakeLists.txt
+@@ -13,7 +13,7 @@ endif()
+ if(QT_FEATURE_winrt_geolocation)
+     add_subdirectory(winrt)
+ endif()
+-if(IOS OR MACOS OR TVOS)
++if(0)
+     add_subdirectory(corelocation)
+ endif()
+ if(ANDROID)
