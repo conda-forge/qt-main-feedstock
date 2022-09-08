@@ -1,0 +1,19 @@
+diff --git a/src/core/configure.cmake b/src/core/configure.cmake
+index be9b63cc5..3e4c9377b 100644
+--- a/qt3d/src/core/configure.cmake
++++ b/qt3d/src/core/configure.cmake
+@@ -12,14 +12,6 @@ set_property(CACHE INPUT_qt3d_assimp PROPERTY STRINGS undefined qt system no)
+ 
+ qt_find_package(WrapQt3DAssimp 5 PROVIDED_TARGETS WrapQt3DAssimp::WrapQt3DAssimp MODULE_NAME 3dcore QMAKE_LIB qt3d-assimp)
+ 
+-qt_config_compile_test("assimp"
+-                   LABEL ""
+-                   PROJECT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../config.tests/assimp"
+-# special case begin
+-                   LIBRARIES WrapQt3DAssimp::WrapQt3DAssimp
+-                   PACKAGES PACKAGE WrapQt3DAssimp 5
+-# special case end
+-)
+ 
+ 
+ #### Tests
