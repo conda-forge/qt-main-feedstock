@@ -105,12 +105,12 @@ requirements:
     - perl 5
     # libclang is required in order to enable simultaneous x86_64 and
     # arm64 support for QDoc
-    - libclang                           # [arm64]
+    - libclang                           # [build_platform != target_platform]
     # Although these should be host-only dependencies, they are needed when
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
-    - llvmdev                           # [arm64]
-    - clangdev                          # [arm64]
+    - llvmdev                           # [build_platform != target_platform]
+    - clangdev                          # [build_platform != target_platform]
     # native libs
     - icu                               # [build_platform != target_platform]
     - double-conversion                 # [build_platform != target_platform]
