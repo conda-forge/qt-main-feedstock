@@ -1,5 +1,5 @@
-About qt-main
-=============
+About qt6-main
+==============
 
 Home: https://qt.io
 
@@ -21,14 +21,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/qt-main-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/qt-main-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
@@ -89,53 +82,53 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
-| [![Conda Recipe](https://img.shields.io/badge/recipe-qt--main-green.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-qt6--main-green.svg)](https://anaconda.org/conda-forge/qt6-main) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/qt6-main.svg)](https://anaconda.org/conda-forge/qt6-main) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/qt6-main.svg)](https://anaconda.org/conda-forge/qt6-main) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/qt6-main.svg)](https://anaconda.org/conda-forge/qt6-main) |
 
-Installing qt-main
-==================
+Installing qt6-main
+===================
 
-Installing `qt-main` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `qt6-main` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `qt-main` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `qt6-main` can be installed with `conda`:
 
 ```
-conda install qt-main
-```
-
-or with `mamba`:
-
-```
-mamba install qt-main
-```
-
-It is possible to list all of the versions of `qt-main` available on your platform with `conda`:
-
-```
-conda search qt-main --channel conda-forge
+conda install qt6-main
 ```
 
 or with `mamba`:
 
 ```
-mamba search qt-main --channel conda-forge
+mamba install qt6-main
+```
+
+It is possible to list all of the versions of `qt6-main` available on your platform with `conda`:
+
+```
+conda search qt6-main --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search qt6-main --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search qt-main --channel conda-forge
+mamba repoquery search qt6-main --channel conda-forge
 
-# List packages depending on `qt-main`:
-mamba repoquery whoneeds qt-main --channel conda-forge
+# List packages depending on `qt6-main`:
+mamba repoquery whoneeds qt6-main --channel conda-forge
 
-# List dependencies of `qt-main`:
-mamba repoquery depends qt-main --channel conda-forge
+# List dependencies of `qt6-main`:
+mamba repoquery depends qt6-main --channel conda-forge
 ```
 
 
@@ -180,17 +173,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating qt-main-feedstock
-==========================
+Updating qt6-main-feedstock
+===========================
 
-If you would like to improve the qt-main recipe or build a new
+If you would like to improve the qt6-main recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/qt-main-feedstock are
+Note that all branches in the conda-forge/qt6-main-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.

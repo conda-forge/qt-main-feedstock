@@ -1,5 +1,7 @@
 alsa_lib:
-- 1.2.3
+- 1.2.6
+assimp:
+- 5.2.3
 c_compiler:
 - gcc
 c_compiler_version:
@@ -30,6 +32,8 @@ gst_plugins_base:
 - '1.20'
 gstreamer:
 - '1.20'
+harfbuzz:
+- '5'
 icu:
 - '70'
 jpeg:
@@ -40,6 +44,10 @@ libevent:
 - 2.1.10
 libpng:
 - '1.6'
+libtiff:
+- '4'
+libwebp:
+- '1'
 libxml2:
 - '2.9'
 nspr:
@@ -48,12 +56,16 @@ nss:
 - '3'
 openssl:
 - 1.1.1
+pcre2:
+- '10.37'
 pin_run_as_build:
   dbus:
     max_pin: x
   fontconfig:
     max_pin: x
   freetype:
+    max_pin: x
+  harfbuzz:
     max_pin: x
   jpeg:
     max_pin: x
@@ -63,6 +75,8 @@ pin_run_as_build:
     max_pin: x.x.x
   libpng:
     max_pin: x.x
+  libtiff:
+    max_pin: x
   libxml2:
     max_pin: x.x
   nspr:
