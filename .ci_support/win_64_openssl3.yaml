@@ -1,0 +1,47 @@
+c_compiler:
+- vs2019
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+curl:
+- '7'
+cxx_compiler:
+- vs2019
+glib:
+- '2'
+gst_plugins_base:
+- '1.20'
+gstreamer:
+- '1.20'
+icu:
+- '70'
+jpeg:
+- '9'
+krb5:
+- '1.19'
+libpng:
+- '1.6'
+openssl:
+- '3'
+pin_run_as_build:
+  curl:
+    max_pin: x
+  jpeg:
+    max_pin: x
+  krb5:
+    max_pin: x.x
+  libpng:
+    max_pin: x.x
+  sqlite:
+    max_pin: x
+  zlib:
+    max_pin: x.x
+sqlite:
+- '3'
+target_platform:
+- win-64
+zlib:
+- '1.2'
+zstd:
+- '1.5'
