@@ -18,11 +18,16 @@ set "MODS=%MODS%;qttranslations"
 
 :: disabled gstreamer plugin: https://bugreports.qt.io/browse/QTBUG-107073
 
+
 mkdir build && cd build
+
+set "PATH=%SRC_DIR%\build\qtbase\bin;%PATH%"
+
 cmake -LAH -G "Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+    -DINSTALL_LIBEXECDIR=lib/qt6 ^
     -DINSTALL_INCLUDEDIR=include/qt6 ^
     -DINSTALL_MKSPECSDIR=lib/qt6/mkspecs ^
     -DINSTALL_DATADIR=share/qt6 ^
