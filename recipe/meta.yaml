@@ -250,6 +250,7 @@ test:
     - {{ cdt('xcb-util-wm-devel') }}          # [linux]
     - make                               # [unix]
     - cmake
+    - qt-main
   files:
     - test/main-qtwebengine.cpp
     - test/main.cpp
