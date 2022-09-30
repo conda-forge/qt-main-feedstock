@@ -1,5 +1,7 @@
 alsa_lib:
-- 1.2.3
+- 1.2.7
+assimp:
+- 5.2.3
 c_compiler:
 - gcc
 c_compiler_version:
@@ -10,6 +12,8 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
+clangdev:
+- '14'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -21,7 +25,7 @@ docker_image:
 expat:
 - '2'
 fontconfig:
-- '2.13'
+- '2'
 freetype:
 - '2'
 glib:
@@ -30,6 +34,8 @@ gst_plugins_base:
 - '1.20'
 gstreamer:
 - '1.20'
+harfbuzz:
+- '5'
 icu:
 - '70'
 jpeg:
@@ -40,39 +46,22 @@ libevent:
 - 2.1.10
 libpng:
 - '1.6'
+libtiff:
+- '4'
+libwebp:
+- '1'
 libxml2:
 - '2.9'
+llvmdev:
+- '14'
 nspr:
 - '4'
 nss:
 - '3'
 openssl:
 - 1.1.1
-pin_run_as_build:
-  dbus:
-    max_pin: x
-  fontconfig:
-    max_pin: x
-  freetype:
-    max_pin: x
-  jpeg:
-    max_pin: x
-  krb5:
-    max_pin: x.x
-  libevent:
-    max_pin: x.x.x
-  libpng:
-    max_pin: x.x
-  libxml2:
-    max_pin: x.x
-  nspr:
-    max_pin: x
-  nss:
-    max_pin: x
-  sqlite:
-    max_pin: x
-  zlib:
-    max_pin: x.x
+pcre2:
+- '10.37'
 pulseaudio:
 - '14.0'
 sqlite:
