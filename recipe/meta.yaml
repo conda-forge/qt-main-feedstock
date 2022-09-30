@@ -284,7 +284,7 @@ test:
     - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so  # [linux]
     - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
     - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
-    - qmake6 --version  # [unix]
+    - qmake6 --version
 
 about:
   home: https://qt.io
