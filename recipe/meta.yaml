@@ -201,9 +201,6 @@ requirements:
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
-    # Windows binaries clash with the qt5 version
-    # See upstream issue https://bugreports.qt.io/browse/QTBUG-107009
-    - qt-main >=999  # [win]
 
 test:
   requires:
