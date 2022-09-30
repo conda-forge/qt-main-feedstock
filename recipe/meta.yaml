@@ -12,6 +12,10 @@ source:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
+      # qttools
+      # typo in Q_UNUSED macro
+      - patches/0004-qttools-qunused.patch
+
       # qt3d
       # qt tries to run assimp and fails on win32 although assimp is found 
       - patches/0033-qt3d-disable-assimp-compile-test.patch
