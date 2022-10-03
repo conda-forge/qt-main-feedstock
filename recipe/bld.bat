@@ -21,13 +21,13 @@ set "MODS=%MODS%;qttranslations"
 
 mkdir build && cd build
 
-set "PATH=%SRC_DIR%\build\qtbase\bin;%PATH%"
+set "PATH=%SRC_DIR%\build\qtbase\lib\qt6;%PATH%"
 
 cmake -LAH -G "Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
-    -DINSTALL_BINDIR=lib/qt6/bin ^
+    -DINSTALL_BINDIR=bin ^
     -DINSTALL_PUBLICBINDIR=bin ^
     -DINSTALL_LIBEXECDIR=lib/qt6 ^
     -DINSTALL_DOCDIR=share/doc/qt6 ^
