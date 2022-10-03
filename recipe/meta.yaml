@@ -149,7 +149,7 @@ requirements:
     - harfbuzz
     - glib
     - gst-plugins-base
-    - gstreamer
+    - gstreamer                          # [unix]
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
