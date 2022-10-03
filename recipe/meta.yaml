@@ -123,8 +123,6 @@ requirements:
     - pulseaudio                        # [build_platform != target_platform and linux]
     - libxml2                           # [build_platform != target_platform and linux]
     - libxkbcommon                      # [build_platform != target_platform and linux]
-    - expat                             # [build_platform != target_platform and linux]
-    - libevent                          # [build_platform != target_platform and linux]
     - zlib                              # [build_platform != target_platform]
     - libxcb                            # [build_platform != target_platform and linux]
     - libdrm                            # [build_platform != target_platform and linux]
@@ -135,8 +133,6 @@ requirements:
     - jpeg                              # [build_platform != target_platform]
     - libpng                            # [build_platform != target_platform]
     - sqlite                            # [build_platform != target_platform]
-    - nspr                              # [build_platform != target_platform]
-    - nss                               # [build_platform != target_platform]
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
@@ -153,15 +149,11 @@ requirements:
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
-    - expat                              # [linux]
-    - libevent                           # [linux]
     - icu
     # jpeg-turbo currently has some conflicting issues in conda-forge
     # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
     - jpeg
     - libpng
-    - nspr                               # [unix]
-    - nss                                # [unix]
     - sqlite
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
@@ -185,8 +177,6 @@ requirements:
     - libwebp
     - assimp
   run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
     # that may exhibit as segfault due to missing libraries
