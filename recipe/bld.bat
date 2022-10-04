@@ -21,13 +21,13 @@ set "MODS=%MODS%;qttranslations"
 
 mkdir build && cd build
 
-set "PATH=%SRC_DIR%\build\qtbase\bin;%PATH%"
+set "PATH=%SRC_DIR%\build\qtbase\lib\qt6\bin;%PATH%"
 
 cmake -LAH -G "Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
-    -DINSTALL_BINDIR=bin ^
+    -DINSTALL_BINDIR=lib/qt6/bin ^
     -DINSTALL_PUBLICBINDIR=bin ^
     -DINSTALL_LIBEXECDIR=lib/qt6 ^
     -DINSTALL_DOCDIR=share/doc/qt6 ^
@@ -49,3 +49,9 @@ if errorlevel 1 exit 1
 cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
+xcopy /y /s qtbase\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
+if errorlevel 1 exit 1
+
+mkdir -p %LIBRARY_PREFIX%\bin
+mklink /h %LIBRARY_PREFIX%\bin\qmake.exe  %LIBRARY_PREFIX%\lib/qt6\bin\qmake.exe
+if errorlevel 1 exit 1
