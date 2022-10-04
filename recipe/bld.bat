@@ -49,9 +49,9 @@ if errorlevel 1 exit 1
 cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
-xcopy /y /s qtbase\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
+xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
 mkdir -p %LIBRARY_PREFIX%\bin
-mklink /h %LIBRARY_PREFIX%\bin\qmake.exe  %LIBRARY_PREFIX%\lib/qt6\bin\qmake.exe
+mklink /h %LIBRARY_PREFIX%\bin\qmake6.exe  %LIBRARY_PREFIX%\lib/qt6\bin\qmake.exe
 if errorlevel 1 exit 1
