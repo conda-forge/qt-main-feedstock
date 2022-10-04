@@ -39,6 +39,7 @@ cmake -LAH -G "Ninja" ^
     -DINSTALL_DATADIR=share/qt6 ^
     -DFEATURE_openssl_linked=ON ^
     -DFEATURE_qml_animation=OFF ^
+    -DFEATURE_gstreamer=OFF ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
