@@ -50,12 +50,14 @@ cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
 file qtbase\user_facing_tool_links.txt
-echo "XXXXXXXX"
 
 xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
+
 mkdir -p %LIBRARY_PREFIX%\bin
-mklink /h %LIBRARY_PREFIX%\bin\qmake6.exe  %LIBRARY_PREFIX%\lib/qt6\bin\qmake.exe
+cd %LIBRARY_PREFIX%\bin
+echo "XXXXXXXX"
+mklink qmake6.exe  ..\lib\qt6\bin\qmake.exe
 if errorlevel 1 exit 1
 
