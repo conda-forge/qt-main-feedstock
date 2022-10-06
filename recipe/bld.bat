@@ -38,6 +38,8 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_openssl_linked=ON ^
     -DFEATURE_qml_animation=OFF ^
     -DFEATURE_gstreamer=OFF ^
+    -DFEATURE_system_freetype=ON ^
+    -DFEATURE_system_sqlite=ON ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
 if errorlevel 1 exit 1
