@@ -54,10 +54,10 @@ type qtbase\user_facing_tool_links.txt
 ::xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 mkdir -p %LIBRARY_PREFIX%\bin
 cd %LIBRARY_PREFIX%\bin
-for %x in (3DAnimation 3DCore 3DExtras 3DInput 3DLogic 3DRender Concurrent Core DBus Designer DesignerComponentsGui Help JsonRpc) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
-for %x in (LabsFolderListModel LabsQmlModels LabsSettings LanguageServer Multimedia MultimediaWidgets Network NetworkAuth OpenGL) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
-for %x in (OpenGLWidgets Positioning PrintSupport Qml QmlCompiler QmlCore QmlLocalStorage QmlModels QmlWorkerScript QmlXmlListModel) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
-for %x in (Scxml ScxmlQml Sensors SerialPort ShaderTools SpatialAudio Sql StateMachine StateMachineQml Svg SvgWidgets Test UiTools Widgets Xml) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
+for %%x in (3DAnimation 3DCore 3DExtras 3DInput 3DLogic 3DRender Concurrent Core DBus Designer DesignerComponents Gui Help JsonRpc) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
+for %%x in (LabsFolderListModel LabsQmlModels LabsSettings LanguageServer Multimedia MultimediaWidgets Network NetworkAuth OpenGL) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
+for %%x in (OpenGLWidgets Positioning PrintSupport Qml QmlCompiler QmlCore QmlLocalStorage QmlModels QmlWorkerScript QmlXmlListModel) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
+for %%x in (Scxml ScxmlQml Sensors SerialPort ShaderTools SpatialAudio Sql StateMachine StateMachineQml Svg SvgWidgets Test UiTools Widgets Xml) do mklink Qt6%%x.dll ..\lib\qt6\bin\Qt6%%x.dll
 mklink qmake6.exe  ..\lib\qt6\bin\qmake.exe
 mklink windeployqt6.exe ..\lib\qt6\bin\windeployqt.exe
 if errorlevel 1 exit 1
