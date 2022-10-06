@@ -145,6 +145,7 @@ requirements:
     - harfbuzz
     - glib
     - gst-plugins-base
+    # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
     - gstreamer                          # [unix]
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
@@ -191,9 +192,6 @@ requirements:
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
-    # Windows binaries clash with the qt5 version
-    # See upstream issue https://bugreports.qt.io/browse/QTBUG-107009
-    - qt-main >=999  # [win]
 
 test:
   requires:
@@ -277,7 +275,7 @@ test:
     - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so  # [linux]
     - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
     - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
-    - qmake6 --version  # [unix]
+    - qmake6 --version
 
 about:
   home: https://qt.io
