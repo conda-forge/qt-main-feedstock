@@ -2,14 +2,11 @@
 
 set -e
 
+test "${HOST}" = "aarch64-conda-linux-gnu" && exit 0
+
 ls
 cd test
-ln -s ${GXX} g++
-cp ../xcrun .
-cp ../xcodebuild .
-export PATH=${PWD}:${PATH}
-qmake hello.pro
+cmake .
 make
-./hello
-# Only test that this builds
+ctest --output-on-failure
 make clean
