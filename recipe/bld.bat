@@ -15,6 +15,8 @@ set "MODS=%MODS%;qtshadertools"
 set "MODS=%MODS%;qtsvg"
 set "MODS=%MODS%;qttools"
 set "MODS=%MODS%;qttranslations"
+set "MODS=%MODS%;qtwebchannel"
+set "MODS=%MODS%;qtwebsockets"
 
 mkdir build && cd build
 

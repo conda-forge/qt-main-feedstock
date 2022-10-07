@@ -74,7 +74,9 @@ qtserialport;\
 qtshadertools;\
 qtsvg;\
 qttools;\
-qttranslations" \
+qttranslations;\
+qtwebchannel;\
+qtwebsockets" \
   ..
 cmake --build . --target install
 
