@@ -26,8 +26,6 @@ dbus:
 - '1'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
-expat:
-- '2'
 fontconfig:
 - '2'
 freetype:
@@ -46,8 +44,6 @@ jpeg:
 - '9'
 krb5:
 - '1.19'
-libevent:
-- 2.1.10
 libpng:
 - '1.6'
 libtiff:
@@ -58,10 +54,6 @@ libxml2:
 - '2.9'
 llvmdev:
 - '14'
-nspr:
-- '4'
-nss:
-- '3'
 openssl:
 - 1.1.1
 pcre2:
