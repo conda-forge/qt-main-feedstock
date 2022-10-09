@@ -20,12 +20,16 @@ source:
       # qt tries to run assimp and fails on win32 although assimp is found 
       - patches/0033-qt3d-disable-assimp-compile-test.patch
 
+      # qtdeclarative
+      # $SRC_DIR/qtdeclarative/src/quicktestutils/qml/testhttpserver_p.h:18:10: fatal error: QTcpServer: No such file or directory
+      - patches/0034-qtdeclarative-qtcpserver-include.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}

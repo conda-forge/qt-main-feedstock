@@ -34,7 +34,7 @@ then
     mv _hidden $BUILD_PREFIX/${HOST}
   )
   rm -r build_native
-  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON"
+  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DBUILD_WITH_PCH=OFF"
 fi
 
 mkdir build && cd build
@@ -58,7 +58,8 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
-  -DFEATURE_qml_animation=OFF \
+  -DFEATURE_quick_particles=OFF -DFEATURE_quick_path=OFF -DFEATURE_qml_network=OFF \
+  -DFEATURE_designer=OFF -DFEATURE_linguist=OFF \
   -DQT_BUILD_SUBMODULES="qt3d;\
 qtbase;\
 qtcharts;\

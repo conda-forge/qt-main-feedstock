@@ -42,10 +42,6 @@ llvmdev:
 - '13'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-nspr:
-- '4'
-nss:
-- '3'
 openssl:
 - 1.1.1
 pcre2:
