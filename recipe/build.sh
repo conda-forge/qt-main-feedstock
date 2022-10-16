@@ -58,7 +58,6 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
-  -DFEATURE_quick_particles=OFF -DFEATURE_quick_path=OFF -DFEATURE_qml_network=OFF \
   -DFEATURE_designer=OFF -DFEATURE_linguist=OFF \
   -DQT_BUILD_SUBMODULES="qt3d;\
 qtbase;\
