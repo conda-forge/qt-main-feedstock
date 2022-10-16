@@ -38,7 +38,6 @@ cmake -LAH -G "Ninja" ^
     -DINSTALL_EXAMPLESDIR=share/doc/qt6/examples ^
     -DINSTALL_DATADIR=share/qt6 ^
     -DFEATURE_openssl_linked=ON ^
-    -DFEATURE_quick_particles=OFF -DFEATURE_quick_path=OFF -DFEATURE_qml_network=OFF ^
     -DFEATURE_gstreamer=OFF ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
