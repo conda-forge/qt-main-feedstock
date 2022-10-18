@@ -267,6 +267,7 @@ test:
                       "Svg",
                       "Test",
                       "Qml",
+                      "Quick",
                       "Widgets",
                       "Xml"] %}
     {% for each_qt_lib in qt_libs %}
