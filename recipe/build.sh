@@ -28,6 +28,7 @@ then
       -DQT_BUILD_SUBMODULES="qtbase;qtdeclarative;qtshadertools;qttools" \
       -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
       -DFEATURE_opengl=OFF \
+      -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
     ..
     cmake --build . --target install
