@@ -1,7 +1,5 @@
 alsa_lib:
 - 1.2.7
-assimp:
-- 5.2.3
 c_compiler:
 - gcc
 c_compiler_version:
@@ -12,8 +10,6 @@ channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-clangdev:
-- '14'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
@@ -47,9 +43,7 @@ libtiff:
 libwebp:
 - '1'
 libxml2:
-- '2.9'
-llvmdev:
-- '14'
+- '2.10'
 openssl:
 - 1.1.1
 pcre2:

@@ -1,13 +1,9 @@
-assimp:
-- 5.2.3
 c_compiler:
 - vs2019
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
-clangdev:
-- '14'
 curl:
 - '7'
 cxx_compiler:
@@ -30,8 +26,6 @@ libtiff:
 - '4'
 libwebp:
 - '1'
-llvmdev:
-- '14'
 openssl:
 - 1.1.1
 pcre2:
