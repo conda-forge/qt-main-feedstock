@@ -1,6 +1,5 @@
 
-set "MODS=qt3d"
-set "MODS=%MODS%;qtbase"
+set "MODS=qtbase"
 set "MODS=%MODS%;qtcharts"
 set "MODS=%MODS%;qtdatavis3d"
 set "MODS=%MODS%;qtdeclarative"

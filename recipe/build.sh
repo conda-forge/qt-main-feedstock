@@ -28,13 +28,14 @@ then
       -DQT_BUILD_SUBMODULES="qtbase;qtdeclarative;qtshadertools;qttools" \
       -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
       -DFEATURE_opengl=OFF \
+      -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
     ..
     cmake --build . --target install
     mv _hidden $BUILD_PREFIX/${HOST}
   )
   rm -r build_native
-  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_BUILD_TOOLS_WHEN_CROSSCOMPILING=ON -DBUILD_WITH_PCH=OFF"
+  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DBUILD_WITH_PCH=OFF"
 fi
 
 mkdir build && cd build
@@ -59,8 +60,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_designer=OFF -DFEATURE_linguist=OFF \
-  -DQT_BUILD_SUBMODULES="qt3d;\
-qtbase;\
+  -DQT_BUILD_SUBMODULES="qtbase;\
 qtcharts;\
 qtdatavis3d;\
 qtdeclarative;\
