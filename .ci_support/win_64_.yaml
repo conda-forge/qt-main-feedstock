@@ -13,7 +13,7 @@ glib:
 gst_plugins_base:
 - '1.20'
 gstreamer:
-- '1.20'
+- '1.21'
 icu:
 - '70'
 jpeg:
