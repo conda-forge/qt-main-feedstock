@@ -136,7 +136,7 @@ requirements:
     - fontconfig                         # [linux]
     - freetype                           # [linux]
     - glib
-    - gst-plugins-base
+    - gst-plugins-base  {{ gstreamer }}
     - gstreamer
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
