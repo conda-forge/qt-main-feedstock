@@ -24,19 +24,6 @@ libpng:
 - '1.6'
 openssl:
 - 1.1.1
-pin_run_as_build:
-  curl:
-    max_pin: x
-  jpeg:
-    max_pin: x
-  krb5:
-    max_pin: x.x
-  libpng:
-    max_pin: x.x
-  sqlite:
-    max_pin: x
-  zlib:
-    max_pin: x.x
 sqlite:
 - '3'
 target_platform:
