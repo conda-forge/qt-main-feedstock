@@ -14,8 +14,6 @@ cxx_compiler_version:
 - '14'
 glib:
 - '2'
-gst_plugins_base:
-- '1.20'
 gstreamer:
 - '1.21'
 icu:
