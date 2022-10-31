@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.7
+- 1.2.8
 c_compiler:
 - gcc
 c_compiler_version:
@@ -21,15 +21,13 @@ docker_image:
 expat:
 - '2'
 fontconfig:
-- '2.13'
+- '2'
 freetype:
 - '2'
 glib:
 - '2'
-gst_plugins_base:
-- '1.20'
 gstreamer:
-- '1.20'
+- '1.21'
 icu:
 - '70'
 jpeg:
@@ -41,38 +39,13 @@ libevent:
 libpng:
 - '1.6'
 libxml2:
-- '2.9'
+- '2.10'
 nspr:
 - '4'
 nss:
 - '3'
 openssl:
 - 1.1.1
-pin_run_as_build:
-  dbus:
-    max_pin: x
-  fontconfig:
-    max_pin: x
-  freetype:
-    max_pin: x
-  jpeg:
-    max_pin: x
-  krb5:
-    max_pin: x.x
-  libevent:
-    max_pin: x.x.x
-  libpng:
-    max_pin: x.x
-  libxml2:
-    max_pin: x.x
-  nspr:
-    max_pin: x
-  nss:
-    max_pin: x
-  sqlite:
-    max_pin: x
-  zlib:
-    max_pin: x.x
 pulseaudio:
 - '14.0'
 sqlite:
