@@ -4,7 +4,6 @@ azure:
       CONDA_BLD_PATH: C:\bld\
 build_platform:
   linux_aarch64: linux_aarch64
-  linux_ppc64le: linux_64
   osx_arm64: osx_64
 conda_forge_output_validation: true
 github:
@@ -14,6 +13,7 @@ os_version:
   linux_64: cos7
 provider:
   linux_aarch64: default
+  linux_ppc64le: default
 test_on_native_only: true
 remote_ci_setup:
   - liblief=0.11.5
