@@ -150,7 +150,13 @@ if [[ $(uname) == "Linux" ]]; then
 #                -ltcg \
 #                --disable-new-dtags \
 
-  make -j${MAKE_JOBS}
+  
+  # Shorten the log to a little further on travis.
+  # Without these sed commands, one gets about 4_497_973 characters in 30 mins
+  # With these sed commands, we get about 1_054_756 characters for getting as
+  # far in the build process.
+  make -j${MAKE_JOBS} | sed "s/^g++.*-o/g++ [...] -o/" | sed "s/-DQT.* //"
+  # make -j${MAKE_JOBS}
   make install
 fi
 
