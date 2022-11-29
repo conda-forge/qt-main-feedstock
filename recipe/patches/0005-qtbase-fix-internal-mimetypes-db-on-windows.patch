@@ -1,7 +1,7 @@
 From d4255907dd5af4c5ae698996ad5b52f0758b65af Mon Sep 17 00:00:00 2001
 From: Ales Erjavec <ales.erjavec@fri.uni-lj.si>
 Date: Fri, 13 May 2022 12:08:19 +0200
-Subject: [PATCH 05/12] qtbase: fix internal mimetypes db on windows
+Subject: [PATCH 05/13] qtbase: fix internal mimetypes db on windows
 
 ---
  qtbase/src/corelib/mimetypes/mime/generate.pl | 1 +

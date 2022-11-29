@@ -1,7 +1,7 @@
 From 14f27aebf5898dc2e420c9c86f6d8d9a4ef764aa Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Mon, 10 Dec 2018 14:45:19 -0600
-Subject: [PATCH 01/12] qtbase: osx: allow any xcrun in PATH
+Subject: [PATCH 01/13] qtbase: osx: allow any xcrun in PATH
 
 Change-Id: I6066837f34fbed47340aa280d696e9deb3c79fc7
 ---

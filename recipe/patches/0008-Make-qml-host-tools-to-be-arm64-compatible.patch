@@ -1,7 +1,7 @@
 From 18b5e7e39dc08c8cc67166128a3504ab59c16e3d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Wed, 17 Nov 2021 21:06:21 -0500
-Subject: [PATCH 08/12] Make qml host tools to be arm64-compatible
+Subject: [PATCH 08/13] Make qml host tools to be arm64-compatible
 
 ---
  qtdeclarative/src/qmldevtools/qmldevtools.pro             | 4 ++++

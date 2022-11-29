@@ -1,7 +1,7 @@
 From 5d5d50a12689e30e7b1eb60c838a8ef0a9d19b8a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Wed, 17 Nov 2021 12:25:43 -0500
-Subject: [PATCH 06/12] Add arm64 support for host tools
+Subject: [PATCH 06/13] Add arm64 support for host tools
 
 ---
  qtbase/qmake/Makefile.unix.macos                         | 4 ++--

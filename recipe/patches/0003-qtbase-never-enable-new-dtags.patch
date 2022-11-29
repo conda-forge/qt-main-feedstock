@@ -1,7 +1,7 @@
 From 5108b6564567cffe52ba417bd110f35c771ef25e Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Mon, 10 Dec 2018 14:49:51 -0600
-Subject: [PATCH 03/12] qtbase: never enable new-dtags
+Subject: [PATCH 03/13] qtbase: never enable new-dtags
 
 Change-Id: I2c99367bc60b1d6e84811ab4e186ac0810cd399c
 ---

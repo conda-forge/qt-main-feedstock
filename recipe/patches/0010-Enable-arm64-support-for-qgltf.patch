@@ -1,7 +1,7 @@
 From f373a72d38d60ea83d592ef861a9b9ed38d2138d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Mon, 22 Nov 2021 20:12:07 -0500
-Subject: [PATCH 10/12] Enable arm64 support for qgltf
+Subject: [PATCH 10/13] Enable arm64 support for qgltf
 
 ---
  qt3d/src/3rdparty/assimp/contrib/zip/src/miniz.h | 4 ++--

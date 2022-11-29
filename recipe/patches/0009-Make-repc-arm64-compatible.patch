@@ -1,7 +1,7 @@
 From 52ce9f2ae9f523401f7ef5a109e322cf2cce79db Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Wed, 17 Nov 2021 20:10:10 -0500
-Subject: [PATCH 09/12] Make repc arm64-compatible
+Subject: [PATCH 09/13] Make repc arm64-compatible
 
 ---
  qtremoteobjects/tools/repc/repc.pro | 4 ++++

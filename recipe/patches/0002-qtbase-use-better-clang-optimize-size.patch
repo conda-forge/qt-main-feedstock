@@ -1,7 +1,7 @@
 From 532339065fc69a549fa0537d243542e2bdc5a4cd Mon Sep 17 00:00:00 2001
 From: Ray Donnelly <mingw.android@gmail.com>
 Date: Mon, 10 Dec 2018 14:48:02 -0600
-Subject: [PATCH 02/12] qtbase: use better clang optimize size
+Subject: [PATCH 02/13] qtbase: use better clang optimize size
 
 Change-Id: I2d0eae04918b9a6306b0684506f3253547233e36
 ---

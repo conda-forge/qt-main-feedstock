@@ -1,7 +1,7 @@
 From 5c5fddcdaa15007172f2dd46f6a6731f29deb747 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Wed, 17 Nov 2021 20:55:05 -0500
-Subject: [PATCH 11/12] Enable arm64 support for qscxmlc
+Subject: [PATCH 11/13] Enable arm64 support for qscxmlc
 
 ---
  qtscxml/tools/qscxmlc/qscxmlc.pro | 4 ++++

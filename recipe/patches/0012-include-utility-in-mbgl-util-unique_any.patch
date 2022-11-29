@@ -1,7 +1,7 @@
 From d368606b5acd8f9ff2e212939a85d9e4ad65524f Mon Sep 17 00:00:00 2001
 From: Mark Harfouche <mark.harfouche@gmail.com>
 Date: Sun, 24 Apr 2022 15:27:14 -0400
-Subject: [PATCH 12/12] #include <utility> in mbgl/util/unique_any
+Subject: [PATCH 12/13] #include <utility> in mbgl/util/unique_any
 
 ---
  .../3rdparty/mapbox-gl-native/include/mbgl/util/unique_any.hpp   | 1 +

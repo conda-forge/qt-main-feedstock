@@ -1,7 +1,7 @@
 From 848fe51c59197f0c9434a20962d6c1c69b276868 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
 Date: Fri, 19 Nov 2021 20:15:29 -0500
-Subject: [PATCH 07/12] Enable arm64/x86_64 support for qttools
+Subject: [PATCH 07/13] Enable arm64/x86_64 support for qttools
 
 ---
  qttools/src/linguist/lconvert/lconvert.pro                  | 4 ++++
