@@ -1,0 +1,27 @@
+From 5c5fddcdaa15007172f2dd46f6a6731f29deb747 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
+Date: Wed, 17 Nov 2021 20:55:05 -0500
+Subject: [PATCH 11/12] Enable arm64 support for qscxmlc
+
+---
+ qtscxml/tools/qscxmlc/qscxmlc.pro | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/qtscxml/tools/qscxmlc/qscxmlc.pro b/qtscxml/tools/qscxmlc/qscxmlc.pro
+index 7620d3d2ba..fd0f87be90 100644
+--- a/qtscxml/tools/qscxmlc/qscxmlc.pro
++++ b/qtscxml/tools/qscxmlc/qscxmlc.pro
+@@ -7,6 +7,10 @@ include(qscxmlc.pri)
+ TARGET = qscxmlc
+ CONFIG += console c++11
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ SOURCES += \
+     main.cpp
+ 
+-- 
+2.38.1.windows.1
+

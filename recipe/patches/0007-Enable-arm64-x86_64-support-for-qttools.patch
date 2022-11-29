@@ -1,0 +1,140 @@
+From 848fe51c59197f0c9434a20962d6c1c69b276868 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Edgar=20Andr=C3=A9s=20Margffoy=20Tuay?= <andfoy@gmail.com>
+Date: Fri, 19 Nov 2021 20:15:29 -0500
+Subject: [PATCH 07/12] Enable arm64/x86_64 support for qttools
+
+---
+ qttools/src/linguist/lconvert/lconvert.pro                  | 4 ++++
+ qttools/src/linguist/lprodump/lprodump.pro                  | 4 ++++
+ qttools/src/linguist/lrelease-pro/lrelease-pro.pro          | 5 +++++
+ qttools/src/linguist/lrelease/lrelease.pro                  | 4 ++++
+ qttools/src/linguist/lupdate-pro/lupdate-pro.pro            | 4 ++++
+ qttools/src/linguist/lupdate/lupdate.pro                    | 4 ++++
+ qttools/src/qdoc/qdoc.pro                                   | 4 ++++
+ qttools/src/qtattributionsscanner/qtattributionsscanner.pro | 4 ++++
+ 8 files changed, 33 insertions(+)
+
+diff --git a/qttools/src/linguist/lconvert/lconvert.pro b/qttools/src/linguist/lconvert/lconvert.pro
+index d1e49bc204..f0c56f545c 100644
+--- a/qttools/src/linguist/lconvert/lconvert.pro
++++ b/qttools/src/linguist/lconvert/lconvert.pro
+@@ -2,6 +2,10 @@ option(host_build)
+ QT = core-private
+ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ SOURCES += main.cpp
+ 
+ include(../shared/formats.pri)
+diff --git a/qttools/src/linguist/lprodump/lprodump.pro b/qttools/src/linguist/lprodump/lprodump.pro
+index a1bcace55d..2aa8b906da 100644
+--- a/qttools/src/linguist/lprodump/lprodump.pro
++++ b/qttools/src/linguist/lprodump/lprodump.pro
+@@ -3,6 +3,10 @@ QT = core
+ 
+ DEFINES += QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ include(../shared/proparser.pri)
+ 
+ DEFINES += PROEVALUATOR_DEBUG
+diff --git a/qttools/src/linguist/lrelease-pro/lrelease-pro.pro b/qttools/src/linguist/lrelease-pro/lrelease-pro.pro
+index 76b896d755..6554d9125a 100644
+--- a/qttools/src/linguist/lrelease-pro/lrelease-pro.pro
++++ b/qttools/src/linguist/lrelease-pro/lrelease-pro.pro
+@@ -2,6 +2,11 @@ option(host_build)
+ QT = core
+ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+ 
++
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ HEADERS += \
+     ../shared/runqttool.h
+ 
+diff --git a/qttools/src/linguist/lrelease/lrelease.pro b/qttools/src/linguist/lrelease/lrelease.pro
+index fb457ac05f..ee3dc75878 100644
+--- a/qttools/src/linguist/lrelease/lrelease.pro
++++ b/qttools/src/linguist/lrelease/lrelease.pro
+@@ -2,6 +2,10 @@ option(host_build)
+ QT = core-private
+ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ HEADERS += \
+     ../shared/projectdescriptionreader.h \
+     ../shared/runqttool.h
+diff --git a/qttools/src/linguist/lupdate-pro/lupdate-pro.pro b/qttools/src/linguist/lupdate-pro/lupdate-pro.pro
+index 49dac11c7f..25a4103755 100644
+--- a/qttools/src/linguist/lupdate-pro/lupdate-pro.pro
++++ b/qttools/src/linguist/lupdate-pro/lupdate-pro.pro
+@@ -2,6 +2,10 @@ option(host_build)
+ QT = core
+ DEFINES += QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ INCLUDEPATH += ../shared
+ 
+ HEADERS += \
+diff --git a/qttools/src/linguist/lupdate/lupdate.pro b/qttools/src/linguist/lupdate/lupdate.pro
+index e69703da23..fb3d5bb4a3 100644
+--- a/qttools/src/linguist/lupdate/lupdate.pro
++++ b/qttools/src/linguist/lupdate/lupdate.pro
+@@ -9,6 +9,10 @@ qtHaveModule(qmldevtools-private) {
+ 
+ DEFINES += QT_NO_CAST_TO_ASCII QT_NO_CAST_FROM_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ include(../shared/formats.pri)
+ 
+ SOURCES += \
+diff --git a/qttools/src/qdoc/qdoc.pro b/qttools/src/qdoc/qdoc.pro
+index db4b25cf18..191aa465e3 100644
+--- a/qttools/src/qdoc/qdoc.pro
++++ b/qttools/src/qdoc/qdoc.pro
+@@ -30,6 +30,10 @@ win32-icc*|win32-msvc*:{
+     QMAKE_LFLAGS += /STACK:4194304
+ }
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ HEADERS += atom.h \
+            clangcodeparser.h \
+            codechunk.h \
+diff --git a/qttools/src/qtattributionsscanner/qtattributionsscanner.pro b/qttools/src/qtattributionsscanner/qtattributionsscanner.pro
+index d645a22a90..53be7ec279 100644
+--- a/qttools/src/qtattributionsscanner/qtattributionsscanner.pro
++++ b/qttools/src/qtattributionsscanner/qtattributionsscanner.pro
+@@ -22,6 +22,10 @@ HEADERS += \
+ 
+ DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
+ 
++QMAKE_CXXFLAGS += -arch x86_64 -arch arm64
++QMAKE_CFLAGS += -arch x86_64 -arch arm64
++QMAKE_LFLAGS += -arch x86_64 -arch arm64
++
+ QMAKE_TARGET_DESCRIPTION = "Qt Source Code Attribution Scanner"
+ load(qt_tool)
+ 
+-- 
+2.38.1.windows.1
+
