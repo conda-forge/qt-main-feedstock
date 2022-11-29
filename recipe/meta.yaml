@@ -1,13 +1,12 @@
-{% set name = "qt-main" %}
 {% set version = "5.15.6" %}
 
 package:
-  name: {{ name|lower }}
+  name: qt-main
   version: {{ version }}
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    md5: eac9a97ea5335eeb1a8f0c39d016bf70
+    sha256: ebc77d27934b70b25b3dc34fbec7c4471eb451848e891c42b32409ea30fe309f
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
