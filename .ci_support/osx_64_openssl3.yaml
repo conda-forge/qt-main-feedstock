@@ -28,6 +28,8 @@ krb5:
 - '1.19'
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 libtiff:
 - '4'
 libwebp:
@@ -38,8 +40,6 @@ openssl:
 - '3'
 pcre2:
 - '10.37'
-sqlite:
-- '3'
 target_platform:
 - osx-64
 zip_keys:

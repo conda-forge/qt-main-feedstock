@@ -36,6 +36,8 @@ krb5:
 - '1.19'
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 libtiff:
 - '4'
 libwebp:
@@ -48,8 +50,6 @@ pcre2:
 - '10.37'
 pulseaudio:
 - '16.1'
-sqlite:
-- '3'
 target_platform:
 - linux-64
 zip_keys:
