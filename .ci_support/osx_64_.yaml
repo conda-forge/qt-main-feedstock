@@ -26,6 +26,8 @@ krb5:
 - '1.19'
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 macos_machine:
 - x86_64-apple-darwin13.4.0
 nspr:
@@ -34,8 +36,6 @@ nss:
 - '3'
 openssl:
 - 1.1.1
-sqlite:
-- '3'
 target_platform:
 - osx-64
 zip_keys:

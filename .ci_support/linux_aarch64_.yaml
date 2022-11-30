@@ -42,6 +42,8 @@ libevent:
 - 2.1.10
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 libxml2:
 - '2.10'
 nspr:
@@ -52,8 +54,6 @@ openssl:
 - 1.1.1
 pulseaudio:
 - '16.1'
-sqlite:
-- '3'
 target_platform:
 - linux-aarch64
 zip_keys:

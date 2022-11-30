@@ -20,10 +20,10 @@ krb5:
 - '1.19'
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 openssl:
 - 1.1.1
-sqlite:
-- '3'
 target_platform:
 - win-64
 zlib:
