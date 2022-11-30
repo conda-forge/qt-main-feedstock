@@ -21,7 +21,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -128,7 +128,7 @@ requirements:
     - krb5                              # [build_platform != target_platform]
     - jpeg                              # [build_platform != target_platform]
     - libpng                            # [build_platform != target_platform]
-    - sqlite                            # [build_platform != target_platform]
+    - libsqlite                         # [build_platform != target_platform]
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
@@ -151,7 +151,7 @@ requirements:
     # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
     - jpeg
     - libpng
-    - sqlite
+    - libsqlite
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
     - pcre2
