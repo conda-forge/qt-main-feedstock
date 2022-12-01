@@ -1,9 +1,13 @@
+BUILD:
+- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - 1.2.8
 c_compiler:
 - gcc
 c_compiler_version:
 - '10'
+cdt_arch:
+- aarch64
 cdt_name:
 - cos7
 channel_sources:
@@ -17,7 +21,7 @@ cxx_compiler_version:
 dbus:
 - '1'
 docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- quay.io/condaforge/linux-anvil-aarch64
 expat:
 - '2'
 fontconfig:
@@ -38,6 +42,8 @@ libevent:
 - 2.1.10
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 libxml2:
 - '2.10'
 nspr:
@@ -48,10 +54,8 @@ openssl:
 - 1.1.1
 pulseaudio:
 - '16.1'
-sqlite:
-- '3'
 target_platform:
-- linux-64
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
