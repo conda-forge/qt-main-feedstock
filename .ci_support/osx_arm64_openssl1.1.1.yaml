@@ -34,6 +34,8 @@ nss:
 - '3'
 openssl:
 - 1.1.1
+postgresql:
+- '15'
 target_platform:
 - osx-arm64
 zip_keys:
