@@ -3,7 +3,7 @@ alsa_lib:
 c_compiler:
 - gcc
 c_compiler_version:
-- '10'
+- '11'
 cdt_name:
 - cos7
 channel_sources:
@@ -13,7 +13,7 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '10'
+- '11'
 dbus:
 - '1'
 docker_image:
@@ -47,7 +47,7 @@ libxml2:
 openssl:
 - '3'
 pcre2:
-- '10.37'
+- '10.40'
 pulseaudio:
 - '16.1'
 target_platform:
