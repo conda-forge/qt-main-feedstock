@@ -175,10 +175,8 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     PATH=${PWD}:${PATH}
 
     PLATFORM="-sdk macosx${MACOSX_SDK_VERSION:-10.14}"
-    EXTRA_FLAGS="-gstreamer 1.0"
     if [[ "${target_platform}" == "osx-arm64" ]]; then
       PLATFORM="-device-option QMAKE_APPLE_DEVICE_ARCHS=arm64 -sdk macosx${MACOSX_SDK_VERSION:-11.0}"
-      EXTRA_FLAGS=""
     fi
 
     if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
@@ -213,7 +211,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 $PLATFORM \
                 -I ${PREFIX}/include \
                 -I ${PREFIX}/include/mysql \
-                -I ${PREFIX}/include/gstreamer-1.0 \
                 -I ${PREFIX}/include/glib-2.0 \
                 -I ${PREFIX}/lib/glib-2.0/include \
                 -L ${PREFIX}/lib \
@@ -228,7 +225,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -verbose \
                 -skip wayland \
                 -skip qtwebengine \
-                $EXTRA_FLAGS \
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
