@@ -114,7 +114,6 @@ if [[ $(uname) == "Linux" ]]; then
                 -verbose \
                 -skip wayland \
                 -skip qtwebengine \
-                -gstreamer 1.0 \
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
