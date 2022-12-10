@@ -155,8 +155,6 @@ requirements:
     - zstd
     - krb5
   run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
     # that may exhibit as segfault due to missing libraries
