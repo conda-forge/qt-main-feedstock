@@ -1,7 +1,7 @@
 {% set version = "5.15.7" %}
 
 package:
-  name: qt-main
+  name: qt-base
   version: {{ version }}
 
 source:
