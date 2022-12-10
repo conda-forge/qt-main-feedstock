@@ -1,12 +1,12 @@
-{% set version = "5.15.6" %}
+{% set version = "5.15.7" %}
 
 package:
   name: qt-main
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: ebc77d27934b70b25b3dc34fbec7c4471eb451848e891c42b32409ea30fe309f
+  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/submodules/qtbase-everywhere-opensource-src-{{ version }}.tar.xz
+    sha256: 05edd00b2a1ba99c85b3fe876fe1c23d63f0a9bbca7df52bc47393cfd8c809c7
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -18,14 +18,14 @@ source:
       # The following patches are required to cross-compile Qt host tools (osx)
       # to work both on x86_64 and arm64
       - patches/0006-Add-arm64-support-for-host-tools.patch             # [arm64]
-      - patches/0007-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
-      - patches/0008-Make-qml-host-tools-to-be-arm64-compatible.patch   # [arm64]
-      - patches/0009-Make-repc-arm64-compatible.patch                   # [arm64]
-      - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
-      - patches/0011-Enable-arm64-support-for-qscxmlc.patch             # [arm64]
+      # - patches/0007-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
+      # - patches/0008-Make-qml-host-tools-to-be-arm64-compatible.patch   # [arm64]
+      # - patches/0009-Make-repc-arm64-compatible.patch                   # [arm64]
+      # - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
+      # - patches/0011-Enable-arm64-support-for-qscxmlc.patch             # [arm64]
 
       # Patch for c++11 compatibility
-      - patches/0012-include-utility-in-mbgl-util-unique_any.patch
+      # - patches/0012-include-utility-in-mbgl-util-unique_any.patch
 
       # Patch for openssl 3 compatibility, picked up from ubuntu, see
       # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c

@@ -264,13 +264,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     cp "${RECIPE_DIR}"/xcodebuild "${PREFIX}"/bin/xc-avoidance/
 fi
 
-# Qt Charts
-# ---------
-popd
-pushd qtcharts
-${PREFIX}/bin/qmake qtcharts.pro PREFIX=${PREFIX}
-make -j${MAKE_JOBS} || exit 1
-make install || exit 1
 popd
 
 # Post build setup
