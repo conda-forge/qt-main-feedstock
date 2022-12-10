@@ -115,11 +115,6 @@ copy qtbase\bin\qmake.exe %LIBRARY_BIN%\qmake.exe
 :ok_qmake_exists
 
 popd
-pushd qtcharts
-%LIBRARY_BIN%\qmake.exe qtcharts.pro PREFIX=%PREFIX%
-jom
-jom install
-popd
 
 :: To rewrite qt.conf contents per conda environment
 if not exist %PREFIX%\Scripts mkdir %PREFIX%\Scripts
