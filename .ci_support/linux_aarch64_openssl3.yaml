@@ -52,6 +52,8 @@ openssl:
 - '3'
 pcre2:
 - '10.40'
+postgresql:
+- '15'
 pulseaudio:
 - '16.1'
 target_platform:
