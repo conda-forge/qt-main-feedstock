@@ -129,18 +129,12 @@ requirements:
     - fontconfig                         # [linux]
     - freetype                           # [linux]
     - glib
-    - pulseaudio                         # [linux]
-    - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
-    - expat                              # [linux]
-    - libevent                           # [linux]
     - icu
     # jpeg-turbo currently has some conflicting issues in conda-forge
     # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
     - jpeg
     - libpng
-    - nspr                               # [unix]
-    - nss                                # [unix]
     - libsqlite
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
@@ -159,7 +153,6 @@ requirements:
     - libclang                             # [not osx]
     - libcups                            # [linux]
     - zstd
-    - alsa-lib                           # [linux]
     - krb5
   run:
     - {{ pin_compatible("nss") }}        # [unix]
