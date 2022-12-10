@@ -1,4 +1,10 @@
 #!/bin/sh
+# Get an updated config.sub and config.guess
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/nasm/autoconf/helpers
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/icu/source
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/sqlite/src
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/breakpad/breakpad/autotools
+cp $BUILD_PREFIX/share/gnuconfig/config.* ./qtwebengine/src/3rdparty/chromium/third_party/farmhash/src
 
 if test "$CONDA_BUILD_CROSS_COMPILATION" = "1"
 then
