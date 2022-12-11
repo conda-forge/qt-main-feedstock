@@ -29,7 +29,7 @@ source:
 
       # Patch for openssl 3 compatibility, picked up from ubuntu, see
       # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c
-      - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch        # [openssl == "3"]
+      - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
