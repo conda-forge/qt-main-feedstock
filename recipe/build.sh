@@ -13,11 +13,7 @@ fi
 mkdir qt-build
 pushd qt-build
 
-echo PREFIX=${PREFIX}
-echo BUILD_PREFIX=${BUILD_PREFIX}
 USED_BUILD_PREFIX=${BUILD_PREFIX:-${PREFIX}}
-echo USED_BUILD_PREFIX=${BUILD_PREFIX}
-
 MAKE_JOBS=$CPU_COUNT
 export NINJAFLAGS="-j${MAKE_JOBS}"
 
@@ -35,19 +31,9 @@ export CC=$(basename ${CC})
 export CXX=$(basename ${CXX})
 
 # Let Qt set its own flags and vars
-for x in OSX_ARCH CFLAGS CXXFLAGS LDFLAGS
-do
+for x in OSX_ARCH CFLAGS CXXFLAGS LDFLAGS; do
     unset $x
 done
-
-# You can use this to cut down on the number of modules built. Of course the Qt package will not be of
-# much use, but it is useful if you are iterating on e.g. figuring out compiler flags to reduce the
-# size of the libraries.
-MINIMAL_BUILD=no
-
-# Remove protobuf which is pulled in indirectly
-# rm -rf $PREFIX/include/google/protobuf
-# rm -rf $PREFIX/bin/protoc
 
 if [[ $(uname) == "Linux" ]]; then
     ln -s ${GXX} g++ || true
@@ -61,21 +47,6 @@ if [[ $(uname) == "Linux" ]]; then
     export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/lib64/pkgconfig/"
     chmod +x g++ gcc gcc-ar
     export PATH=${PWD}:${PATH}
-
-    declare -a SKIPS
-    if [[ ${MINIMAL_BUILD} == yes ]]; then
-      SKIPS+=(-skip); SKIPS+=(qtwebsockets)
-      SKIPS+=(-skip); SKIPS+=(qtwebchannel)
-      SKIPS+=(-skip); SKIPS+=(qtsvg)
-      SKIPS+=(-skip); SKIPS+=(qtsensors)
-      SKIPS+=(-skip); SKIPS+=(qtcanvas3d)
-      SKIPS+=(-skip); SKIPS+=(qtconnectivity)
-      SKIPS+=(-skip); SKIPS+=(declarative)
-      SKIPS+=(-skip); SKIPS+=(multimedia)
-      SKIPS+=(-skip); SKIPS+=(qttools)
-      SKIPS+=(-skip); SKIPS+=(qtlocation)
-      SKIPS+=(-skip); SKIPS+=(qt3d)
-    fi
 
     if [ ${target_platform} == "linux-aarch64" ] || [ ${target_platform} == "linux-ppc64le" ]; then
         # The -reduce-relations option doesn't seem to pass for aarch64 and ppc64le
@@ -141,8 +112,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -D XK_ISO_Level5_Lock=0xfe13 \
                 -D FC_WEIGHT_EXTRABLACK=215 \
                 -D FC_WEIGHT_ULTRABLACK=FC_WEIGHT_EXTRABLACK \
-                -D GLX_GLXEXT_PROTOTYPES \
-                "${SKIPS[@]+"${SKIPS[@]}"}"
+                -D GLX_GLXEXT_PROTOTYPES
 
 # ltcg bloats a test tar.bz2 from 24524263 to 43257121 (built with the following skips)
 #                -ltcg \
@@ -243,9 +213,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -securetransport \
                 -no-openssl \
                 -optimize-size
-
-# For quicker turnaround when e.g. checking compilers optimizations
-#                -skip qtwebsockets -skip qtwebchannel -skip qtwebengine -skip qtsvg -skip qtsensors -skip qtcanvas3d -skip qtconnectivity -skip declarative -skip multimedia -skip qttools -skip qtlocation -skip qt3d
 # lto causes an increase in final tar.bz2 size of about 4% (tested with the above -skip options though, not the whole thing)
 #                -ltcg \
 
