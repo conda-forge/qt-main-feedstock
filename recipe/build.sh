@@ -203,7 +203,8 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
       lipo -create $BUILD_PREFIX/lib/libc++.dylib $PREFIX/lib/libc++.dylib -output $PREFIX/lib/libc++.dylib
       lipo -create $BUILD_PREFIX/lib/libclang.dylib $PREFIX/lib/libclang.dylib -output $PREFIX/lib/libclang.dylib
     fi
-
+    # On OSX, we use the native secure transport instead of openssl
+    # https://forum.qt.io/topic/55853/openssl-and-mac-os-x/7
     ../configure -prefix ${PREFIX} \
                 -libdir ${PREFIX}/lib \
                 -bindir ${PREFIX}/bin \
@@ -244,6 +245,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -no-harfbuzz \
                 -no-libudev \
                 -no-egl \
+                -securetransport \
                 -no-openssl \
                 -optimize-size
 
