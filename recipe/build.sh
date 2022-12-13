@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 if test "$CONDA_BUILD_CROSS_COMPILATION" = "1"
 then
   (
