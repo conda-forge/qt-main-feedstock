@@ -40,6 +40,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_system_sqlite=ON ^
     -DFEATURE_designer=OFF -DFEATURE_linguist=OFF ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
+    -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=16 ^
     ..
 if errorlevel 1 exit 1
 
