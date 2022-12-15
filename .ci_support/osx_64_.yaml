@@ -34,8 +34,6 @@ nspr:
 - '4'
 nss:
 - '3'
-openssl:
-- 1.1.1
 postgresql:
 - '15'
 target_platform:
