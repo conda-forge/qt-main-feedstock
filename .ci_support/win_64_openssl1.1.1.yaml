@@ -23,7 +23,7 @@ libpng:
 libsqlite:
 - '3'
 libtiff:
-- '4'
+- '4.4'
 libwebp:
 - '1'
 openssl:
