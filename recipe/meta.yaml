@@ -154,7 +154,11 @@ requirements:
     # Only libclang is needed, but needs the full package for detection.
     - llvmdev
     - clangdev
-    - libclang
+    # Ensure that build and host have the same clang version on osx
+    # otherwise qt6 may be out of sync compared to the pinned compiler
+    # version
+    - libclang {{ cxx_compiler_version }}  # [osx]
+    - libclang                             # [not osx]
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
