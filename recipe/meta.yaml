@@ -36,7 +36,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -154,7 +154,11 @@ requirements:
     # Only libclang is needed, but needs the full package for detection.
     - llvmdev
     - clangdev
-    - libclang
+    # Ensure that build and host have the same clang version on osx
+    # otherwise qt6 may be out of sync compared to the pinned compiler
+    # version
+    - libclang {{ cxx_compiler_version }}  # [osx]
+    - libclang                             # [not osx]
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
