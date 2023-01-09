@@ -64,7 +64,6 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
 qtdeclarative;\
 qtimageformats;\
 qtmultimedia;\
-qtnetworkauth;\
 qtpositioning;\
 qtscxml;\
 qtsensors;\
