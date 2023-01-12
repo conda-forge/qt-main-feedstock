@@ -3,7 +3,7 @@ alsa_lib:
 c_compiler:
 - gcc
 c_compiler_version:
-- '10'
+- '11'
 cdt_name:
 - cos7
 channel_sources:
@@ -13,7 +13,7 @@ channel_targets:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '10'
+- '11'
 dbus:
 - '1'
 docker_image:
@@ -33,11 +33,13 @@ icu:
 jpeg:
 - '9'
 krb5:
-- '1.19'
+- '1.20'
 libevent:
 - 2.1.10
 libpng:
 - '1.6'
+libsqlite:
+- '3'
 libxml2:
 - '2.10'
 nspr:
@@ -46,10 +48,10 @@ nss:
 - '3'
 openssl:
 - 1.1.1
+postgresql:
+- '15'
 pulseaudio:
-- '14.0'
-sqlite:
-- '3'
+- '16.1'
 target_platform:
 - linux-ppc64le
 zip_keys:
