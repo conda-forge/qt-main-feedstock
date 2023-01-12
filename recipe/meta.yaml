@@ -36,16 +36,26 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 6
+  number: 7
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
-  missing_dso_whitelist:  # [osx]
-    - /usr/lib/libbsm.0.dylib  # [osx]
-    - /usr/lib/libcups.2.dylib  # [osx]
-    - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib/libsandbox.1.dylib  # [osx]
+  ignore_run_exports_from:             # [linux]
+    - gtk3                             # [linux]
+    - pango                            # [linux]
+    - atk                              # [linux]
+    - cairo                            # [linux]
+    - gdk-pixbuf                       # [linux]
+  missing_dso_whitelist:               # [unix]
+    - /usr/lib/libbsm.0.dylib          # [osx]
+    - /usr/lib/libcups.2.dylib         # [osx]
+    - /usr/lib/libresolv.9.dylib       # [osx]
+    - /usr/lib/libsandbox.1.dylib      # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
+    # GTK3 decided to use the CDTs for these two packages
+    # So we assume that they will be installed by the system
+    - '*/libX11.so*'                   # [linux]
+    - '*/libXext.so*'                  # [linux]
 
 requirements:
   build:
@@ -63,12 +73,11 @@ requirements:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
     - {{ cdt('libxi-devel') }}           # [linux]
+    - {{ cdt('libxinerama-devel') }}     # [linux]
     - {{ cdt('libxrandr-devel') }}       # [linux]
     - {{ cdt('pciutils-devel') }}        # [linux]
     - {{ cdt('libxscrnsaver-devel') }}   # [linux]
@@ -164,6 +173,12 @@ requirements:
     - alsa-lib                           # [linux]
     - krb5
     - harfbuzz                           # [linux]
+    # Specifically for the platform plugin gtk3
+    - gtk3                               # [linux]
+    - pango                              # [linux]
+    - atk                                # [linux]
+    - cairo                              # [linux]
+    - gdk-pixbuf                         # [linux]
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
@@ -194,8 +209,6 @@ test:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
@@ -227,6 +240,39 @@ test:
     - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
+
+outputs:
+  - name: qt-main
+  - name: qt-gtk-platformtheme
+    script: install_qt-gtk-platformtheme.sh
+    build:
+      skip: true  # [not linux]
+
+    requirements:
+      build:
+        # Add these to generate the SHA correctly
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - sysroot_linux-64 2.17
+        # openssl here ensures that we can install the same qt-main
+        # package during the build process
+        - openssl
+      host:
+        # openssl here ensures that we can install the same qt-main
+        # package during the build process
+        - openssl
+        - {{ pin_subpackage('qt-main', exact=True) }}
+        # Specify these dependencies so that we pickup the run_exports
+        - gtk3
+        - pango
+        - atk
+        - cairo
+        - gdk-pixbuf
+      run:
+        - {{ pin_subpackage('qt-main', exact=True) }}
+    test:
+      commands:
+        - test -f ${PREFIX}/plugins/platformthemes/libqgtk3.so
 
 about:
   home: https://qt.io

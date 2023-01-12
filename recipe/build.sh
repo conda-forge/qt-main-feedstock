@@ -75,6 +75,9 @@ if [[ $(uname) == "Linux" ]]; then
       SKIPS+=(-skip); SKIPS+=(qttools)
       SKIPS+=(-skip); SKIPS+=(qtlocation)
       SKIPS+=(-skip); SKIPS+=(qt3d)
+      EXTRA_OPTIONS=""
+    else
+      EXTRA_OPTIONS="-gstreamer 1.0"
     fi
 
     if [ ${target_platform} == "linux-aarch64" ] || [ ${target_platform} == "linux-ppc64le" ]; then
@@ -114,7 +117,6 @@ if [[ $(uname) == "Linux" ]]; then
                 -verbose \
                 -skip wayland \
                 -skip qtwebengine \
-                -gstreamer 1.0 \
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
@@ -123,6 +125,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \
                 -plugin-sql-psql \
+                -gtk \
                 -xcb \
                 -xcb-xlib \
                 -qt-pcre \
@@ -144,6 +147,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -D FC_WEIGHT_EXTRABLACK=215 \
                 -D FC_WEIGHT_ULTRABLACK=FC_WEIGHT_EXTRABLACK \
                 -D GLX_GLXEXT_PROTOTYPES \
+                ${EXTRA_OPTIONS} \
                 "${SKIPS[@]+"${SKIPS[@]}"}"
 
 # ltcg bloats a test tar.bz2 from 24524263 to 43257121 (built with the following skips)
@@ -159,6 +163,9 @@ if [[ $(uname) == "Linux" ]]; then
   make -j${MAKE_JOBS} | sed "s/^g++.*-o/g++ [...] -o/" | sed "s/-DQT.* //"
   # make -j${MAKE_JOBS}
   make install
+
+  # Will be installed as part of the GTK extension
+  rm $PREFIX/plugins/platformthemes/libqgtk3.so
 fi
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
