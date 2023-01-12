@@ -135,7 +135,6 @@ if [[ $(uname) == "Linux" ]]; then
                 ${REDUCE_RELOCATIONS} \
                 -cups \
                 -openssl-linked \
-                -openssl \
                 -Wno-expansion-to-defined \
                 -D _X_INLINE=inline \
                 -D XK_dead_currency=0xfe6f \
@@ -150,7 +149,14 @@ if [[ $(uname) == "Linux" ]]; then
 #                -ltcg \
 #                --disable-new-dtags \
 
-  make -j${MAKE_JOBS}
+
+  # Shorten the log to a little further on travis and to make the log files smaller
+  # than 50 MB.
+  # Without these sed commands, one gets about 4_497_973 characters in 30 mins
+  # With these sed commands, we get about 1_054_756 characters for getting as
+  # far in the build process.
+  make -j${MAKE_JOBS} | sed "s/^g++.*-o/g++ [...] -o/" | sed "s/-DQT.* //"
+  # make -j${MAKE_JOBS}
   make install
 fi
 
@@ -197,7 +203,8 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
       lipo -create $BUILD_PREFIX/lib/libc++.dylib $PREFIX/lib/libc++.dylib -output $PREFIX/lib/libc++.dylib
       lipo -create $BUILD_PREFIX/lib/libclang.dylib $PREFIX/lib/libclang.dylib -output $PREFIX/lib/libclang.dylib
     fi
-
+    # On OSX, we use the native secure transport instead of openssl
+    # https://forum.qt.io/topic/55853/openssl-and-mac-os-x/7
     ../configure -prefix ${PREFIX} \
                 -libdir ${PREFIX}/lib \
                 -bindir ${PREFIX}/bin \
@@ -238,6 +245,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -no-harfbuzz \
                 -no-libudev \
                 -no-egl \
+                -securetransport \
                 -no-openssl \
                 -optimize-size
 

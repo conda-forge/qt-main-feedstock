@@ -2,6 +2,6 @@ __migrator:
   build_number: 1
   kind: version
   migration_number: 1
-alsa_lib:
-- 1.2.8
-migrator_ts: 1666711133.5889597
+krb5:
+- '1.20'
+migrator_ts: 1671105899.8058033

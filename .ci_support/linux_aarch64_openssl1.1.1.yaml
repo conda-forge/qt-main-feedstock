@@ -1,19 +1,33 @@
-MACOSX_DEPLOYMENT_TARGET:
-- '10.13'
-MACOSX_SDK_VERSION:
-- '10.14'
+BUILD:
+- aarch64-conda_cos7-linux-gnu
+alsa_lib:
+- 1.2.8
 c_compiler:
-- clang
+- gcc
 c_compiler_version:
-- '13'
+- '11'
+cdt_arch:
+- aarch64
+cdt_name:
+- cos7
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- clangxx
+- gxx
 cxx_compiler_version:
-- '13'
+- '11'
+dbus:
+- '1'
+docker_image:
+- quay.io/condaforge/linux-anvil-aarch64
+expat:
+- '2'
+fontconfig:
+- '2'
+freetype:
+- '2'
 glib:
 - '2'
 gstreamer:
@@ -24,20 +38,26 @@ jpeg:
 - '9'
 krb5:
 - '1.20'
+libevent:
+- 2.1.10
 libpng:
 - '1.6'
 libsqlite:
 - '3'
-macos_machine:
-- x86_64-apple-darwin13.4.0
+libxml2:
+- '2.10'
 nspr:
 - '4'
 nss:
 - '3'
+openssl:
+- 1.1.1
 postgresql:
 - '15'
+pulseaudio:
+- '16.1'
 target_platform:
-- osx-64
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
