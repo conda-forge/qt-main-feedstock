@@ -2,7 +2,9 @@
 set -ex
 
 # test for presence of sql plugin
-test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}
+test   -f "${PREFIX}/plugins/sqldrivers/libqsqlite${SHLIB_EXT}"
+# gtk3 platform theme is installed as a separate package
+test ! -f "${PREFIX}/plugins/platformthemes/libqgtk3${SHLIB_EXT}"
 
 ls
 cd test
