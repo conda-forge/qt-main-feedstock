@@ -38,6 +38,10 @@ build:
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib/libsandbox.1.dylib  # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
+    # GTK3 decided to use the CDTs for these two packages
+    # So we assume that they will be installed by the system
+    - '*/libX11.so*'                   # [linux]
+    - '*/libXext.so*'                  # [linux]
 
 requirements:
   build:
@@ -56,12 +60,11 @@ requirements:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
     - {{ cdt('libxi-devel') }}           # [linux]
+    - {{ cdt('libxinerama-devel') }}     # [linux]
     - {{ cdt('libxrandr-devel') }}       # [linux]
     - {{ cdt('pciutils-devel') }}        # [linux]
     - {{ cdt('libxscrnsaver-devel') }}   # [linux]
@@ -147,6 +150,13 @@ requirements:
     - libcups                            # [linux]
     - zstd
     - krb5
+    - harfbuzz                           # [linux]
+    # Specifically for the platform plugin gtk3
+    - gtk3                               # [linux]
+    - pango                              # [linux]
+    - atk                                # [linux]
+    - cairo                              # [linux]
+    - gdk-pixbuf                         # [linux]
   run:
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
@@ -176,8 +186,6 @@ test:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
