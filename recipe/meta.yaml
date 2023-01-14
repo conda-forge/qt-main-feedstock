@@ -219,8 +219,9 @@ test:
     - xcrun
   commands:
     # sql plugin
-    - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
+    - test -f ${PREFIX}/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
     - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
+    - test -f ${PREFIX}/plugins/platformthemes/libqgtk3.so                 # [linux]
 
 about:
   home: https://qt.io
