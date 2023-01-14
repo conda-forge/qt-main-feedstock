@@ -235,4 +235,14 @@ about:
 
 extra:
   recipe-maintainers:
-    - conda-forge/qt-main
+    - andfoy
+    - ccordoba12
+    - duncanmmacleod
+    - gillins
+    - mingwandroid
+    - msarahan
+    - ocefpaf
+    - stuarteberg
+    - Tobias-Fischer
+    - matthiasdiener
+    - jschueller
