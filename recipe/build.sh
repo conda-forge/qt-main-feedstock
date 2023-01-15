@@ -118,6 +118,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
+                -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \
@@ -233,6 +234,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
+                -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \
@@ -242,7 +244,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -no-framework \
                 -dbus \
                 -no-mtdev \
-                -no-harfbuzz \
                 -no-libudev \
                 -no-egl \
                 -securetransport \
