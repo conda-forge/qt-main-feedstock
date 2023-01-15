@@ -89,6 +89,7 @@ call "../configure" ^
      -system-libpng ^
      -system-sqlite ^
      -system-zlib ^
+     -system-harfbuzz ^
      -plugin-sql-sqlite ^
      -qtlibinfix %QT_LIBINFIX% ^
      -verbose
