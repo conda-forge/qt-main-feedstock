@@ -70,6 +70,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -headerdir ${PREFIX}/include/qt \
                 -archdatadir ${PREFIX} \
                 -datadir ${PREFIX} \
+                -plugindir ${PREFIX}/lib/qt5/plugins \
                 -I ${PREFIX}/include \
                 -L ${PREFIX}/lib \
                 -L ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 \
@@ -179,6 +180,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -headerdir ${PREFIX}/include/qt \
                 -archdatadir ${PREFIX} \
                 -datadir ${PREFIX} \
+                -plugindir ${PREFIX}/lib/qt5/plugins \
                 $PLATFORM \
                 -I ${PREFIX}/include \
                 -I ${PREFIX}/include/mysql \

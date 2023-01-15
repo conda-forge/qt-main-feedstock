@@ -65,6 +65,7 @@ call "../configure" ^
      -headerdir %LIBRARY_INC%\qt ^
      -archdatadir %LIBRARY_PREFIX% ^
      -datadir %LIBRARY_PREFIX% ^
+     -plugin %LIBRARY_PREFIX%\qt5\plugins ^
      -optimized-tools ^
      %LIBRARY_PATHS% ^
      -L %LIBRARY_LIB% ^
