@@ -240,5 +240,15 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
-* [@conda-forge/qt-main](https://github.com/conda-forge/qt-main/)
+* [@Tobias-Fischer](https://github.com/Tobias-Fischer/)
+* [@andfoy](https://github.com/andfoy/)
+* [@ccordoba12](https://github.com/ccordoba12/)
+* [@duncanmmacleod](https://github.com/duncanmmacleod/)
+* [@gillins](https://github.com/gillins/)
+* [@jschueller](https://github.com/jschueller/)
+* [@matthiasdiener](https://github.com/matthiasdiener/)
+* [@mingwandroid](https://github.com/mingwandroid/)
+* [@msarahan](https://github.com/msarahan/)
+* [@ocefpaf](https://github.com/ocefpaf/)
+* [@stuarteberg](https://github.com/stuarteberg/)
 
