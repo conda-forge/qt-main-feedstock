@@ -1,9 +1,9 @@
-alsa_lib:
-- 1.2.8
 c_compiler:
 - gcc
 c_compiler_version:
 - '11'
+cairo:
+- '1'
 cdt_name:
 - cos7
 channel_sources:
@@ -18,40 +18,32 @@ dbus:
 - '1'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
-expat:
-- '2'
 fontconfig:
 - '2'
 freetype:
 - '2'
+gdk_pixbuf:
+- '2'
 glib:
 - '2'
-gstreamer:
-- '1.21'
+harfbuzz:
+- '6'
 icu:
 - '70'
 jpeg:
 - '9'
 krb5:
 - '1.20'
-libevent:
-- 2.1.10
 libpng:
 - '1.6'
 libsqlite:
 - '3'
-libxml2:
-- '2.10'
-nspr:
-- '4'
-nss:
-- '3'
 openssl:
 - 1.1.1
+pango:
+- '1.50'
 postgresql:
 - '15'
-pulseaudio:
-- '16.1'
 target_platform:
 - linux-64
 zip_keys:

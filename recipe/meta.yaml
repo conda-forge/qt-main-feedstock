@@ -1,12 +1,12 @@
-{% set version = "5.15.6" %}
+{% set version = "5.15.7" %}
 
 package:
-  name: qt-main
+  name: qt-base
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: ebc77d27934b70b25b3dc34fbec7c4471eb451848e891c42b32409ea30fe309f
+  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/submodules/qtbase-everywhere-opensource-src-{{ version }}.tar.xz
+    sha256: 05edd00b2a1ba99c85b3fe876fe1c23d63f0a9bbca7df52bc47393cfd8c809c7
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -18,14 +18,6 @@ source:
       # The following patches are required to cross-compile Qt host tools (osx)
       # to work both on x86_64 and arm64
       - patches/0006-Add-arm64-support-for-host-tools.patch             # [arm64]
-      - patches/0007-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
-      - patches/0008-Make-qml-host-tools-to-be-arm64-compatible.patch   # [arm64]
-      - patches/0009-Make-repc-arm64-compatible.patch                   # [arm64]
-      - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
-      - patches/0011-Enable-arm64-support-for-qscxmlc.patch             # [arm64]
-
-      # Patch for c++11 compatibility
-      - patches/0012-include-utility-in-mbgl-util-unique_any.patch
 
       # Patch for openssl 3 compatibility, picked up from ubuntu, see
       # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c
@@ -39,16 +31,27 @@ build:
   number: 5
   detect_binary_files_with_prefix: true
   run_exports:
-    - {{ pin_subpackage('qt-main', max_pin='x.x') }}
+    - {{ pin_subpackage('qt-base', max_pin='x.x') }}
+  ignore_run_exports_from:             # [linux]
+    - gtk3                             # [linux]
+    - pango                            # [linux]
+    - atk                              # [linux]
+    - cairo                            # [linux]
+    - gdk-pixbuf                       # [linux]
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
     - /usr/lib/libcups.2.dylib  # [osx]
     - /usr/lib/libresolv.9.dylib  # [osx]
     - /usr/lib/libsandbox.1.dylib  # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
+    # GTK3 decided to use the CDTs for these two packages
+    # So we assume that they will be installed by the system
+    - '*/libX11.so*'                   # [linux]
+    - '*/libXext.so*'                  # [linux]
 
 requirements:
   build:
+    # TODO: cleanup the CDTs ...
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - sysroot_linux-64 2.17              # [linux]
@@ -63,12 +66,11 @@ requirements:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
     - {{ cdt('libxi-devel') }}           # [linux]
+    - {{ cdt('libxinerama-devel') }}     # [linux]
     - {{ cdt('libxrandr-devel') }}       # [linux]
     - {{ cdt('pciutils-devel') }}        # [linux]
     - {{ cdt('libxscrnsaver-devel') }}   # [linux]
@@ -129,20 +131,12 @@ requirements:
     - fontconfig                         # [linux]
     - freetype                           # [linux]
     - glib
-    - gst-plugins-base  {{ gstreamer }}
-    - gstreamer
-    - pulseaudio                         # [linux]
-    - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
-    - expat                              # [linux]
-    - libevent                           # [linux]
     - icu
     # jpeg-turbo currently has some conflicting issues in conda-forge
     # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
     - jpeg
     - libpng
-    - nspr                               # [unix]
-    - nss                                # [unix]
     - libsqlite
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
@@ -161,11 +155,15 @@ requirements:
     - libclang                             # [not osx]
     - libcups                            # [linux]
     - zstd
-    - alsa-lib                           # [linux]
     - krb5
+    - harfbuzz
+    # Specifically for the platform plugin gtk3
+    - gtk3                               # [linux]
+    - pango                              # [linux]
+    - atk                                # [linux]
+    - cairo                              # [linux]
+    - gdk-pixbuf                         # [linux]
   run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
     # that may exhibit as segfault due to missing libraries
@@ -180,6 +178,7 @@ requirements:
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
+    - qt-main {{ version }}
 
 test:
   requires:
@@ -193,8 +192,6 @@ test:
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
     - {{ cdt('libxau-devel') }}          # [linux]
     - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libxcomposite-devel') }}   # [linux]
     - {{ cdt('libxcursor-devel') }}      # [linux]
@@ -228,8 +225,9 @@ test:
     - xcrun
   commands:
     # sql plugin
-    - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
-    - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
+    - test -f ${PREFIX}/lib/qt5/plugins/sqldrivers/libqsqlite${SHLIB_EXT}          # [unix]
+    - if not exist %LIBRARY_PREFIX%\qt5\plugins\sqldrivers\qsqlite.dll exit 1      # [win]
+    - test -f ${PREFIX}/lib/qt5/plugins/platformthemes/libqgtk3.so                 # [linux]
 
 about:
   home: https://qt.io

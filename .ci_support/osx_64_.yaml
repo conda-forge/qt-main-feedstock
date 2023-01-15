@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '13'
+- '14'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -13,11 +13,11 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '13'
+- '14'
 glib:
 - '2'
-gstreamer:
-- '1.21'
+harfbuzz:
+- '6'
 icu:
 - '70'
 jpeg:
@@ -30,10 +30,6 @@ libsqlite:
 - '3'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-nspr:
-- '4'
-nss:
-- '3'
 postgresql:
 - '15'
 target_platform:

@@ -10,8 +10,8 @@ cxx_compiler:
 - vs2019
 glib:
 - '2'
-gstreamer:
-- '1.21'
+harfbuzz:
+- '6'
 icu:
 - '70'
 jpeg:

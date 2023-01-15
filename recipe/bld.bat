@@ -28,7 +28,7 @@ set LLVM_INSTALL_DIR=%PREFIX%\Library
 :: Compilation fails due to long path names in the case of angle
 :: We create a symlink to the actual folder and then instruct Qt
 :: to locate angle under our symlink
-mklink /D %cd%\angle %cd%\qtbase\src\3rdparty\angle
+mklink /D %cd%\angle %cd%\src\3rdparty\angle
 set ANGLE_DIR=%cd%\angle
 
 set QT_LIBINFIX=_conda
@@ -65,6 +65,7 @@ call "../configure" ^
      -headerdir %LIBRARY_INC%\qt ^
      -archdatadir %LIBRARY_PREFIX% ^
      -datadir %LIBRARY_PREFIX% ^
+     -plugin %LIBRARY_PREFIX%\qt5\plugins ^
      -optimized-tools ^
      %LIBRARY_PATHS% ^
      -L %LIBRARY_LIB% ^
@@ -89,6 +90,7 @@ call "../configure" ^
      -system-libpng ^
      -system-sqlite ^
      -system-zlib ^
+     -system-harfbuzz ^
      -plugin-sql-sqlite ^
      -qtlibinfix %QT_LIBINFIX% ^
      -verbose
@@ -114,11 +116,6 @@ echo Warning %LIBRARY_BIN%\qmake.exe does not exist jom -U install failed, very 
 copy qtbase\bin\qmake.exe %LIBRARY_BIN%\qmake.exe
 :ok_qmake_exists
 
-popd
-pushd qtcharts
-%LIBRARY_BIN%\qmake.exe qtcharts.pro PREFIX=%PREFIX%
-jom
-jom install
 popd
 
 :: To rewrite qt.conf contents per conda environment
