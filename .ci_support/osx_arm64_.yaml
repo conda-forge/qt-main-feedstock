@@ -14,6 +14,8 @@ cxx_compiler_version:
 - '14'
 glib:
 - '2'
+harfbuzz:
+- '6'
 icu:
 - '70'
 jpeg:
