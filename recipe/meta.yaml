@@ -163,7 +163,7 @@ requirements:
     - zstd
     - alsa-lib                           # [linux]
     - krb5
-    - harfbuzz
+    - harfbuzz                           # [linux]
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
