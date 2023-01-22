@@ -36,7 +36,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 5
+  number: 6
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -163,6 +163,7 @@ requirements:
     - zstd
     - alsa-lib                           # [linux]
     - krb5
+    - harfbuzz                           # [linux]
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
@@ -226,10 +227,6 @@ test:
     - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
-  commands:
-    # sql plugin
-    - test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}            # [unix]
-    - if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1  # [win]
 
 about:
   home: https://qt.io

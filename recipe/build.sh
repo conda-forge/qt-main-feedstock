@@ -118,6 +118,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-libjpeg \
                 -system-libpng \
                 -system-zlib \
+                -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \

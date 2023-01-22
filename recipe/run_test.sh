@@ -1,6 +1,8 @@
 #!/bin/bash
+set -ex
 
-set -e
+# test for presence of sql plugin
+test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}
 
 ls
 cd test
