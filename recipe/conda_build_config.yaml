@@ -1,3 +1,8 @@
+# Remove channel_sources when
+# https://github.com/conda-forge/cdt-builds/pull/63
+# is merged
+channel_sources:
+  - mark.harfouche,conda-forge
 MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
   - '10.13'                # [osx and x86_64]
 MACOSX_SDK_VERSION:        # [osx and x86_64]
