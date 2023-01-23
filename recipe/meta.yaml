@@ -40,12 +40,6 @@ build:
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
-  ignore_run_exports_from:             # [linux]
-    - gtk3                             # [linux]
-    - pango                            # [linux]
-    - atk                              # [linux]
-    - cairo                            # [linux]
-    - gdk-pixbuf                       # [linux]
   missing_dso_whitelist:               # [unix]
     - /usr/lib/libbsm.0.dylib          # [osx]
     - /usr/lib/libcups.2.dylib         # [osx]
@@ -104,6 +98,12 @@ requirements:
     - {{ cdt('xcb-util-keysyms-devel') }}     # [linux]
     - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
     - {{ cdt('xcb-util-wm-devel') }}          # [linux]
+    # CDTs needed specificially for GTK3 integration
+    - {{ cdt('gtk3-devel') }}            # [linux]
+    - {{ cdt('pango-devel') }}           # [linux]
+    - {{ cdt('atk-devel') }}             # [linux]
+    - {{ cdt('cairo-devel') }}           # [linux]
+    - {{ cdt('gdk-pixbuf2-devel') }}     # [linux]
 
     # For fontconfig + freetype
     - pkg-config                         # [unix]
@@ -173,12 +173,6 @@ requirements:
     - alsa-lib                           # [linux]
     - krb5
     - harfbuzz                           # [linux]
-    # Specifically for the platform plugin gtk3
-    - gtk3                               # [linux]
-    - pango                              # [linux]
-    - atk                                # [linux]
-    - cairo                              # [linux]
-    - gdk-pixbuf                         # [linux]
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
@@ -241,39 +235,6 @@ test:
     - xcodebuild
     - xcrun
 
-outputs:
-  - name: qt-main
-  - name: qt-gtk-platformtheme
-    script: install_qt-gtk-platformtheme.sh
-    build:
-      skip: true  # [not linux]
-
-    requirements:
-      build:
-        # Add these to generate the SHA correctly
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - sysroot_linux-64 2.17
-        # openssl here ensures that we can install the same qt-main
-        # package during the build process
-        - openssl
-      host:
-        # openssl here ensures that we can install the same qt-main
-        # package during the build process
-        - openssl
-        - {{ pin_subpackage('qt-main', exact=True) }}
-        # Specify these dependencies so that we pickup the run_exports
-        - gtk3
-        - pango
-        - atk
-        - cairo
-        - gdk-pixbuf
-      run:
-        - {{ pin_subpackage('qt-main', exact=True) }}
-    test:
-      commands:
-        - test -f ${PREFIX}/plugins/platformthemes/libqgtk3.so
-
 about:
   home: https://qt.io
   license: LGPL-3.0-only
@@ -298,3 +259,4 @@ extra:
     - Tobias-Fischer
     - matthiasdiener  # (currently building linux_ppc64le manually)
     - jschueller
+    - hmaarrfk    # interested in gtk3 integration

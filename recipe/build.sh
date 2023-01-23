@@ -87,6 +87,15 @@ if [[ $(uname) == "Linux" ]]; then
         REDUCE_RELOCATIONS=-reduce-relocations
     fi
 
+    # Remove private dependencies from select pkgconfig configuration files
+    # to help find gtk.
+    # This works around a bug in pkg-config
+    # https://github.com/conda-forge/conda-forge.github.io/issues/1880#issuecomment-1384518165
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/pango.pc"
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gdk-pixbuf-2.0.pc"
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gtk+-3.0.pc"
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gdk-3.0.pc"
+
     # ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 is because our compilers don't look in sysroot/usr/lib64
     # CentOS7 has:
     # LIBRARY_PATH=/usr/lib/gcc/x86_64-redhat-linux/4.8.5/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../../lib64/:/lib/../lib64/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/4.8.5/../../../:/lib/:/usr/lib/
@@ -163,9 +172,6 @@ if [[ $(uname) == "Linux" ]]; then
   make -j${MAKE_JOBS} | sed "s/^g++.*-o/g++ [...] -o/" | sed "s/-DQT.* //"
   # make -j${MAKE_JOBS}
   make install
-
-  # Will be installed as part of the GTK extension
-  rm $PREFIX/plugins/platformthemes/libqgtk3.so
 fi
 
 if [[ ${HOST} =~ .*darwin.* ]]; then

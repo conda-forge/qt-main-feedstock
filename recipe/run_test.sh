@@ -1,10 +1,11 @@
 #!/bin/bash
 set -ex
 
-# test for presence of sql plugin
-test   -f "${PREFIX}/plugins/sqldrivers/libqsqlite${SHLIB_EXT}"
-# gtk3 platform theme is installed as a separate package
-test ! -f "${PREFIX}/plugins/platformthemes/libqgtk3${SHLIB_EXT}"
+# test for presence of plugins
+test -f "${PREFIX}/plugins/sqldrivers/libqsqlite${SHLIB_EXT}"
+if [[ $(uname) == "Linux" ]]; then
+  test -f "${PREFIX}/plugins/platformthemes/libqgtk3${SHLIB_EXT}"
+fi
 
 ls
 cd test
