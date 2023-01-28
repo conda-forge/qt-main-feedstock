@@ -11,7 +11,7 @@ cxx_compiler:
 glib:
 - '2'
 gstreamer:
-- '1.21'
+- '1.22'
 icu:
 - '70'
 jpeg:
@@ -23,7 +23,7 @@ libpng:
 libsqlite:
 - '3'
 openssl:
-- 1.1.1
+- '3'
 target_platform:
 - win-64
 zlib:
