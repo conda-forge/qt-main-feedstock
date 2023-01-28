@@ -252,3 +252,4 @@ extra:
     - Tobias-Fischer
     - matthiasdiener  # (currently building linux_ppc64le manually)
     - jschueller
+    - hmaarrfk
