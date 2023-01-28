@@ -217,6 +217,7 @@ Feedstock Maintainers
 * [@ccordoba12](https://github.com/ccordoba12/)
 * [@duncanmmacleod](https://github.com/duncanmmacleod/)
 * [@gillins](https://github.com/gillins/)
+* [@hmaarrfk](https://github.com/hmaarrfk/)
 * [@jschueller](https://github.com/jschueller/)
 * [@matthiasdiener](https://github.com/matthiasdiener/)
 * [@mingwandroid](https://github.com/mingwandroid/)
