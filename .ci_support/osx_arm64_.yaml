@@ -1,6 +1,4 @@
 MACOSX_DEPLOYMENT_TARGET:
-- '10.14'
-MACOSX_SDK_VERSION:
 - '11.0'
 c_compiler:
 - clang
@@ -17,7 +15,7 @@ cxx_compiler_version:
 glib:
 - '2'
 gstreamer:
-- '1.21'
+- '1.22'
 harfbuzz:
 - '6'
 icu:
@@ -35,15 +33,15 @@ libtiff:
 libwebp:
 - '1'
 macos_machine:
-- x86_64-apple-darwin13.4.0
+- arm64-apple-darwin20.0.0
 openssl:
-- 1.1.1
+- '3'
 pcre2:
 - '10.40'
 postgresql:
 - '15'
 target_platform:
-- osx-64
+- osx-arm64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
