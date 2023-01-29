@@ -48,8 +48,11 @@ build:
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
     # GTK3 decided to use the CDTs for these two packages
     # So we assume that they will be installed by the system
-    - '*/libX11.so*'                   # [linux]
     - '*/libXext.so*'                  # [linux]
+    - '*/libX11.so*'                   # [linux]
+    - '*/libX11-xcb.so*'               # [linux]
+    - '*/libSM.so*'                    # [linux]
+    - '*/libICE.so*'                   # [linux]
 
 requirements:
   build:
