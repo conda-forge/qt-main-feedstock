@@ -91,10 +91,21 @@ if [[ $(uname) == "Linux" ]]; then
     # to help find gtk.
     # This works around a bug in pkg-config
     # https://github.com/conda-forge/conda-forge.github.io/issues/1880#issuecomment-1384518165
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/cairo.pc"
+    sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/cairo-gobject.pc"
     sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/pango.pc"
     sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gdk-pixbuf-2.0.pc"
     sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gtk+-3.0.pc"
     sed -i '/Requires.private:/d' "${CONDA_BUILD_SYSROOT}/usr/lib/pkgconfig/gdk-3.0.pc"
+
+    # We really want to link to the cairo CDT and not the one
+    # That was pulled transitively by some other conda dependency
+    rm -f ${PREFIX}/lib/pkgconfig/cairo.pc
+    rm -f ${PREFIX}/lib/pkgconfig/cairo-gobject.pc
+    rm -f ${PREFIX}/lib/libcairo-gobject.so
+    rm -f ${PREFIX}/lib/libcairo.so
+    rm -f ${PREFIX}/lib/libcairo-gobject.a
+    rm -f ${PREFIX}/lib/libcairo.a
 
     # ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 is because our compilers don't look in sysroot/usr/lib64
     # CentOS7 has:

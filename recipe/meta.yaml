@@ -106,6 +106,7 @@ requirements:
     - {{ cdt('pango-devel') }}           # [linux]
     - {{ cdt('atk-devel') }}             # [linux]
     - {{ cdt('cairo-devel') }}           # [linux]
+    - {{ cdt('cairo-gobject-devel') }}   # [linux]
     - {{ cdt('gdk-pixbuf2-devel') }}     # [linux]
 
     # For fontconfig + freetype
