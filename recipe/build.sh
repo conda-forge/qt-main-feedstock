@@ -102,10 +102,12 @@ if [[ $(uname) == "Linux" ]]; then
     # That was pulled transitively by some other conda dependency
     rm -f ${PREFIX}/lib/pkgconfig/cairo.pc
     rm -f ${PREFIX}/lib/pkgconfig/cairo-gobject.pc
-    rm -f ${PREFIX}/lib/libcairo-gobject.so
-    rm -f ${PREFIX}/lib/libcairo.so
     rm -f ${PREFIX}/lib/libcairo-gobject.a
+    rm -f ${PREFIX}/lib/libcairo-gobject.so
+    rm -f ${PREFIX}/lib/libcairo-gobject.so.2
     rm -f ${PREFIX}/lib/libcairo.a
+    rm -f ${PREFIX}/lib/libcairo.so
+    rm -f ${PREFIX}/lib/libcairo.so.2
 
     # ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 is because our compilers don't look in sysroot/usr/lib64
     # CentOS7 has:
