@@ -46,8 +46,9 @@ build:
     - /usr/lib/libresolv.9.dylib       # [osx]
     - /usr/lib/libsandbox.1.dylib      # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
-    # GTK3 decided to use the CDTs for these two packages
-    # So we assume that they will be installed by the system
+    # We decided to use CDTs for these X11 dependencies
+    # We assume that they will be installed by the system
+    # https://github.com/conda-forge/qt-main-feedstock/issues/32
     - '*/libXext.so*'                  # [linux]
     - '*/libX11.so*'                   # [linux]
     - '*/libX11-xcb.so*'               # [linux]
