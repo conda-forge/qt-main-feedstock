@@ -15,7 +15,7 @@ cxx_compiler_version:
 glib:
 - '2'
 gstreamer:
-- '1.21'
+- '1.22'
 icu:
 - '70'
 jpeg:

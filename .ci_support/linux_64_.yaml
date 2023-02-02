@@ -27,7 +27,7 @@ freetype:
 glib:
 - '2'
 gstreamer:
-- '1.21'
+- '1.22'
 harfbuzz:
 - '6'
 icu:
