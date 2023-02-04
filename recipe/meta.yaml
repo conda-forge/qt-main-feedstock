@@ -103,6 +103,16 @@ requirements:
     - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
     - {{ cdt('xcb-util-wm-devel') }}          # [linux]
     # CDTs needed specificially for GTK3 integration
+    # CDTs were chosen for GTK3 integration as opposed to conda-forge 
+    # packages because
+    #   1. The goal here is to integrate with the user's system installation of GTK-3
+    #   2. These CDTs provide older versions of the packages than what we provide
+    #      at conda-forge
+    #   3. An audit of the dependencies required for GTK integration showed they
+    #      are very forward compatible.
+    #   4. If the user doesn't have the required system dependencies, the plugin
+    #      seems to be ignored by qt as evidenced by
+    #      https://github.com/conda-forge/qt-main-feedstock/pull/105#issuecomment-1414813998
     - {{ cdt('gtk3-devel') }}            # [linux]
     - {{ cdt('pango-devel') }}           # [linux]
     - {{ cdt('atk-devel') }}             # [linux]
