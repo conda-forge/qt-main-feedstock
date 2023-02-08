@@ -1,4 +1,4 @@
-{% set version = "5.15.6" %}
+{% set version = "5.15.8" %}
 
 package:
   name: qt-main
@@ -6,7 +6,7 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: ebc77d27934b70b25b3dc34fbec7c4471eb451848e891c42b32409ea30fe309f
+    sha256: 776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -21,7 +21,7 @@ source:
       - patches/0007-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
       - patches/0008-Make-qml-host-tools-to-be-arm64-compatible.patch   # [arm64]
       - patches/0009-Make-repc-arm64-compatible.patch                   # [arm64]
-      - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
+      # - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
       - patches/0011-Enable-arm64-support-for-qscxmlc.patch             # [arm64]
 
       # Patch for c++11 compatibility
