@@ -120,9 +120,12 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-zlib \
                 -system-harfbuzz \
                 -system-sqlite \
+                -system-harfbuzz \
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \
                 -plugin-sql-psql \
+                -egl \
+                -eglfs \
                 -xcb \
                 -xcb-xlib \
                 -qt-pcre \
