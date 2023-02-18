@@ -70,7 +70,8 @@ if [[ $(uname) == "Linux" ]]; then
       SKIPS+=(-skip); SKIPS+=(qtsensors)
       SKIPS+=(-skip); SKIPS+=(qtcanvas3d)
       SKIPS+=(-skip); SKIPS+=(qtconnectivity)
-      SKIPS+=(-skip); SKIPS+=(declarative)
+      # declarative is needed for wayland
+      # SKIPS+=(-skip); SKIPS+=(declarative)
       SKIPS+=(-skip); SKIPS+=(multimedia)
       SKIPS+=(-skip); SKIPS+=(qttools)
       SKIPS+=(-skip); SKIPS+=(qtlocation)
@@ -115,7 +116,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -nomake tests \
                 -make tools \
                 -verbose \
-                -skip wayland \
+                -feature-wayland-server \
                 -skip qtwebengine \
                 -system-libjpeg \
                 -system-libpng \
