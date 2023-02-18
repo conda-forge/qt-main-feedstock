@@ -1,5 +1,4 @@
 {% set version = "5.15.8" %}
-n
 package:
   name: qt-main
   version: {{ version }}
