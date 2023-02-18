@@ -163,9 +163,6 @@ if [[ $(uname) == "Linux" ]]; then
   make -j${MAKE_JOBS} | sed "s/^g++.*-o/g++ [...] -o/" | sed "s/-DQT.* //"
   # make -j${MAKE_JOBS}
   make install
-
-  # Will be installed as part of the GTK extension
-  rm $PREFIX/plugins/platformthemes/libqgtk3.so
 fi
 
 if [[ ${HOST} =~ .*darwin.* ]]; then

@@ -1,5 +1,5 @@
 {% set version = "5.15.8" %}
-
+n
 package:
   name: qt-main
   version: {{ version }}
@@ -41,6 +41,10 @@ build:
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
   ignore_run_exports_from:             # [linux]
+    # These dependneices are required for GTK3 integration through a qt gtk3
+    # plugin. However, we found that if the plugin doesn't load, qt will
+    # startup just fine
+    # https://github.com/conda-forge/qt-main-feedstock/pull/105#issuecomment-1414813998
     - gtk3                             # [linux]
     - pango                            # [linux]
     - atk                              # [linux]
@@ -196,6 +200,12 @@ requirements:
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
+    # Do we need these here?
+    # - {{ pin_compatible('gtk3') }}
+    # - {{ pin_compatible('pango') }}
+    # - {{ pin_compatible('atk') }}
+    # - {{ pin_compatible('cairo') }}
+    # - {{ pin_compatible('gdk-pixbuf') }}
 
 test:
   requires:
@@ -240,39 +250,6 @@ test:
     - test/test_qmimedatabase.cpp
     - xcodebuild
     - xcrun
-
-outputs:
-  - name: qt-main
-  - name: qt-gtk-platformtheme
-    script: install_qt-gtk-platformtheme.sh
-    build:
-      skip: true  # [not linux]
-
-    requirements:
-      build:
-        # Add these to generate the SHA correctly
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - sysroot_linux-64 2.17
-        # openssl here ensures that we can install the same qt-main
-        # package during the build process
-        - openssl
-      host:
-        # openssl here ensures that we can install the same qt-main
-        # package during the build process
-        - openssl
-        - {{ pin_subpackage('qt-main', exact=True) }}
-        # Specify these dependencies so that we pickup the run_exports
-        - gtk3
-        - pango
-        - atk
-        - cairo
-        - gdk-pixbuf
-      run:
-        - {{ pin_subpackage('qt-main', exact=True) }}
-    test:
-      commands:
-        - test -f ${PREFIX}/plugins/platformthemes/libqgtk3.so
 
 about:
   home: https://qt.io
