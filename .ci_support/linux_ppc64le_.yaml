@@ -4,6 +4,8 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '11'
+cairo:
+- '1'
 cdt_name:
 - cos7
 channel_sources:
@@ -23,6 +25,8 @@ expat:
 fontconfig:
 - '2'
 freetype:
+- '2'
+gdk_pixbuf:
 - '2'
 glib:
 - '2'
@@ -50,6 +54,8 @@ nss:
 - '3'
 openssl:
 - '3'
+pango:
+- '1.50'
 postgresql:
 - '15'
 pulseaudio:
