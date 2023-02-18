@@ -43,7 +43,7 @@ done
 # You can use this to cut down on the number of modules built. Of course the Qt package will not be of
 # much use, but it is useful if you are iterating on e.g. figuring out compiler flags to reduce the
 # size of the libraries.
-MINIMAL_BUILD=yes
+MINIMAL_BUILD=no
 
 # Remove protobuf which is pulled in indirectly
 # rm -rf $PREFIX/include/google/protobuf
@@ -62,6 +62,7 @@ if [[ $(uname) == "Linux" ]]; then
     chmod +x g++ gcc gcc-ar
     export PATH=${PWD}:${PATH}
 
+    EXTRA_OPTIONS=""
     declare -a SKIPS
     if [[ ${MINIMAL_BUILD} == yes ]]; then
       SKIPS+=(-skip); SKIPS+=(qtwebsockets)
@@ -70,15 +71,15 @@ if [[ $(uname) == "Linux" ]]; then
       SKIPS+=(-skip); SKIPS+=(qtsensors)
       SKIPS+=(-skip); SKIPS+=(qtcanvas3d)
       SKIPS+=(-skip); SKIPS+=(qtconnectivity)
-      # declarative is needed for wayland
-      # SKIPS+=(-skip); SKIPS+=(declarative)
+      SKIPS+=(-skip); SKIPS+=(declarative)
       SKIPS+=(-skip); SKIPS+=(multimedia)
       SKIPS+=(-skip); SKIPS+=(qttools)
       SKIPS+=(-skip); SKIPS+=(qtlocation)
       SKIPS+=(-skip); SKIPS+=(qt3d)
-      EXTRA_OPTIONS=""
+      SKIPS+=(-skip); SKIPS+=(wayland)
     else
-      EXTRA_OPTIONS="-gstreamer 1.0"
+      EXTRA_OPTIONS="${EXTRA_OPTIONS} -gstreamer 1.0"
+      EXTRA_OPTIONS="${EXTRA_OPTIONS} -feature-wayland-server"
     fi
 
     if [ ${target_platform} == "linux-aarch64" ] || [ ${target_platform} == "linux-ppc64le" ]; then
@@ -116,7 +117,6 @@ if [[ $(uname) == "Linux" ]]; then
                 -nomake tests \
                 -make tools \
                 -verbose \
-                -feature-wayland-server \
                 -skip qtwebengine \
                 -system-libjpeg \
                 -system-libpng \
