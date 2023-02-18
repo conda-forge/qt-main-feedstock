@@ -231,7 +231,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -nomake tests \
                 -make tools \
                 -verbose \
-                -skip wayland \
                 -skip qtwebengine \
                 $EXTRA_FLAGS \
                 -system-libjpeg \
