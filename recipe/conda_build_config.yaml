@@ -1,3 +1,7 @@
+# Remove channel_sources when the following is merged.
+# https://github.com/conda-forge/staged-recipes/pull/22067
+channel_sources:
+  - mark.harfouche,conda-forge
 MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
   - '10.13'                # [osx and x86_64]
 MACOSX_SDK_VERSION:        # [osx and x86_64]
