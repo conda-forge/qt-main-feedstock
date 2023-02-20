@@ -20,3 +20,6 @@ qmake test_qmimedatabase.pro
 make
 ./test_qmimedatabase
 make clean
+
+# Manually inspect this file remove me when done
+cat "${PREFIX}/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake"
