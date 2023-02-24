@@ -9,6 +9,7 @@ ln -sf ${GXX} g++
 cp ../xcrun .
 cp ../xcodebuild .
 export PATH=${PWD}:${PATH}
+
 # To learn about qmake flags, read
 # https://doc.qt.io/qt-5/qmake-variable-reference.html
 qmake                         \

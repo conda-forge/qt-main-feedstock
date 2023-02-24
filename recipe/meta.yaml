@@ -126,7 +126,8 @@ requirements:
     - alsa-lib                           # [linux]
     - krb5
     - harfbuzz                           # [linux]
-    # Adding the following xcb-util run requirements resolves issue
+    # The xcb-util packages are necessary to build the Qt xcb plugin.
+    # It was decided to not use CDTs for qt to resolve issues
     # that may exhibit as segfault due to missing libraries
     # in some lighter weight linux installations
     # https://github.com/conda-forge/qt-main-feedstock/issues/32
