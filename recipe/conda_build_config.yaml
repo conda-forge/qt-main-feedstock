@@ -4,6 +4,8 @@ MACOSX_SDK_VERSION:        # [osx and x86_64]
   - '10.14'                # [osx and x86_64]
 replacements:
   all_replacements:
+    # These replacements avoid leakage of build time CONDA_BUILD_SYSROOT
+    # into cmake configuration files
     - tag: 'qmake build metadata'
       glob_patterns:
         - '*.pri'
@@ -11,3 +13,8 @@ replacements:
       regex_re: '(?:-L|-I)?\"?([^;\s]+\/sysroot)'
       replacement_re: '$(CONDA_BUILD_SYSROOT)'
       regex_rg: '([^;\s"]+/sysroot)'
+    - tag: 'CMake build metadata'
+      glob_patterns:
+        - '*.cmake'
+      regex_re: '([^;\s"]+/sysroot)'
+      replacement_re: '$ENV{CONDA_BUILD_SYSROOT}'
