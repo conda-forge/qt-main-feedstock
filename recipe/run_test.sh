@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -e
+set -ex
+
+test -f ${PREFIX}/bin/qt6.conf
 
 test "${HOST}" = "aarch64-conda-linux-gnu" && exit 0
 

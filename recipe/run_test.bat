@@ -1,3 +1,7 @@
+@ECHO ON
+
+if not exist %LIBRARY_PREFIX%\bin\qt6.conf exit 1
+
 pushd test
 
 cmake -G"NMake Makefiles" -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" .
