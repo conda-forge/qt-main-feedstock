@@ -1,11 +1,11 @@
-About qt6-main
-==============
+About qt6-main-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Home: https://qt.io
 
 Package license: LGPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Summary: Qt is a cross-platform application and UI framework.
 
@@ -21,14 +21,7 @@ Current build status
 ====================
 
 
-<table><tr>
-    <td>Travis</td>
-    <td>
-      <a href="https://app.travis-ci.com/conda-forge/qt-main-feedstock">
-        <img alt="linux" src="https://img.shields.io/travis/com/conda-forge/qt-main-feedstock/main.svg?label=Linux">
-      </a>
-    </td>
-  </tr>
+<table>
     
   <tr>
     <td>Azure</td>
