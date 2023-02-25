@@ -2,6 +2,9 @@ azure:
   settings_win:
     variables:
       CONDA_BLD_PATH: C:\bld\
+    pool:
+      # https://github.com/conda-forge/clangdev-feedstock/issues/202
+      vmImage: windows-2019
 build_platform:
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
