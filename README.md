@@ -1,11 +1,11 @@
-About qt6-main
-==============
+About qt6-main-feedstock
+========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Home: https://qt.io
 
 Package license: LGPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Summary: Qt is a cross-platform application and UI framework.
 
@@ -46,6 +46,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=14730&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/qt-main-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>linux_ppc64le</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=14730&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/qt-main-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_" alt="variant">
                 </a>
               </td>
             </tr><tr>
