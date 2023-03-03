@@ -2,6 +2,6 @@ __migrator:
   build_number: 1
   kind: version
   migration_number: 1
-gstreamer:
-- '1.21'
-migrator_ts: 1664900131.838455
+krb5:
+- '1.20'
+migrator_ts: 1671105899.8058033

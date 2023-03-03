@@ -1,11 +1,8 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtcharts"
-set "MODS=%MODS%;qtdatavis3d"
 set "MODS=%MODS%;qtdeclarative"
 set "MODS=%MODS%;qtimageformats"
 set "MODS=%MODS%;qtmultimedia"
-set "MODS=%MODS%;qtnetworkauth"
 set "MODS=%MODS%;qtpositioning"
 set "MODS=%MODS%;qtscxml"
 set "MODS=%MODS%;qtsensors"
