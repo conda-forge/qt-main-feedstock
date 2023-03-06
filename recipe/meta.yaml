@@ -36,7 +36,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 6
+  number: 7
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -137,9 +137,9 @@ requirements:
     - expat                              # [linux]
     - libevent                           # [linux]
     - icu
-    # jpeg-turbo currently has some conflicting issues in conda-forge
+    # libjpeg-turbo -turbo currently has some conflicting issues in conda-forge
     # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
-    - jpeg
+    - libjpeg-turbo
     - libpng
     - nspr                               # [unix]
     - nss                                # [unix]
