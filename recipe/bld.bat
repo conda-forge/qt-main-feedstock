@@ -55,3 +55,23 @@ mklink qmake6.exe  ..\lib\qt6\bin\qmake.exe
 mklink windeployqt6.exe ..\lib\qt6\bin\windeployqt.exe
 if errorlevel 1 exit 1
 
+:: You can find the expected values of these files in the log
+:: For example Translations will be listed as
+:: INSTALL_TRANSLATIONSDIR
+:: This file should be in the location of the user's executable
+:: for conda, this becomes LIBRARY_PREFIX\bin\
+:: https://doc.qt.io/qt-6/qt-conf.html
+echo "[Paths]"                                                 > %LIBRARY_PREFIX%\bin\qt6.conf
+echo "PREFIX = %LIBRARY_PREFIX%"                              >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Documentation = %LIBRARY_PREFIXPREFIX%\share\doc\qt6"   >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Headers = %LIBRARY_PREFIX%\include\qt6"                 >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Libraries = %LIBRARY_PREFIX%\lib"                       >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "LibraryExecutables = %LIBRARY_PREFIX%\lib\qt6"          >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Binaries = %LIBRARY_PREFIX%\lib\qt6\bin"                >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Plugins = %LIBRARY_PREFIX%\lib\qt6\plugins"             >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "QmlImports = %LIBRARY_PREFIX%\lib\qt6\qml"              >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "ArchData = %LIBRARY_PREFIX%\lib\qt6"                    >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Data = %LIBRARY_PREFIX%\share\qt6"                      >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Translations = %LIBRARY_PREFIX%\share\qt6\translations" >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Examples = %LIBRARY_PREFIX%\share\doc\qt6\examples"     >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo "Tests = %LIBRARY_PREFIX%\tests"                         >> %LIBRARY_PREFIX%\bin\qt6.conf

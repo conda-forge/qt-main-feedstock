@@ -59,7 +59,8 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
-  -DFEATURE_designer=OFF -DFEATURE_linguist=OFF \
+  -DFEATURE_designer=OFF \
+  -DFEATURE_linguist=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
@@ -83,3 +84,26 @@ for links in ${SRC_DIR}/build/qt*/user_facing_tool_links.txt
 do
   while read _line; do ln -sf $_line; done < ${links}
 done
+
+# You can find the expected values of these files in the log
+# For example Translations will be listed as
+# INSTALL_TRANSLATIONSDIR
+# This file should be in the location of the user's executable
+# for conda, this becomes PREFIX/bin/
+# https://doc.qt.io/qt-6/qt-conf.html
+cat << EOF >${PREFIX}/bin/qt6.conf
+[Paths]
+Prefix = ${PREFIX}
+Documentation = ${PREFIX}/share/doc/qt6
+Headers = ${PREFIX}/include/qt6
+Libraries = ${PREFIX}/lib
+LibraryExecutables = ${PREFIX}/lib/qt6
+Binaries = ${PREFIX}/lib/qt6/bin
+Plugins = ${PREFIX}/lib/qt6/plugins
+QmlImports = ${PREFIX}/lib/qt6/qml
+ArchData = ${PREFIX}/lib/qt6
+Data = ${PREFIX}/share/qt6
+Translations = ${PREFIX}/share/qt6/translations
+Examples = ${PREFIX}/share/doc/qt6/examples
+Tests = ${PREFIX}/tests
+EOF
