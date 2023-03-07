@@ -137,8 +137,6 @@ requirements:
     - expat                              # [linux]
     - libevent                           # [linux]
     - icu
-    # libjpeg-turbo -turbo currently has some conflicting issues in conda-forge
-    # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
     - libjpeg-turbo
     - libpng
     - nspr                               # [unix]
