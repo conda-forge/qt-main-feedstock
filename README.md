@@ -1,11 +1,11 @@
-About qt-main
-=============
+About qt-main-feedstock
+=======================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Home: https://qt.io
 
 Package license: LGPL-3.0-only
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
 Summary: Qt is a cross-platform application and UI framework.
 
