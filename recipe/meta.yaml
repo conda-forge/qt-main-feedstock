@@ -36,7 +36,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 6
+  number: 7
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -52,50 +52,12 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - sysroot_linux-64 2.17              # [linux]
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxext') }}               # [linux]
-    - {{ cdt('libxext-devel') }}         # [linux]
-    - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl') }}           # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux]
-    - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libxcomposite-devel') }}   # [linux]
-    - {{ cdt('libxcursor-devel') }}      # [linux]
-    - {{ cdt('libxi-devel') }}           # [linux]
-    - {{ cdt('libxrandr-devel') }}       # [linux]
-    - {{ cdt('pciutils-devel') }}        # [linux]
-    - {{ cdt('libxscrnsaver-devel') }}   # [linux]
-    - {{ cdt('libxtst-devel') }}         # [linux]
-    - {{ cdt('libselinux') }}            # [linux]
-    - {{ cdt('libselinux-devel') }}      # [linux]
-    - {{ cdt('libxdamage') }}            # [linux]
-    - {{ cdt('libxdamage-devel') }}      # [linux]
-    - {{ cdt('libxfixes') }}             # [linux]
-    - {{ cdt('libxfixes-devel') }}       # [linux]
-    - {{ cdt('libxxf86vm') }}            # [linux]
-    - {{ cdt('libxxf86vm-devel') }}      # [linux]
-    - {{ cdt('libsm-devel') }}           # [linux]
-    - {{ cdt('libice-devel') }}          # [linux]
-    - {{ cdt('libxcb') }}                # [linux]
-    - {{ cdt('libxcb-devel') }}          # [linux]
-    - {{ cdt('expat-devel') }}           # [linux]
-    - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - {{ cdt('libglvnd-egl') }}          # [linux]
-    - {{ cdt('libxkbcommon-devel') }}    # [linux]
-    - {{ cdt('xcb-util-devel') }}        # [linux]
-    - {{ cdt('xcb-util-image-devel') }}  # [linux]
-    - {{ cdt('xcb-util-keysyms-devel') }}     # [linux]
-    - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
-    - {{ cdt('xcb-util-wm-devel') }}          # [linux]
-
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
@@ -137,9 +99,7 @@ requirements:
     - expat                              # [linux]
     - libevent                           # [linux]
     - icu
-    # jpeg-turbo currently has some conflicting issues in conda-forge
-    # see: https://github.com/conda-forge/conda-forge.github.io/issues/673
-    - jpeg
+    - libjpeg-turbo
     - libpng
     - nspr                               # [unix]
     - nss                                # [unix]
@@ -164,11 +124,8 @@ requirements:
     - alsa-lib                           # [linux]
     - krb5
     - harfbuzz                           # [linux]
-  run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
-    - libxcb                             # [linux]
-    # Adding the following xcb-util run requirements resolves issue
+    # The xcb-util packages are necessary to build the Qt xcb plugin.
+    # It was decided to not use CDTs for qt to resolve issues
     # that may exhibit as segfault due to missing libraries
     # in some lighter weight linux installations
     # https://github.com/conda-forge/qt-main-feedstock/issues/32
@@ -177,6 +134,34 @@ requirements:
     - xcb-util-keysyms                   # [linux]
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
+    - xorg-libx11                        # [linux]
+    - xorg-libxext                       # [linux]
+    - xorg-libxdamage                    # [linux]
+    - xorg-libsm                         # [linux]
+    - xorg-libice                        # [linux]
+    # https://github.com/conda-forge/staged-recipes/pull/22084
+    - xorg-libxxf86vm                    # [linux]
+    - xorg-xf86vidmodeproto              # [linux]
+  run:
+    - {{ pin_compatible("nss") }}        # [unix]
+    - {{ pin_compatible("nspr") }}       # [unix]
+    - libxcb                             # [linux]
+    # Adding the following xcb-util run requirements resolves issue
+    # that may exhibit as segfault due to missing libraries
+    # in some lighter weight linux installations
+    # https://github.com/conda-forge/qt-main-feedstock/issues/32
+    - xcb-util-wm                        # [linux]
+    - xcb-util-keysyms                   # [linux]
+    - xcb-util-image                     # [linux]
+    - xcb-util-renderutil                # [linux]
+    # https://github.com/conda-forge/xorg-libx11-feedstock/pull/28
+    - xorg-libx11                        # [linux]
+    # https://github.com/conda-forge/xorg-libxext-feedstock/pull/12
+    - xorg-libxext                       # [linux]
+    # no run_export
+    - xorg-libsm                         # [linux]
+    - xorg-libice                        # [linux]
+    - xorg-xf86vidmodeproto              # [linux]
     - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
@@ -185,36 +170,17 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxext-devel') }}         # [linux]
-    - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux]
-    - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libxcomposite-devel') }}   # [linux]
-    - {{ cdt('libxcursor-devel') }}      # [linux]
-    - {{ cdt('libxi-devel') }}           # [linux]
-    - {{ cdt('libxrandr-devel') }}       # [linux]
-    - {{ cdt('pciutils-devel') }}        # [linux]
-    - {{ cdt('libxscrnsaver-devel') }}   # [linux]
-    - {{ cdt('libxtst-devel') }}         # [linux]
-    - {{ cdt('libselinux-devel') }}      # [linux]
-    - {{ cdt('libxdamage') }}            # [linux]
-    - {{ cdt('libxdamage-devel') }}      # [linux]
-    - {{ cdt('libxfixes') }}             # [linux]
-    - {{ cdt('libxfixes-devel') }}       # [linux]
-    - {{ cdt('libxxf86vm') }}            # [linux]
-    - {{ cdt('libxcb') }}                # [linux]
-    - {{ cdt('expat-devel') }}           # [linux]
-    - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
+    - {{ cdt('libglvnd-egl') }}          # [linux]
     - make                               # [unix]
+    - xcb-util                           # [linux]
+    - xorg-libxdamage                    # [linux]
+    # https://github.com/conda-forge/staged-recipes/pull/22084
+    - xorg-libxxf86vm                    # [linux]
   files:
     - test/hello.pro
     - test/main-qtwebengine.cpp
