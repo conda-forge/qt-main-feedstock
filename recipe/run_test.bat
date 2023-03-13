@@ -3,7 +3,8 @@
 
 :: If qt6.conf is not part of the package, it won't work when installed side by side with Qt5.
 :: See https://github.com/conda-forge/qt-main-feedstock/issues/99
-if not exist %LIBRARY_PREFIX%\bin\qt6.conf exit 1
+if not exist %LIBRARY_BIN%\qt6.conf exit 1
+if not exist %PREFIX%\qt6.conf exit 1
 
 pushd test
 
