@@ -58,19 +58,21 @@ if errorlevel 1 exit 1
 :: For example Translations will be listed as
 :: INSTALL_TRANSLATIONSDIR
 :: This file should be in the location of the user's executable
-:: for conda, this becomes LIBRARY_PREFIX\bin\
+:: for conda, this becomes LIBRARY_BIN
 :: https://doc.qt.io/qt-6/qt-conf.html
-echo "[Paths]"                                                 > %LIBRARY_PREFIX%\bin\qt6.conf
-echo "PREFIX = %LIBRARY_PREFIX%"                              >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Documentation = %LIBRARY_PREFIXPREFIX%\share\doc\qt6"   >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Headers = %LIBRARY_PREFIX%\include\qt6"                 >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Libraries = %LIBRARY_PREFIX%\lib"                       >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "LibraryExecutables = %LIBRARY_PREFIX%\lib\qt6"          >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Binaries = %LIBRARY_PREFIX%\lib\qt6\bin"                >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Plugins = %LIBRARY_PREFIX%\lib\qt6\plugins"             >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "QmlImports = %LIBRARY_PREFIX%\lib\qt6\qml"              >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "ArchData = %LIBRARY_PREFIX%\lib\qt6"                    >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Data = %LIBRARY_PREFIX%\share\qt6"                      >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Translations = %LIBRARY_PREFIX%\share\qt6\translations" >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Examples = %LIBRARY_PREFIX%\share\doc\qt6\examples"     >> %LIBRARY_PREFIX%\bin\qt6.conf
-echo "Tests = %LIBRARY_PREFIX%\tests"                         >> %LIBRARY_PREFIX%\bin\qt6.conf
+echo [Paths]                                                     > %LIBRARY_BIN%\qt6.conf
+echo Prefix = %PREFIX:\=/%                                      >> %LIBRARY_BIN%\qt6.conf
+echo Documentation = %LIBRARY_PREFIX:\=/%/share/doc/qt6         >> %LIBRARY_BIN%\qt6.conf
+echo Headers = %LIBRARY_INC:\=/%/qt6                            >> %LIBRARY_BIN%\qt6.conf
+echo Libraries = %LIBRARY_LIB:\=/%                              >> %LIBRARY_BIN%\qt6.conf
+echo LibraryExecutables = %LIBRARY_LIB:\=/%/qt6                 >> %LIBRARY_BIN%\qt6.conf
+echo Binaries = %LIBRARY_LIB:\=/%/qt6/bin                       >> %LIBRARY_BIN%\qt6.conf
+echo Plugins = %LIBRARY_LIB:\=/%/qt6/plugins                    >> %LIBRARY_BIN%\qt6.conf
+echo QmlImports = %LIBRARY_LIB:\=/%/qt6/qml                     >> %LIBRARY_BIN%\qt6.conf
+echo ArchData = %LIBRARY_LIB:\=/%/qt6                           >> %LIBRARY_BIN%\qt6.conf
+echo Data = %LIBRARY_PREFIX:\=/%/share/qt6                      >> %LIBRARY_BIN%\qt6.conf
+echo Translations = %LIBRARY_PREFIX:\=/%/share/qt6/translations >> %LIBRARY_BIN%\qt6.conf
+echo Examples = %LIBRARY_PREFIX:\=/%/share/doc/qt6/examples     >> %LIBRARY_BIN%\qt6.conf
+echo Tests = %LIBRARY_PREFIX:\=/%/tests                         >> %LIBRARY_BIN%\qt6.conf
+:: Some things go looking in the prefix root (pyqt, for example)
+copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
