@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.4.2" %}
+{% set version = "6.4.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 15e2530292b65a2b3dc23fc03f140796
+    md5: 2b05efca0036dd1c52d91f259c807a26
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -21,7 +21,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 8
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
