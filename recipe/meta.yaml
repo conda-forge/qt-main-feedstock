@@ -253,7 +253,6 @@ test:
                       "OpenGL",
                       "OpenGLWidgets",
                       "PrintSupport",
-                      "Sensors",
                       "ShaderTools",
                       "Svg",
                       "Test",
