@@ -29,7 +29,7 @@ gstreamer:
 harfbuzz:
 - '6'
 icu:
-- '70'
+- '72'
 krb5:
 - '1.20'
 libjpeg_turbo:
