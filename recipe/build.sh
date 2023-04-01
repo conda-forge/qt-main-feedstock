@@ -167,7 +167,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     # This flag helps compatibility between qt and CXX17
     # https://github.com/conda-forge/qt-main-feedstock/pull/136
     # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
-    CXXFLAGS="${CXXFLAGS} -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY"
+    CXXFLAGS="${CXXFLAGS:-} -D_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY"
     # Avoid Xcode
     cp "${RECIPE_DIR}"/xcrun .
     cp "${RECIPE_DIR}"/xcodebuild .
