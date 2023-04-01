@@ -1,0 +1,12 @@
+diff -ur a/qtmultimedia/src/plugins/multimedia/darwin/camera/avfcamerautility.mm b/qtmultimedia/src/plugins/multimedia/darwin/camera/avfcamerautility.mm
+--- a/qtmultimedia/src/plugins/multimedia/darwin/camera/avfcamerautility.mm	2023-03-11 22:46:05.000000000 -0500
++++ b/qtmultimedia/src/plugins/multimedia/darwin/camera/avfcamerautility.mm	2023-04-01 19:30:45.489302095 -0400
+@@ -69,7 +69,7 @@
+     }
+ };
+ 
+-struct FormatHasNoFPSRange : std::unary_function<AVCaptureDeviceFormat *, bool>
++struct FormatHasNoFPSRange
+ {
+     bool operator() (AVCaptureDeviceFormat *format)
+     {
