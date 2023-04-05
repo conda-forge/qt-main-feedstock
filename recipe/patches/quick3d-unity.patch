@@ -1,0 +1,390 @@
+From b8f9eb9fda45150305c894d9dc85c9e7e917c265 Mon Sep 17 00:00:00 2001
+From: Amir Masoud Abdol <amir.abdol@qt.io>
+Date: Thu, 23 Feb 2023 16:43:15 +0100
+Subject: [PATCH] Fix some name collision and double definition for unity build
+
+This is a mere renaming of a few function/variable names to avoid them
+colliding with each other during the unity build.
+
+Pick-to: 6.5
+Task-number: QTBUG-109394
+Change-Id: Ib3a8d63b97c3f1fbb70ce499391f150e6235fa88
+Reviewed-by: Joerg Bornemann <joerg.bornemann@qt.io>
+Reviewed-by: Andy Nichols <andy.nichols@qt.io>
+---
+ .../qquick3dparticlemodelblendparticle.cpp    |  4 +-
+ .../qquick3dparticlemodelshape.cpp            |  4 +-
+ src/runtimerender/qssgrenderreflectionmap.cpp | 34 ++++++++---------
+ src/runtimerender/qssgrendershadowmap.cpp     | 38 +++++++++----------
+ .../qssgrhicustommaterialsystem.cpp           | 12 +++---
+ .../rendererimpl/qssgrenderer.cpp             | 28 +++++++-------
+ 6 files changed, 60 insertions(+), 60 deletions(-)
+
+diff --git a/src/quick3dparticles/qquick3dparticlemodelblendparticle.cpp b/src/quick3dparticles/qquick3dparticlemodelblendparticle.cpp
+index 259b855c7..d29a0d225 100644
+--- a/qtquick3d/src/quick3dparticles/qquick3dparticlemodelblendparticle.cpp
++++ b/qtquick3d/src/quick3dparticles/qquick3dparticlemodelblendparticle.cpp
+@@ -273,7 +273,7 @@ void QQuick3DParticleModelBlendParticle::regenerate()
+     handleEndNodeChanged();
+ }
+ 
+-static QSSGMesh::Mesh loadMesh(const QString &source)
++static QSSGMesh::Mesh loadModelBlendParticleMesh(const QString &source)
+ {
+     QString src = source;
+     if (source.startsWith(QLatin1Char('#'))) {
+@@ -447,7 +447,7 @@ void QQuick3DParticleModelBlendParticle::updateParticles()
+         QString src = m_model->source().toString();
+         if (context && !src.startsWith(QLatin1Char('#')))
+             src = QQmlFile::urlToLocalFileOrQrc(context->resolvedUrl(m_model->source()));
+-        QSSGMesh::Mesh mesh = loadMesh(src);
++        QSSGMesh::Mesh mesh = loadModelBlendParticleMesh(src);
+         if (!mesh.isValid()) {
+             qWarning () << "ModelBlendParticle3D: Unable to load mesh: " << src;
+             return;
+diff --git a/src/quick3dparticles/qquick3dparticlemodelshape.cpp b/src/quick3dparticles/qquick3dparticlemodelshape.cpp
+index 416672a92..cfb13da19 100644
+--- a/qtquick3d/src/quick3dparticles/qquick3dparticlemodelshape.cpp
++++ b/qtquick3d/src/quick3dparticles/qquick3dparticlemodelshape.cpp
+@@ -102,7 +102,7 @@ QVector3D QQuick3DParticleModelShape::getPosition(int particleIndex)
+     return randomPositionModel(particleIndex);
+ }
+ 
+-static QSSGMesh::Mesh loadMesh(const QString &source)
++static QSSGMesh::Mesh loadModelShapeMesh(const QString &source)
+ {
+     QString src = source;
+     if (source.startsWith(QLatin1Char('#'))) {
+@@ -261,7 +261,7 @@ void QQuick3DParticleModelShape::calculateModelVertexPositions()
+                 QString src = m_model->source().toString();
+                 if (context && !src.startsWith(QLatin1Char('#')))
+                     src = QQmlFile::urlToLocalFileOrQrc(context->resolvedUrl(m_model->source()));
+-                QSSGMesh::Mesh mesh = loadMesh(src);
++                QSSGMesh::Mesh mesh = loadModelShapeMesh(src);
+                 if (!mesh.isValid())
+                     return;
+                 if (mesh.drawMode() != QSSGMesh::Mesh::DrawMode::Triangles)
+diff --git a/src/runtimerender/qssgrenderreflectionmap.cpp b/src/runtimerender/qssgrenderreflectionmap.cpp
+index 087894dd9..790b54570 100644
+--- a/qtquick3d/src/runtimerender/qssgrenderreflectionmap.cpp
++++ b/qtquick3d/src/runtimerender/qssgrenderreflectionmap.cpp
+@@ -28,10 +28,10 @@ void QSSGRenderReflectionMap::releaseCachedResources()
+     m_reflectionMapList.clear();
+ }
+ 
+-static QRhiTexture *allocateRhiTexture(QRhi *rhi,
+-                                       QRhiTexture::Format format,
+-                                       const QSize &size,
+-                                       QRhiTexture::Flags flags = {})
++static QRhiTexture *allocateRhiReflectionTexture(QRhi *rhi,
++                                                 QRhiTexture::Format format,
++                                                 const QSize &size,
++                                                 QRhiTexture::Flags flags = {})
+ {
+     auto texture = rhi->newTexture(format, size, 1, flags);
+     if (!texture->create())
+@@ -39,9 +39,9 @@ static QRhiTexture *allocateRhiTexture(QRhi *rhi,
+     return texture;
+ }
+ 
+-static QRhiRenderBuffer *allocateRhiRenderBuffer(QRhi *rhi,
+-                                                 QRhiRenderBuffer::Type type,
+-                                                 const QSize &size)
++static QRhiRenderBuffer *allocateRhiReflectionRenderBuffer(QRhi *rhi,
++                                                           QRhiRenderBuffer::Type type,
++                                                           const QSize &size)
+ {
+     auto renderBuffer = rhi->newRenderBuffer(type, size, 1);
+     if (!renderBuffer->create())
+@@ -66,11 +66,11 @@ void QSSGRenderReflectionMap::addReflectionMapEntry(qint32 probeIdx, const QSSGR
+     QSSGReflectionMapEntry *pEntry = reflectionMapEntry(probeIdx);
+ 
+     if (!pEntry) {
+-        QRhiRenderBuffer *depthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
+-        QRhiTexture *map = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
+-                                                          | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
+-        QRhiTexture *prefiltered = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
+-                                                                  | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
++        QRhiRenderBuffer *depthStencil = allocateRhiReflectionRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
++        QRhiTexture *map = allocateRhiReflectionTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
++                                                                    | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
++        QRhiTexture *prefiltered = allocateRhiReflectionTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
++                                                                            | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
+         m_reflectionMapList.push_back(QSSGReflectionMapEntry::withRhiCubeMap(probeIdx, map, prefiltered, depthStencil));
+ 
+         pEntry = &m_reflectionMapList.back();
+@@ -84,11 +84,11 @@ void QSSGRenderReflectionMap::addReflectionMapEntry(qint32 probeIdx, const QSSGR
+ 
+         if (!pEntry->m_rhiDepthStencil || mapRes != pEntry->m_rhiCube->pixelSize().width()) {
+             pEntry->destroyRhiResources();
+-            pEntry->m_rhiDepthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
+-            pEntry->m_rhiCube = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
+-                                                               | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
+-            pEntry->m_rhiPrefilteredCube = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
+-                                                                          | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
++            pEntry->m_rhiDepthStencil = allocateRhiReflectionRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
++            pEntry->m_rhiCube = allocateRhiReflectionTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
++                                                                         | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
++            pEntry->m_rhiPrefilteredCube = allocateRhiReflectionTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap
++                                                                                    | QRhiTexture::MipMapped | QRhiTexture::UsedWithGenerateMips);
+         }
+ 
+         // Additional graphics resources: samplers, render targets.
+diff --git a/src/runtimerender/qssgrendershadowmap.cpp b/src/runtimerender/qssgrendershadowmap.cpp
+index 167060884..3c3fb7129 100644
+--- a/qtquick3d/src/runtimerender/qssgrendershadowmap.cpp
++++ b/qtquick3d/src/runtimerender/qssgrendershadowmap.cpp
+@@ -27,10 +27,10 @@ void QSSGRenderShadowMap::releaseCachedResources()
+     m_shadowMapList.clear();
+ }
+ 
+-static QRhiTexture *allocateRhiTexture(QRhi *rhi,
+-                                       QRhiTexture::Format format,
+-                                       const QSize &size,
+-                                       QRhiTexture::Flags flags = {})
++static QRhiTexture *allocateRhiShadowTexture(QRhi *rhi,
++                                             QRhiTexture::Format format,
++                                             const QSize &size,
++                                             QRhiTexture::Flags flags = {})
+ {
+     auto texture = rhi->newTexture(format, size, 1, flags);
+     if (!texture->create())
+@@ -38,9 +38,9 @@ static QRhiTexture *allocateRhiTexture(QRhi *rhi,
+     return texture;
+ }
+ 
+-static QRhiRenderBuffer *allocateRhiRenderBuffer(QRhi *rhi,
+-                                                 QRhiRenderBuffer::Type type,
+-                                                 const QSize &size)
++static QRhiRenderBuffer *allocateRhiShadowRenderBuffer(QRhi *rhi,
++                                                       QRhiRenderBuffer::Type type,
++                                                       const QSize &size)
+ {
+     auto renderBuffer = rhi->newRenderBuffer(type, size, 1);
+     if (!renderBuffer->create())
+@@ -53,9 +53,9 @@ static inline void setupForRhiDepthCube(QRhi *rhi,
+                                         const QSize &size,
+                                         QRhiTexture::Format format)
+ {
+-    entry->m_rhiDepthCube = allocateRhiTexture(rhi, format, size, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
+-    entry->m_rhiCubeCopy = allocateRhiTexture(rhi, format, size, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
+-    entry->m_rhiDepthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, size);
++    entry->m_rhiDepthCube = allocateRhiShadowTexture(rhi, format, size, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
++    entry->m_rhiCubeCopy = allocateRhiShadowTexture(rhi, format, size, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
++    entry->m_rhiDepthStencil = allocateRhiShadowRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, size);
+ }
+ 
+ static inline void setupForRhiDepth(QRhi *rhi,
+@@ -63,9 +63,9 @@ static inline void setupForRhiDepth(QRhi *rhi,
+                                     const QSize &size,
+                                     QRhiTexture::Format format)
+ {
+-    entry->m_rhiDepthMap = allocateRhiTexture(rhi, format, size, QRhiTexture::RenderTarget);
+-    entry->m_rhiDepthCopy = allocateRhiTexture(rhi, format, size, QRhiTexture::RenderTarget);
+-    entry->m_rhiDepthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, size);
++    entry->m_rhiDepthMap = allocateRhiShadowTexture(rhi, format, size, QRhiTexture::RenderTarget);
++    entry->m_rhiDepthCopy = allocateRhiShadowTexture(rhi, format, size, QRhiTexture::RenderTarget);
++    entry->m_rhiDepthStencil = allocateRhiShadowRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, size);
+ }
+ 
+ void QSSGRenderShadowMap::addShadowMapEntry(qint32 lightIdx,
+@@ -118,17 +118,17 @@ void QSSGRenderShadowMap::addShadowMapEntry(qint32 lightIdx,
+         }
+         pEntry->m_shadowMapMode = mode;
+     } else if (mode == ShadowMapModes::CUBE) {
+-        QRhiTexture *depthMap = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
+-        QRhiTexture *depthCopy = allocateRhiTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
+-        QRhiRenderBuffer *depthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
++        QRhiTexture *depthMap = allocateRhiShadowTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
++        QRhiTexture *depthCopy = allocateRhiShadowTexture(rhi, rhiFormat, pixelSize, QRhiTexture::RenderTarget | QRhiTexture::CubeMap);
++        QRhiRenderBuffer *depthStencil = allocateRhiShadowRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
+         m_shadowMapList.push_back(QSSGShadowMapEntry::withRhiDepthCubeMap(lightIdx, mode, depthMap, depthCopy, depthStencil));
+ 
+         pEntry = &m_shadowMapList.back();
+     } else { // VSM
+         Q_ASSERT(mode == ShadowMapModes::VSM);
+-        QRhiTexture *depthMap = allocateRhiTexture(rhi, rhiFormat, QSize(width, height), QRhiTexture::RenderTarget);
+-        QRhiTexture *depthCopy = allocateRhiTexture(rhi, rhiFormat, QSize(width, height), QRhiTexture::RenderTarget);
+-        QRhiRenderBuffer *depthStencil = allocateRhiRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
++        QRhiTexture *depthMap = allocateRhiShadowTexture(rhi, rhiFormat, QSize(width, height), QRhiTexture::RenderTarget);
++        QRhiTexture *depthCopy = allocateRhiShadowTexture(rhi, rhiFormat, QSize(width, height), QRhiTexture::RenderTarget);
++        QRhiRenderBuffer *depthStencil = allocateRhiShadowRenderBuffer(rhi, QRhiRenderBuffer::DepthStencil, pixelSize);
+         m_shadowMapList.push_back(QSSGShadowMapEntry::withRhiDepthMap(lightIdx, mode, depthMap, depthCopy, depthStencil));
+ 
+         pEntry = &m_shadowMapList.back();
+diff --git a/src/runtimerender/qssgrhicustommaterialsystem.cpp b/src/runtimerender/qssgrhicustommaterialsystem.cpp
+index 33d15cda6..0beb32000 100644
+--- a/qtquick3d/src/runtimerender/qssgrhicustommaterialsystem.cpp
++++ b/qtquick3d/src/runtimerender/qssgrhicustommaterialsystem.cpp
+@@ -159,7 +159,7 @@ void QSSGCustomMaterialSystem::updateUniformsForCustomMaterial(QSSGRef<QSSGRhiSh
+                                                           renderable.modelContext.lightmapTexture);
+ }
+ 
+-static const QRhiShaderResourceBinding::StageFlags VISIBILITY_ALL =
++static const QRhiShaderResourceBinding::StageFlags CUSTOM_MATERIAL_VISIBILITY_ALL =
+         QRhiShaderResourceBinding::VertexStage | QRhiShaderResourceBinding::FragmentStage;
+ 
+ void QSSGCustomMaterialSystem::rhiPrepareRenderable(QSSGRhiGraphicsPipelineState *ps,
+@@ -253,8 +253,8 @@ void QSSGCustomMaterialSystem::rhiPrepareRenderable(QSSGRhiGraphicsPipelineState
+         QRhiTexture *dummyCubeTexture = rhiCtx->dummyTexture(QRhiTexture::CubeMap, resourceUpdates);
+         rhiCtx->commandBuffer()->resourceUpdate(resourceUpdates);
+ 
+-        bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf, 0, shaderPipeline->ub0Size());
+-        bindings.addUniformBuffer(1, VISIBILITY_ALL, dcd.ubuf,
++        bindings.addUniformBuffer(0, CUSTOM_MATERIAL_VISIBILITY_ALL, dcd.ubuf, 0, shaderPipeline->ub0Size());
++        bindings.addUniformBuffer(1, CUSTOM_MATERIAL_VISIBILITY_ALL, dcd.ubuf,
+                                   shaderPipeline->ub0LightDataOffset(),
+                                   shaderPipeline->ub0LightDataSize());
+ 
+@@ -441,7 +441,7 @@ void QSSGCustomMaterialSystem::rhiPrepareRenderable(QSSGRhiGraphicsPipelineState
+                     QRhiSampler *sampler = rhiCtx->sampler(samplerDesc);
+                     samplerBindingsSpecified.setBit(samplerBinding);
+                     bindings.addTexture(samplerBinding,
+-                                        VISIBILITY_ALL,
++                                        CUSTOM_MATERIAL_VISIBILITY_ALL,
+                                         texture, sampler);
+                 }
+             } // else this is not necessarily an error, e.g. having metalness/roughness maps with metalness disabled
+@@ -459,7 +459,7 @@ void QSSGCustomMaterialSystem::rhiPrepareRenderable(QSSGRhiGraphicsPipelineState
+                     rhiCtx->checkAndAdjustForNPoT(t.texture, &t.samplerDesc);
+                     QRhiSampler *sampler = rhiCtx->sampler(t.samplerDesc);
+                     bindings.addTexture(samplerBinding,
+-                                        VISIBILITY_ALL,
++                                        CUSTOM_MATERIAL_VISIBILITY_ALL,
+                                         t.texture,
+                                         sampler);
+                 }
+@@ -472,7 +472,7 @@ void QSSGCustomMaterialSystem::rhiPrepareRenderable(QSSGRhiGraphicsPipelineState
+             for (const QShaderDescription::InOutVariable &var : samplerVars) {
+                 if (!samplerBindingsSpecified.testBit(var.binding)) {
+                     QRhiTexture *t = var.type == QShaderDescription::SamplerCube ? dummyCubeTexture : dummyTexture;
+-                    bindings.addTexture(var.binding, VISIBILITY_ALL, t, dummySampler);
++                    bindings.addTexture(var.binding, CUSTOM_MATERIAL_VISIBILITY_ALL, t, dummySampler);
+                 }
+             }
+         }
+diff --git a/src/runtimerender/rendererimpl/qssgrenderer.cpp b/src/runtimerender/rendererimpl/qssgrenderer.cpp
+index b8f1cdebd..07a17c7d6 100644
+--- a/qtquick3d/src/runtimerender/rendererimpl/qssgrenderer.cpp
++++ b/qtquick3d/src/runtimerender/rendererimpl/qssgrenderer.cpp
+@@ -40,7 +40,7 @@ struct QSSGSubsetRenderable;
+ static constexpr float QSSG_PI = float(M_PI);
+ static constexpr float QSSG_HALFPI = float(M_PI_2);
+ 
+-static const QRhiShaderResourceBinding::StageFlags VISIBILITY_ALL =
++static const QRhiShaderResourceBinding::StageFlags RENDERER_VISIBILITY_ALL =
+         QRhiShaderResourceBinding::VertexStage | QRhiShaderResourceBinding::FragmentStage;
+ 
+ static QSSGRef<QSSGRhiShaderPipeline> shadersForDefaultMaterial(QSSGRhiGraphicsPipelineState *ps,
+@@ -904,7 +904,7 @@ static void addOpaqueDepthPrePassBindings(QSSGRhiContext *rhiCtx,
+                             toRhi(renderableImage->m_imageNode.m_verticalTilingMode),
+                             QRhiSampler::Repeat
+                     });
+-                    bindings.addTexture(samplerBinding, VISIBILITY_ALL, texture, sampler);
++                    bindings.addTexture(samplerBinding, RENDERER_VISIBILITY_ALL, texture, sampler);
+                 }
+             } // else this is not necessarily an error, e.g. having metalness/roughness maps with metalness disabled
+         }
+@@ -944,7 +944,7 @@ static void addOpaqueDepthPrePassBindings(QSSGRhiContext *rhiCtx,
+                     samplerBindingsSpecified.setBit(samplerBinding);
+                     QRhiSampler *sampler = rhiCtx->sampler(t.samplerDesc);
+                     bindings.addTexture(samplerBinding,
+-                                        VISIBILITY_ALL,
++                                        RENDERER_VISIBILITY_ALL,
+                                         t.texture,
+                                         sampler);
+                 }
+@@ -962,7 +962,7 @@ static void addOpaqueDepthPrePassBindings(QSSGRhiContext *rhiCtx,
+         for (const QShaderDescription::InOutVariable &var : samplerVars) {
+             if (!samplerBindingsSpecified.testBit(var.binding)) {
+                 QRhiTexture *t = var.type == QShaderDescription::SamplerCube ? dummyCubeTexture : dummyTexture;
+-                bindings.addTexture(var.binding, VISIBILITY_ALL, t, dummySampler);
++                bindings.addTexture(var.binding, RENDERER_VISIBILITY_ALL, t, dummySampler);
+             }
+         }
+     }
+@@ -1183,7 +1183,7 @@ static void rhiPrepareResourcesForShadowMap(QSSGRhiContext *rhiCtx,
+             ps->ia.bakeVertexInputLocations(*shaderPipeline, instanceBufferBinding);
+ 
+ 
+-            bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd->ubuf);
++            bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd->ubuf);
+ 
+                  // Depth and SSAO textures, in case a custom material's shader code does something with them.
+             addDepthTextureBindings(rhiCtx, shaderPipeline.data(), bindings);
+@@ -1359,10 +1359,10 @@ void RenderHelpers::rhiPrepareRenderable(QSSGRhiContext *rhiCtx,
+             int instanceBufferBinding = setupInstancing(&subsetRenderable, ps, rhiCtx, cameraDirection, cameraPosition);
+             ps->ia.bakeVertexInputLocations(*shaderPipeline, instanceBufferBinding);
+ 
+-            bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf, 0, shaderPipeline->ub0Size());
++            bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd.ubuf, 0, shaderPipeline->ub0Size());
+ 
+             if (shaderPipeline->isLightingEnabled()) {
+-                bindings.addUniformBuffer(1, VISIBILITY_ALL, dcd.ubuf,
++                bindings.addUniformBuffer(1, RENDERER_VISIBILITY_ALL, dcd.ubuf,
+                                           shaderPipeline->ub0LightDataOffset(),
+                                           shaderPipeline->ub0LightDataSize());
+             }
+@@ -1387,7 +1387,7 @@ void RenderHelpers::rhiPrepareRenderable(QSSGRhiContext *rhiCtx,
+                         };
+                         rhiCtx->checkAndAdjustForNPoT(texture, &samplerDesc);
+                         QRhiSampler *sampler = rhiCtx->sampler(samplerDesc);
+-                        bindings.addTexture(samplerBinding, VISIBILITY_ALL, texture, sampler);
++                        bindings.addTexture(samplerBinding, RENDERER_VISIBILITY_ALL, texture, sampler);
+                     }
+                 } // else this is not necessarily an error, e.g. having metalness/roughness maps with metalness disabled
+                 renderableImage = renderableImage->m_nextImage;
+@@ -1767,7 +1767,7 @@ void RenderHelpers::rhiRenderShadowMap(QSSGRhiContext *rhiCtx,
+         Q_ASSERT(sampler);
+ 
+         QSSGRhiShaderResourceBindingList bindings;
+-        bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf);
++        bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd.ubuf);
+         bindings.addTexture(1, QRhiShaderResourceBinding::FragmentStage, map, sampler);
+         QRhiShaderResourceBindings *srb = rhiCtx->srb(bindings);
+ 
+@@ -1786,7 +1786,7 @@ void RenderHelpers::rhiRenderShadowMap(QSSGRhiContext *rhiCtx,
+         ps.shaderPipeline = shaderPipeline.data();
+ 
+         bindings.clear();
+-        bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf);
++        bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd.ubuf);
+         bindings.addTexture(1, QRhiShaderResourceBinding::FragmentStage, workMap, sampler);
+         srb = rhiCtx->srb(bindings);
+ 
+@@ -2121,7 +2121,7 @@ void RenderHelpers::rhiRenderAoTexture(QSSGRhiContext *rhiCtx,
+     QRhiSampler *sampler = rhiCtx->sampler({ QRhiSampler::Nearest, QRhiSampler::Nearest, QRhiSampler::None,
+                                              QRhiSampler::ClampToEdge, QRhiSampler::ClampToEdge, QRhiSampler::Repeat });
+     QSSGRhiShaderResourceBindingList bindings;
+-    bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf);
++    bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd.ubuf);
+     bindings.addTexture(1, QRhiShaderResourceBinding::FragmentStage, rhiDepthTexture.texture, sampler);
+     QRhiShaderResourceBindings *srb = rhiCtx->srb(bindings);
+ 
+@@ -2224,7 +2224,7 @@ void RenderHelpers::rhiPrepareGrid(QSSGRhiContext *rhiCtx, QSSGRenderLayer &laye
+     memcpy(ubufData + 64 * 2 + 4 * 4, &gridFlags, 4);
+     dcd.ubuf->endFullDynamicBufferUpdateForCurrentFrame();
+ 
+-    bindings.addUniformBuffer(uniformBinding, VISIBILITY_ALL, dcd.ubuf);
++    bindings.addUniformBuffer(uniformBinding, RENDERER_VISIBILITY_ALL, dcd.ubuf);
+ 
+     layer.gridSrb = rhiCtx->srb(bindings);
+     renderer->rhiQuadRenderer()->prepareQuad(rhiCtx, nullptr);
+@@ -2302,7 +2302,7 @@ void rhiPrepareSkyBox_helper(QSSGRhiContext *rhiCtx,
+         memcpy(ubufData + 176, viewProjection.constData(), 64); //###
+         dcd.ubuf->endFullDynamicBufferUpdateForCurrentFrame();
+ 
+-        bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd.ubuf);
++        bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd.ubuf);
+ 
+         if (cubeFace >= 0)
+             entry->m_skyBoxSrbs[cubeFace] = rhiCtx->srb(bindings);
+@@ -2419,7 +2419,7 @@ bool RenderHelpers::rhiPrepareDepthPass(QSSGRhiContext *rhiCtx,
+             ps->ia.bakeVertexInputLocations(*shaderPipeline, instanceBufferBinding);
+ 
+             QSSGRhiShaderResourceBindingList bindings;
+-            bindings.addUniformBuffer(0, VISIBILITY_ALL, dcd->ubuf);
++            bindings.addUniformBuffer(0, RENDERER_VISIBILITY_ALL, dcd->ubuf);
+ 
+             // Depth and SSAO textures, in case a custom material's shader code does something with them.
+             addDepthTextureBindings(rhiCtx, shaderPipeline.data(), bindings);

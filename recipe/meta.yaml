@@ -18,6 +18,7 @@ source:
       # https://bugreports.qt.io/browse/QTBUG-112642
       - patches/base-unity.patch
 
+      # https://github.com/qt/qtquick3d/commit/b8f9eb9fda45150305c894d9dc85c9e7e917c265
       - patches/quick3d-unity.patch
 
       # This helps compatibility between qt and CXX17
