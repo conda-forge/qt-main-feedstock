@@ -16,12 +16,17 @@ source:
       # $SRC_DIR/qtdeclarative/src/quicktestutils/qml/testhttpserver_p.h:18:10: fatal error: QTcpServer: No such file or directory
       - patches/0034-qtdeclarative-qtcpserver-include.patch
 
+      # This helps compatibility between qt and CXX17
+      # https://github.com/conda-forge/qt-main-feedstock/pull/136
+      # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
+      - patches/0040-fix_unary_function_cxx17.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -37,49 +42,12 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - sysroot_linux-64 2.17              # [linux]
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxext') }}               # [linux]
-    - {{ cdt('libxext-devel') }}         # [linux]
-    - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl') }}           # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux]
-    - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libxcomposite-devel') }}   # [linux]
-    - {{ cdt('libxcursor-devel') }}      # [linux]
-    - {{ cdt('libxi-devel') }}           # [linux]
-    - {{ cdt('libxrandr-devel') }}       # [linux]
-    - {{ cdt('pciutils-devel') }}        # [linux]
-    - {{ cdt('libxscrnsaver-devel') }}   # [linux]
-    - {{ cdt('libxtst-devel') }}         # [linux]
-    - {{ cdt('libselinux') }}            # [linux]
-    - {{ cdt('libselinux-devel') }}      # [linux]
-    - {{ cdt('libxdamage') }}            # [linux]
-    - {{ cdt('libxdamage-devel') }}      # [linux]
-    - {{ cdt('libxfixes') }}             # [linux]
-    - {{ cdt('libxfixes-devel') }}       # [linux]
-    - {{ cdt('libxxf86vm') }}            # [linux]
-    - {{ cdt('libxxf86vm-devel') }}      # [linux]
-    - {{ cdt('libsm-devel') }}           # [linux]
-    - {{ cdt('libice-devel') }}          # [linux]
-    - {{ cdt('libxcb') }}                # [linux]
-    - {{ cdt('libxcb-devel') }}          # [linux]
-    - {{ cdt('expat-devel') }}           # [linux]
-    - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - {{ cdt('libglvnd-egl') }}          # [linux]
-    - {{ cdt('libxkbcommon-devel') }}    # [linux]
-    - {{ cdt('xcb-util-devel') }}        # [linux]
-    - {{ cdt('xcb-util-image-devel') }}  # [linux]
-    - {{ cdt('xcb-util-keysyms-devel') }}     # [linux]
-    - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
-    - {{ cdt('xcb-util-wm-devel') }}          # [linux]
 
     # For fontconfig + freetype
     - pkg-config                         # [unix]
@@ -109,21 +77,21 @@ requirements:
     - double-conversion                 # [build_platform != target_platform]
     - libtiff                           # [build_platform != target_platform]
     - libwebp                           # [build_platform != target_platform]
-    - dbus                              # [build_platform != target_platform and linux]
-    - fontconfig                        # [build_platform != target_platform and linux]
-    - freetype                          # [build_platform != target_platform and linux]
+    - dbus                              # [(build_platform != target_platform) and linux]
+    - fontconfig                        # [(build_platform != target_platform) and linux]
+    - freetype                          # [(build_platform != target_platform) and linux]
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
     - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform]
     - gstreamer                         # [build_platform != target_platform]
-    - pulseaudio                        # [build_platform != target_platform and linux]
-    - libxml2                           # [build_platform != target_platform and linux]
-    - libxkbcommon                      # [build_platform != target_platform and linux]
+    - pulseaudio                        # [(build_platform != target_platform) and linux]
+    - libxml2                           # [(build_platform != target_platform) and linux]
+    - libxkbcommon                      # [(build_platform != target_platform) and linux]
     - zlib                              # [build_platform != target_platform]
-    - libxcb                            # [build_platform != target_platform and linux]
-    - libdrm                            # [build_platform != target_platform and linux]
+    - libxcb                            # [(build_platform != target_platform) and linux]
+    - libdrm                            # [(build_platform != target_platform) and linux]
     - openssl                           # [build_platform != target_platform]
-    - libcups                           # [build_platform != target_platform and linux]
+    - libcups                           # [(build_platform != target_platform) and linux]
     - zstd                              # [build_platform != target_platform]
     - krb5                              # [build_platform != target_platform]
     - libjpeg-turbo                     # [build_platform != target_platform]
@@ -132,6 +100,24 @@ requirements:
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
+
+    - xcb-util                          # [(build_platform != target_platform) and linux]
+    - xcb-util-wm                       # [(build_platform != target_platform) and linux]
+    - xcb-util-keysyms                  # [(build_platform != target_platform) and linux]
+    - xcb-util-image                    # [(build_platform != target_platform) and linux]
+    - xcb-util-renderutil               # [(build_platform != target_platform) and linux]
+    - xorg-libx11                       # [(build_platform != target_platform) and linux]
+    - xorg-libxext                      # [(build_platform != target_platform) and linux]
+    - xorg-libxdamage                   # [(build_platform != target_platform) and linux]
+    - xorg-libxrandr                    # [(build_platform != target_platform) and linux]
+    - xorg-libxcomposite                # [(build_platform != target_platform) and linux]
+    - xorg-libxcursor                   # [(build_platform != target_platform) and linux]
+    - xorg-libsm                        # [(build_platform != target_platform) and linux]
+    - xorg-libice                       # [(build_platform != target_platform) and linux]
+    - xorg-libxxf86vm                   # [(build_platform != target_platform) and linux]
+    - xorg-libxtst                      # [(build_platform != target_platform) and linux]
+    - xorg-xf86vidmodeproto             # [(build_platform != target_platform) and linux]
+
   host:
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
@@ -174,6 +160,28 @@ requirements:
     - double-conversion
     - libtiff
     - libwebp
+    # The xcb-util packages are necessary to build the Qt xcb plugin.
+    # It was decided to not use CDTs for qt to resolve issues
+    # that may exhibit as segfault due to missing libraries
+    # in some lighter weight linux installations
+    # https://github.com/conda-forge/qt-main-feedstock/issues/32
+    - xcb-util                           # [linux]
+    - xcb-util-wm                        # [linux]
+    - xcb-util-keysyms                   # [linux]
+    - xcb-util-image                     # [linux]
+    - xcb-util-renderutil                # [linux]
+    - xorg-libx11                        # [linux]
+    - xorg-libxext                       # [linux]
+    - xorg-libxdamage                    # [linux]
+    - xorg-libxrandr                     # [linux]
+    - xorg-libxcomposite                 # [linux]
+    - xorg-libxcursor                    # [linux]
+    - xorg-libsm                         # [linux]
+    - xorg-libice                        # [linux]
+    # https://github.com/conda-forge/staged-recipes/pull/22084
+    - xorg-libxxf86vm                    # [linux]
+    - xorg-libxtst                       # [linux]
+    - xorg-xf86vidmodeproto              # [linux]
   run:
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
@@ -193,51 +201,19 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]
-    - {{ cdt('libx11-devel') }}          # [linux]
-    - {{ cdt('libxext') }}               # [linux]
-    - {{ cdt('libxext-devel') }}         # [linux]
-    - {{ cdt('libxrender-devel') }}      # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
     - {{ cdt('mesa-libegl') }}           # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libxau-devel') }}          # [linux]
-    - {{ cdt('alsa-lib-devel') }}        # [linux]
-    - {{ cdt('gtk2-devel') }}            # [linux]
-    - {{ cdt('gtkmm24-devel') }}         # [linux]
     - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libxcomposite-devel') }}   # [linux]
-    - {{ cdt('libxcursor-devel') }}      # [linux]
-    - {{ cdt('libxi-devel') }}           # [linux]
-    - {{ cdt('libxrandr-devel') }}       # [linux]
-    - {{ cdt('pciutils-devel') }}        # [linux]
-    - {{ cdt('libxscrnsaver-devel') }}   # [linux]
-    - {{ cdt('libxtst-devel') }}         # [linux]
-    - {{ cdt('libselinux') }}            # [linux]
-    - {{ cdt('libselinux-devel') }}      # [linux]
-    - {{ cdt('libxdamage') }}            # [linux]
-    - {{ cdt('libxdamage-devel') }}      # [linux]
-    - {{ cdt('libxfixes') }}             # [linux]
-    - {{ cdt('libxfixes-devel') }}       # [linux]
-    - {{ cdt('libxxf86vm') }}            # [linux]
-    - {{ cdt('libxxf86vm-devel') }}      # [linux]
-    - {{ cdt('libsm-devel') }}           # [linux]
-    - {{ cdt('libice-devel') }}          # [linux]
-    - {{ cdt('libxcb') }}                # [linux]
-    - {{ cdt('libxcb-devel') }}          # [linux]
-    - {{ cdt('expat-devel') }}           # [linux]
-    - {{ cdt('pcre') }}                  # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - {{ cdt('libglvnd-egl') }}          # [linux]
-    - {{ cdt('libxkbcommon-devel') }}    # [linux]
-    - {{ cdt('xcb-util-devel') }}        # [linux]
-    - {{ cdt('xcb-util-image-devel') }}  # [linux]
-    - {{ cdt('xcb-util-keysyms-devel') }}     # [linux]
-    - {{ cdt('xcb-util-renderutil-devel') }}  # [linux]
-    - {{ cdt('xcb-util-wm-devel') }}          # [linux]
     - make                               # [unix]
     - cmake
+    - xcb-util                           # [linux]
+    - xorg-libxdamage                    # [linux]
+    # https://github.com/conda-forge/staged-recipes/pull/22084
+    - xorg-libxxf86vm                    # [linux]
   files:
     - test/main-qtwebengine.cpp
     - test/main.cpp
