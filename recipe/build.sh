@@ -77,6 +77,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_designer=OFF \
   -DFEATURE_linguist=OFF \
+  -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
