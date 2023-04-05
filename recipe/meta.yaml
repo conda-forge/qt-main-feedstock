@@ -12,9 +12,13 @@ source:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
-      # qtdeclarative
-      # $SRC_DIR/qtdeclarative/src/quicktestutils/qml/testhttpserver_p.h:18:10: fatal error: QTcpServer: No such file or directory
-      #- patches/0034-qtdeclarative-qtcpserver-include.patch
+      # https://bugreports.qt.io/browse/QTBUG-112656
+      - patches/qopenglcontext_p.patch
+
+      # https://bugreports.qt.io/browse/QTBUG-112642
+      - patches/base-unity.patch
+
+      - patches/quick3d-unity.patch
 
       # This helps compatibility between qt and CXX17
       # https://github.com/conda-forge/qt-main-feedstock/pull/136
