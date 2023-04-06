@@ -187,6 +187,7 @@ requirements:
     - xorg-libxxf86vm                    # [linux]
     - xorg-libxtst                       # [linux]
     - xorg-xf86vidmodeproto              # [linux]
+    - assimp
   run:
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
