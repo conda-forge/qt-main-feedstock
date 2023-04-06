@@ -19,6 +19,7 @@ cmake -LAH -G "Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+    -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 ^
     -DINSTALL_BINDIR=lib/qt6/bin ^
     -DINSTALL_PUBLICBINDIR=bin ^
     -DINSTALL_LIBEXECDIR=lib/qt6 ^
@@ -34,6 +35,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
     -DFEATURE_designer=OFF -DFEATURE_linguist=OFF ^
+    -DFEATURE_quick3d_assimp=OFF ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
 if errorlevel 1 exit 1

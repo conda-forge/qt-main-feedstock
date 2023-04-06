@@ -35,6 +35,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DCMAKE_IGNORE_PREFIX_PATH="${PREFIX}" \
       -DCMAKE_FIND_FRAMEWORK=LAST \
       -DCMAKE_INSTALL_RPATH:STRING=${BUILD_PREFIX}/lib \
+      -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
       -DFEATURE_system_sqlite=ON \
       -DFEATURE_framework=OFF \
       -DFEATURE_gssapi=OFF \
@@ -57,6 +58,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
   -DCMAKE_INSTALL_RPATH:STRING=${PREFIX}/lib \
+  -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
   -DINSTALL_BINDIR=lib/qt6/bin \
   -DINSTALL_PUBLICBINDIR=bin \
   -DINSTALL_LIBEXECDIR=lib/qt6 \
@@ -75,6 +77,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_designer=OFF \
   -DFEATURE_linguist=OFF \
+  -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\

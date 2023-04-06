@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.4.3" %}
+{% set version = "6.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,19 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 2b05efca0036dd1c52d91f259c807a26
+    md5: 10247444e4264ea9cee7d4a7c13efd34
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
-      # qtdeclarative
-      # $SRC_DIR/qtdeclarative/src/quicktestutils/qml/testhttpserver_p.h:18:10: fatal error: QTcpServer: No such file or directory
-      - patches/0034-qtdeclarative-qtcpserver-include.patch
+      # https://bugreports.qt.io/browse/QTBUG-112656
+      - patches/qopenglcontext_p.patch
+
+      # https://bugreports.qt.io/browse/QTBUG-112642
+      - patches/base-unity.patch
+
+      # https://github.com/qt/qtquick3d/commit/b8f9eb9fda45150305c894d9dc85c9e7e917c265
+      - patches/quick3d-unity.patch
 
       # This helps compatibility between qt and CXX17
       # https://github.com/conda-forge/qt-main-feedstock/pull/136
@@ -26,7 +31,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 2
+  number: 1
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}

@@ -1,0 +1,52 @@
+diff --git a/src/gui/platform/macos/qcocoanativeinterface.mm b/src/gui/platform/macos/qcocoanativeinterface.mm
+index a41f9b16da..d8d08b4349 100644
+--- a/qtbase/src/gui/platform/macos/qcocoanativeinterface.mm
++++ b/qtbase/src/gui/platform/macos/qcocoanativeinterface.mm
+@@ -1,7 +1,9 @@
+ // Copyright (C) 2020 The Qt Company Ltd.
+ // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-only
+ 
+-#include <QtGui/private/qopenglcontext_p.h>
++#ifndef QT_NO_OPENGL
++#  include <QtGui/private/qopenglcontext_p.h>
++#endif
+ #include <QtGui/private/qguiapplication_p.h>
+ #include <qpa/qplatformopenglcontext.h>
+ #include <qpa/qplatformintegration.h>
+diff --git a/src/plugins/platforms/cocoa/qcocoaintegration.h b/src/plugins/platforms/cocoa/qcocoaintegration.h
+index 72e5798bd6..09904efbaf 100644
+--- a/qtbase/src/plugins/platforms/cocoa/qcocoaintegration.h
++++ b/qtbase/src/plugins/platforms/cocoa/qcocoaintegration.h
+@@ -20,7 +20,9 @@
+ #include <QtCore/QScopedPointer>
+ #include <qpa/qplatformintegration.h>
+ #include <QtGui/private/qcoretextfontdatabase_p.h>
+-#include <QtGui/private/qopenglcontext_p.h>
++#ifndef QT_NO_OPENGL
++#  include <QtGui/private/qopenglcontext_p.h>
++#endif
+ #include <QtGui/private/qapplekeymapper_p.h>
+ 
+ Q_FORWARD_DECLARE_OBJC_CLASS(NSToolbar);
+diff --git a/src/plugins/platforms/cocoa/qcocoaintegration.mm b/src/plugins/platforms/cocoa/qcocoaintegration.mm
+index 6dd410ad22..56c65a0836 100644
+--- a/qtbase/src/plugins/platforms/cocoa/qcocoaintegration.mm
++++ b/qtbase/src/plugins/platforms/cocoa/qcocoaintegration.mm
+@@ -33,12 +33,16 @@
+ #include <QtCore/private/qcore_mac_p.h>
+ #include <QtGui/private/qcoregraphics_p.h>
+ #include <QtGui/private/qmacmimeregistry_p.h>
+-#include <QtGui/private/qopenglcontext_p.h>
++#ifndef QT_NO_OPENGL
++#  include <QtGui/private/qopenglcontext_p.h>
++#endif
+ #include <QtGui/private/qrhibackingstore_p.h>
+ #include <QtGui/private/qfontengine_coretext_p.h>
+ 
+ #include <IOKit/graphics/IOGraphicsLib.h>
+ 
++#include <inttypes.h>
++
+ static void initResources()
+ {
+     Q_INIT_RESOURCE(qcocoaresources);
