@@ -51,6 +51,13 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   )
   rm -r build_native
   CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DBUILD_WITH_PCH=OFF"
+
+  # Error: unknown architecture `nocona' on linux-aarch64
+  if test "${target_platform}" = "linux-aarch64"
+  then
+    CFLAGS=${CFLAGS// -march=nocona/}
+    CXXFLAGS=${CXXFLAGS// -march=nocona/}
+  fi
 fi
 
 mkdir build && cd build
