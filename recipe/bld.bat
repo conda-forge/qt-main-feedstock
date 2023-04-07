@@ -34,7 +34,6 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_gstreamer=OFF ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
-    -DFEATURE_quick3d_assimp=OFF ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
 if errorlevel 1 exit 1
