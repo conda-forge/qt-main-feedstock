@@ -40,6 +40,8 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DFEATURE_framework=OFF \
       -DFEATURE_gssapi=OFF \
       -DFEATURE_qml_animation=OFF \
+      -DFEATURE_egl=ON \
+      -DFEATURE_eglfs=ON \
       -DQT_BUILD_SUBMODULES="qtbase;qtdeclarative;qtshadertools;qttools" \
       -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
       -DFEATURE_opengl=OFF \
@@ -81,6 +83,8 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gssapi=OFF \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_gstreamer_gl=OFF \
+  -DFEATURE_egl=ON \
+  -DFEATURE_eglfs=ON \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\
@@ -93,7 +97,7 @@ qttools;\
 qttranslations;\
 qtwebchannel;\
 qtwebsockets" \
-  ..
+..
 cmake --build . --target install
 
 cd ${PREFIX}
