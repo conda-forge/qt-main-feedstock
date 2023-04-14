@@ -60,6 +60,10 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   fi
 fi
 
+if [[ $(uname) == "Linux" ]]; then
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON"
+fi
+
 mkdir build && cd build
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
