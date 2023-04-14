@@ -30,9 +30,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
     mkdir -p $BUILD_PREFIX/${HOST}
     mv $BUILD_PREFIX/${HOST} _hidden
 
-#     ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so
     cmake -LAH -G "Ninja" \
-      -DCMAKE_FIND_DEBUG_MODE=ON \
       -DCMAKE_PREFIX_PATH=${BUILD_PREFIX} \
       -DCMAKE_IGNORE_PREFIX_PATH="${PREFIX}" \
       -DCMAKE_FIND_FRAMEWORK=LAST \
@@ -46,8 +44,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
       -DFEATURE_opengl=OFF \
       -DFEATURE_linguist=OFF \
-      -DFEATURE_egl=ON \
-      -DFEATURE_eglfs=ON \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
     ..
     cmake --build . --target install
@@ -67,7 +63,6 @@ fi
 mkdir build && cd build
 ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
-  -DCMAKE_FIND_DEBUG_MODE=ON \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
   -DCMAKE_INSTALL_RPATH:STRING=${PREFIX}/lib \
@@ -89,8 +84,6 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
-  -DFEATURE_egl=ON \
-  -DFEATURE_eglfs=ON \
   -DQT_BUILD_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
