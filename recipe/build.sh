@@ -30,8 +30,9 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
     mkdir -p $BUILD_PREFIX/${HOST}
     mv $BUILD_PREFIX/${HOST} _hidden
 
-    ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so
+#     ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so
     cmake -LAH -G "Ninja" \
+      -DCMAKE_FIND_DEBUG_MODE=ON \
       -DCMAKE_PREFIX_PATH=${BUILD_PREFIX} \
       -DCMAKE_IGNORE_PREFIX_PATH="${PREFIX}" \
       -DCMAKE_FIND_FRAMEWORK=LAST \
@@ -64,8 +65,9 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
 fi
 
 mkdir build && cd build
-ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGl.so
+ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
+  -DCMAKE_FIND_DEBUG_MODE=ON \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
   -DCMAKE_INSTALL_RPATH:STRING=${PREFIX}/lib \
