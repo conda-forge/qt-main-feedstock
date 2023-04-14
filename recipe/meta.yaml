@@ -53,6 +53,7 @@ requirements:
     - {{ cdt('libdrm-devel') }}          # [linux]
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - {{ cdt('libglvnd-egl') }}          # [linux]
+    - {{ cdt('libglvnd-devel') }}        # [linux]
 
     # For fontconfig + freetype
     - pkg-config                         # [unix]
@@ -249,6 +250,7 @@ test:
     - if not exist %PREFIX%\\Library\\bin\\Qt6{{ each_qt_lib }}.dll exit 1  # [win]
     {% endfor %}
     - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so  # [linux]
+    - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so  # [linux]
     - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
     - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
     - qmake6 --version

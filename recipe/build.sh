@@ -60,8 +60,11 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   fi
 fi
 
+if [[ $(uname) == "Linux" ]]; then
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON"
+fi
+
 mkdir build && cd build
-ln -s ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so.1 ${CONDA_BUILD_SYSROOT}/usr/lib/libEGL.so
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \

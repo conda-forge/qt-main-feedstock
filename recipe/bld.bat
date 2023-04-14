@@ -10,6 +10,15 @@ set "MODS=%MODS%;qttranslations"
 set "MODS=%MODS%;qtwebchannel"
 set "MODS=%MODS%;qtwebsockets"
 
+:: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
+:: https://github.com/ContinuumIO/anaconda-issues/issues/9142
+if not exist "%LIBRARY_BIN%" mkdir "%LIBRARY_BIN%"
+copy opengl32sw\opengl32sw.dll  %LIBRARY_BIN%\opengl32sw.dll
+if errorlevel 1 exit /b 1
+if not exist %LIBRARY_BIN%\opengl32sw.dll exit /b 1
+
+set OPENGLVER=dynamic
+
 mkdir build && cd build
 
 :: have to set path for internal tools: https://bugreports.qt.io/browse/QTBUG-107009
@@ -35,6 +44,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
     -DFEATURE_quick3d_assimp=OFF ^
+    -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
 if errorlevel 1 exit 1
