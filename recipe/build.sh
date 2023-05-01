@@ -135,6 +135,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -no-avx \
                 -no-avx2 \
                 -optimize-size \
+                -force-debug-info \
                 ${REDUCE_RELOCATIONS} \
                 -cups \
                 -openssl-linked \
