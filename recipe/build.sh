@@ -1,7 +1,6 @@
 #!/bin/sh
 set -ex
 
-
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   if [[ "${build_platform}" == "linux-64" ]]; then
     # There are probably equivalent CDTs to install if your build platform
