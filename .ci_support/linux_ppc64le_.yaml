@@ -43,7 +43,7 @@ libpng:
 libsqlite:
 - '3'
 libxml2:
-- '2.10'
+- '2.11'
 nspr:
 - '4'
 nss:
