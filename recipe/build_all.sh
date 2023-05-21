@@ -14,9 +14,9 @@ for config_filename in $configs; do
         continue
     fi
 
-    python build-locally.py $config  2>&1 | tee build_artifacts/${config}-log.txt
+    python build-locally.py $config  2>&1 | tee ${config}-log.txt
     # docker images get quite big clean them up after each build to save your disk....
     docker system prune --force
 done
 
-zip build_artifacts/log_files.zip build_artifacts/*-log.txt
+zip log_files.zip *-log.txt
