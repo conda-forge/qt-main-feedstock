@@ -35,11 +35,11 @@ build:
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
-  missing_dso_whitelist:  # [osx]
-    - /usr/lib/libbsm.0.dylib  # [osx]
-    - /usr/lib/libcups.2.dylib  # [osx]
-    - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib/libsandbox.1.dylib  # [osx]
+  missing_dso_whitelist:            # [osx]
+    - /usr/lib/libbsm.0.dylib       # [osx]
+    - /usr/lib/libcups.2.dylib      # [osx]
+    - /usr/lib/libresolv.9.dylib    # [osx]
+    - /usr/lib/libsandbox.1.dylib   # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
 
 requirements:
