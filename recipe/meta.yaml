@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.5.0" %}
+{% set version = "6.5.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,31 +7,27 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 10247444e4264ea9cee7d4a7c13efd34
+    md5: 4c1ec00f50833bc3c74d372d2ca6b556
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
-      # https://bugreports.qt.io/browse/QTBUG-112656
-      - patches/qopenglcontext_p.patch
-
-      # https://bugreports.qt.io/browse/QTBUG-112642
-      - patches/base-unity.patch
-
-      # https://github.com/qt/qtquick3d/commit/b8f9eb9fda45150305c894d9dc85c9e7e917c265
-      - patches/quick3d-unity.patch
-
       # This helps compatibility between qt and CXX17
       # https://github.com/conda-forge/qt-main-feedstock/pull/136
       # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
+      # https://bugreports.qt.io/browse/QTBUG-113782
       - patches/0040-fix_unary_function_cxx17.patch
+
+      # error: 'IFF_UP' conflicts with a previous declaration
+      # https://bugreports.qt.io/browse/QTBUG-113787
+      - patches/qtnetwork-unity.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 8
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -77,7 +73,7 @@ requirements:
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [build_platform != target_platform]
-    - clangdev >=9, <16                 # [build_platform != target_platform]
+    - clangdev >=9                      # [build_platform != target_platform]
     # native libs
     - icu                               # [build_platform != target_platform]
     - double-conversion                 # [build_platform != target_platform]
@@ -153,7 +149,7 @@ requirements:
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
     - llvmdev
-    - clangdev >=9, <16
+    - clangdev >=9
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
