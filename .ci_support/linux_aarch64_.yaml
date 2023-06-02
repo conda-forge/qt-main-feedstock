@@ -35,7 +35,7 @@ gstreamer:
 harfbuzz:
 - '7'
 icu:
-- '72'
+- '70'
 krb5:
 - '1.20'
 libevent:
