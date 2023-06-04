@@ -1,0 +1,65 @@
+alsa_lib:
+- 1.2.8
+c_compiler:
+- gcc
+c_compiler_version:
+- '12'
+cdt_name:
+- cos7
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+cxx_compiler:
+- gxx
+cxx_compiler_version:
+- '12'
+dbus:
+- '1'
+docker_image:
+- quay.io/condaforge/linux-anvil-cos7-x86_64
+fontconfig:
+- '2'
+freetype:
+- '2'
+glib:
+- '2'
+gstreamer:
+- '1.22'
+harfbuzz:
+- '7'
+icu:
+- '72'
+krb5:
+- '1.20'
+libjpeg_turbo:
+- 2.1.5
+libpng:
+- '1.6'
+libsqlite:
+- '3'
+libtiff:
+- '4.5'
+libwebp:
+- '1'
+libxcb:
+- '1.15'
+libxml2:
+- '2.11'
+openssl:
+- '3'
+pcre2:
+- '10.40'
+postgresql:
+- '15'
+pulseaudio:
+- '16.1'
+target_platform:
+- linux-64
+zip_keys:
+- - c_compiler_version
+  - cxx_compiler_version
+zlib:
+- '1.2'
+zstd:
+- '1.5'
