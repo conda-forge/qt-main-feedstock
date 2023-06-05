@@ -1,0 +1,25 @@
+diff -ru a/qtbase/src/corelib/global/qlibraryinfo.cpp b/qtbase/src/corelib/global/qlibraryinfo.cpp
+--- a/qtbase/src/corelib/global/qlibraryinfo.cpp	2023-06-02 23:53:41.966945291 -0400
++++ b/qtbase/src/corelib/global/qlibraryinfo.cpp	2023-06-02 23:55:16.881661460 -0400
+@@ -95,21 +95,6 @@
+     QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
+     if (QFile::exists(qtconfig))
+         return new QSettings(qtconfig, QSettings::IniFormat);
+-#ifdef Q_OS_DARWIN
+-    CFBundleRef bundleRef = CFBundleGetMainBundle();
+-    if (bundleRef) {
+-        QCFType<CFURLRef> urlRef = CFBundleCopyResourceURL(bundleRef,
+-                                                           QCFString("qt.conf"_L1),
+-                                                           0,
+-                                                           0);
+-        if (urlRef) {
+-            QCFString path = CFURLCopyFileSystemPath(urlRef, kCFURLPOSIXPathStyle);
+-            qtconfig = QDir::cleanPath(path);
+-            if (QFile::exists(qtconfig))
+-                return new QSettings(qtconfig, QSettings::IniFormat);
+-        }
+-    }
+-#endif
+     if (QCoreApplication::instance()) {
+         QDir pwd(QCoreApplication::applicationDirPath());
+         qtconfig = pwd.filePath(u"qt" QT_STRINGIFY(QT_VERSION_MAJOR) ".conf"_s);
