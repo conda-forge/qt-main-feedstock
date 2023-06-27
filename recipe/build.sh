@@ -133,6 +133,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -qt-pcre \
                 -xkbcommon \
                 -dbus \
+                -feature-vulkan \
                 -no-linuxfb \
                 -no-libudev \
                 -no-avx \
@@ -247,6 +248,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -qt-pcre \
                 -no-framework \
                 -dbus \
+                -feature-vulkan \
                 -no-mtdev \
                 -no-harfbuzz \
                 -no-libudev \

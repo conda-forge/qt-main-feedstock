@@ -41,7 +41,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 13
+  number: 14
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -91,6 +91,8 @@ requirements:
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16                 # [arm64]
   host:
+    - libvulkan-headers
+    - libvulkan-loader
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
     - dbus                               # [linux]

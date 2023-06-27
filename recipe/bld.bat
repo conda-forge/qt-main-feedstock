@@ -84,6 +84,7 @@ call "../configure" ^
      -platform win32-msvc ^
      -release ^
      -shared ^
+     -feature-vulkan ^
      -qt-freetype ^
      -system-libjpeg ^
      -system-libpng ^
