@@ -1,0 +1,45 @@
+From f5c6433086047ce1fe80989a9077bb982fded3bd Mon Sep 17 00:00:00 2001
+From: Amir Masoud Abdol <amir.abdol@qt.io>
+Date: Thu, 29 Jun 2023 10:39:02 +0200
+Subject: [PATCH] Unity Build: Resolve a variable redefinition error
+
+The `qvk_sampleCounts` variable is defined in `qrhivulkan.cpp` as well.
+This causes an issue when building with unity build. To resolve the
+problem, I renamed the variable in `qvulkanwindow.cpp`.
+
+Fixes: QTBUG-114918
+Pick-to: 6.5 6.6
+Change-Id: I0b38c6b3e30792dd6f770d4dea8cb4c7789961d1
+---
+
+diff --git a/src/gui/vulkan/qvulkanwindow.cpp b/src/gui/vulkan/qvulkanwindow.cpp
+index 5a86b43..3efc37e 100644
+--- a/qtbase/src/gui/vulkan/qvulkanwindow.cpp
++++ b/qtbase/src/gui/vulkan/qvulkanwindow.cpp
+@@ -448,7 +448,7 @@
+ static struct {
+     VkSampleCountFlagBits mask;
+     int count;
+-} qvk_sampleCounts[] = {
++} q_vk_sampleCounts[] = {
+     // keep this sorted by 'count'
+     { VK_SAMPLE_COUNT_1_BIT, 1 },
+     { VK_SAMPLE_COUNT_2_BIT, 2 },
+@@ -488,7 +488,7 @@
+     VkSampleCountFlags depth = limits->framebufferDepthSampleCounts;
+     VkSampleCountFlags stencil = limits->framebufferStencilSampleCounts;
+ 
+-    for (const auto &qvk_sampleCount : qvk_sampleCounts) {
++    for (const auto &qvk_sampleCount : q_vk_sampleCounts) {
+         if ((color & qvk_sampleCount.mask)
+                 && (depth & qvk_sampleCount.mask)
+                 && (stencil & qvk_sampleCount.mask))
+@@ -537,7 +537,7 @@
+         return;
+     }
+ 
+-    for (const auto &qvk_sampleCount : qvk_sampleCounts) {
++    for (const auto &qvk_sampleCount : q_vk_sampleCounts) {
+         if (qvk_sampleCount.count == sampleCount) {
+             d->sampleCount = qvk_sampleCount.mask;
+             return;
