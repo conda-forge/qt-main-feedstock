@@ -61,6 +61,12 @@ fi
 
 if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
+fi
+if [[ "${target_platform}" == "linux-64" ]]; then
+  # In 2023/07/06 we started having trouble with "running out of space"
+  # on azure for linux64 builds.
+  CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
 mkdir build && cd build

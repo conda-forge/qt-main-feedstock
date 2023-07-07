@@ -44,6 +44,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
     -DFEATURE_quick3d_assimp=OFF ^
+    -DFEATURE_vulkan=ON ^
     -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
