@@ -58,7 +58,7 @@ requirements:
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
-    - cmake
+    - cmake >= 3.16
     - ninja
     - ruby >=2.5                         # [linux]
     - bison                              # [linux]
@@ -219,7 +219,7 @@ test:
     - {{ cdt('libglvnd-glx') }}          # [linux]
     - {{ cdt('libglvnd-egl') }}          # [linux]
     - make                               # [unix]
-    - cmake
+    - cmake >= 3.16
     - xcb-util                           # [linux]
     - xorg-libxdamage                    # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
