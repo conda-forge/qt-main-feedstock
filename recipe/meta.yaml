@@ -31,7 +31,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -184,13 +184,21 @@ requirements:
     - xorg-libxdamage                    # [linux]
     - xorg-libxrandr                     # [linux]
     - xorg-libxcomposite                 # [linux]
-    - xorg-libxcursor                    # [linux]
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
     - xorg-libxtst                       # [linux]
     - xorg-xf86vidmodeproto              # [linux]
+
+    # Required to build the gtk3 platform theme, just testing
+    - gtk3                               # [linux]
+    - pango                              # [linux]
+    - atk                                # [linux]
+    - cairo                              # [linux]
+    - gdk-pixbuf                         # [linux]
+    - xorg-libxinerama                   # [linux]
+    - xorg-xineramaproto                 # [linux]
   run:
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
