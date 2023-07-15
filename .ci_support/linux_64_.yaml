@@ -4,6 +4,8 @@ c_compiler:
 - gcc
 c_compiler_version:
 - '12'
+cairo:
+- '1'
 cdt_name:
 - cos7
 channel_sources:
@@ -23,6 +25,8 @@ docker_image:
 fontconfig:
 - '2'
 freetype:
+- '2'
+gdk_pixbuf:
 - '2'
 glib:
 - '2'
@@ -50,6 +54,8 @@ libxml2:
 - '2.11'
 openssl:
 - '3'
+pango:
+- '1.50'
 pcre2:
 - '10.40'
 postgresql:
