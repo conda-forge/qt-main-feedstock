@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.5.1" %}
+{% set version = "6.5.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,20 +7,11 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 4c1ec00f50833bc3c74d372d2ca6b556
+    md5: 87f56fd8aedd2e429047c40397e9be48
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
-      # This helps compatibility between qt and CXX17
-      # https://github.com/conda-forge/qt-main-feedstock/pull/136
-      # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
-      # https://bugreports.qt.io/browse/QTBUG-113782
-      - patches/0040-fix_unary_function_cxx17.patch
-
-      # error: 'IFF_UP' conflicts with a previous declaration
-      # https://bugreports.qt.io/browse/QTBUG-113787
-      - patches/qtnetwork-unity.patch
       - patches/0015-qt6-conf-osx.patch
       # https://github.com/conda-forge/qt-main-feedstock/pull/170#issuecomment-1610753495
       # https://bugreports.qt.io/browse/QTBUG-114918
@@ -31,7 +22,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
