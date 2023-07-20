@@ -44,6 +44,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DFEATURE_opengl=OFF \
       -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
+      -DBUILD_WITH_PCH=OFF \
     ..
     cmake --build . --target install
     mv _hidden $BUILD_PREFIX/${HOST}
@@ -63,9 +64,10 @@ if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
 fi
-if [[ "${target_platform}" == "linux-64" ]]; then
+
+if test "${build_platform}" = "linux-64"; then
   # In 2023/07/06 we started having trouble with "running out of space"
-  # on azure for linux64 builds.
+  # on azure for linux64 builds, then linux-aarch64.
   CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
