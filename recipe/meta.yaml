@@ -13,6 +13,7 @@ source:
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
       - patches/0015-qt6-conf-osx.patch
+
       # https://github.com/conda-forge/qt-main-feedstock/pull/170#issuecomment-1610753495
       # https://bugreports.qt.io/browse/QTBUG-114918
       - patches/qvksc_fix_f5c6433.diff
