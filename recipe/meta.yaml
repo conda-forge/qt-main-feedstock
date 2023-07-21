@@ -18,7 +18,7 @@ source:
       # https://bugreports.qt.io/browse/QTBUG-114918
       - patches/qvksc_fix_f5c6433.diff
 
-      # https://bugreports.qt.io/browse/QTBUG-112656
+      # https://bugreports.qt.io/browse/QTBUG-115446
       - patches/cocoa_opengl.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
