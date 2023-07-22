@@ -44,7 +44,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DFEATURE_opengl=OFF \
       -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
-      -DBUILD_WITH_PCH=OFF \
     ..
     cmake --build . --target install
     mv _hidden $BUILD_PREFIX/${HOST}
