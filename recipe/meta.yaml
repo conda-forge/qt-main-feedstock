@@ -6,7 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+  - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+  #- url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     md5: 87f56fd8aedd2e429047c40397e9be48
     patches:
       # qtbase
