@@ -11,7 +11,7 @@ cxx_compiler:
 glib:
 - '2'
 harfbuzz:
-- '7'
+- '8'
 icu:
 - '72'
 krb5:
