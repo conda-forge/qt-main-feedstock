@@ -33,7 +33,7 @@ glib:
 gstreamer:
 - '1.22'
 harfbuzz:
-- '7'
+- '8'
 icu:
 - '73'
 krb5:
