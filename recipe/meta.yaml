@@ -99,7 +99,7 @@ requirements:
     - glib
     - gst-plugins-base  {{ gstreamer }}
     - gstreamer
-    - pulseaudio                         # [linux]
+    - pulseaudio-client                  # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
     - expat                              # [linux]
