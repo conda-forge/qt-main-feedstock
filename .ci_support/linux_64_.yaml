@@ -29,7 +29,7 @@ glib:
 gstreamer:
 - '1.22'
 harfbuzz:
-- '7'
+- '8'
 icu:
 - '73'
 krb5:
@@ -54,6 +54,8 @@ openssl:
 - '3'
 postgresql:
 - '15'
+pulseaudio_client:
+- '16.1'
 target_platform:
 - linux-64
 zip_keys:
