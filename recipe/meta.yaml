@@ -41,7 +41,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 15
+  number: 16
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -99,7 +99,7 @@ requirements:
     - glib
     - gst-plugins-base  {{ gstreamer }}
     - gstreamer
-    - pulseaudio                         # [linux]
+    - pulseaudio-client                  # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
     - expat                              # [linux]

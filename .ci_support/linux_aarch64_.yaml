@@ -1,7 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
 alsa_lib:
-- 1.2.9
+- 1.2.10
 c_compiler:
 - gcc
 c_compiler_version:
@@ -33,9 +33,9 @@ glib:
 gstreamer:
 - '1.22'
 harfbuzz:
-- '7'
+- '8'
 icu:
-- '72'
+- '73'
 krb5:
 - '1.21'
 libevent:
@@ -58,7 +58,7 @@ openssl:
 - '3'
 postgresql:
 - '15'
-pulseaudio:
+pulseaudio_client:
 - '16.1'
 target_platform:
 - linux-aarch64

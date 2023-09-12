@@ -17,7 +17,7 @@ glib:
 gstreamer:
 - '1.22'
 icu:
-- '72'
+- '73'
 krb5:
 - '1.21'
 libjpeg_turbo:
