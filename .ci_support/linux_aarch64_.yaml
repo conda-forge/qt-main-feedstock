@@ -57,7 +57,7 @@ nss:
 openssl:
 - '3'
 postgresql:
-- '15'
+- '16'
 pulseaudio_client:
 - '16.1'
 target_platform:
