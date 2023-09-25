@@ -36,12 +36,17 @@ source:
       # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
       - patches/0014-remove-usage-of-unary-operator.patch
 
+      # https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/thread/IJQ3KMKJFIKEVY4WX5WMQFYUGAVB2G2M/#TPQFP6W22XACTGIBLDL3TG6HA322HWPR
+      # https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/TPQFP6W22XACTGIBLDL3TG6HA322HWPR/
+      # https://github.com/OpenMandrivaAssociation/qt5-qtbase/blob/master/qtbase-5.15.9-work-around-pyside2-brokenness.patch
+      - patches/qtbase-5.15.9-work-around-pyside2-brokenness.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 16
+  number: 17
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
