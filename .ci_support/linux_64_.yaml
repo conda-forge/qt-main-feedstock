@@ -35,7 +35,7 @@ icu:
 krb5:
 - '1.21'
 libjpeg_turbo:
-- 2.1.5
+- '3'
 libpng:
 - '1.6'
 libsqlite:
