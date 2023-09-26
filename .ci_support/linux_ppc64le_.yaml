@@ -37,7 +37,7 @@ krb5:
 libevent:
 - 2.1.12
 libjpeg_turbo:
-- 2.1.5
+- '3'
 libpng:
 - '1.6'
 libsqlite:
