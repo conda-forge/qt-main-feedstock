@@ -101,7 +101,10 @@ requirements:
     - gstreamer
     - pulseaudio-client                  # [linux]
     - libxml2                            # [linux]
-    - libxkbcommon                       # [linux]
+    # 2023/10/09 - hmaarrfk
+    # It seems that libxkbcommon 1.6 is causing
+    # some compilation failures
+    - libxkbcommon 1.5                   # [linux]
     - expat                              # [linux]
     - libevent                           # [linux]
     - icu
