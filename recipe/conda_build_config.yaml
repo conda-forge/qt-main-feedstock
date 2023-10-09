@@ -1,8 +1,8 @@
 # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
-c_compiler_version:        # [osx and x86_64]
-  - 15                     # [osx and x86_64]
-cxx_compiler_version:      # [osx and x86_64]
-  - 15                     # [osx and x86_64]
+c_compiler_version:        # [osx]
+  - 15                     # [osx]
+cxx_compiler_version:      # [osx]
+  - 15                     # [osx]
 MACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]
   - '10.13'                # [osx and x86_64]
 MACOSX_SDK_VERSION:        # [osx and x86_64]
