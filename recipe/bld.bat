@@ -1,4 +1,7 @@
 
+:: work around https://github.com/conda-forge/libtiff-feedstock/issues/102
+mkdir %LIBRARY_PREFIX%\lib\cmake\tiff\include
+
 set "MODS=qtbase"
 set "MODS=%MODS%;qtdeclarative"
 set "MODS=%MODS%;qtimageformats"
