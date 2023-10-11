@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.5.3" %}
+{% set version = "6.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,7 +8,7 @@ package:
 source:
   - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
   #- url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 755db0527410df135609b51defa1a689
+    md5: efc59647689c2548961a7312d075baf6
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
