@@ -36,12 +36,16 @@ source:
       # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
       - patches/0014-remove-usage-of-unary-operator.patch
 
+      # https://github.com/xkbcommon/libxkbcommon/blob/6073565903488cb5b9a8d37fdc4a7c2f9d7ad04d/NEWS#L11
+      # https://gitlab.freedesktop.org/xorg/proto/xorgproto/-/merge_requests/70
+      - patches/0015-remove-deleted-xkb-keys.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 16
+  number: 17
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
