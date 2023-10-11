@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.5.2" %}
+{% set version = "6.5.3" %}
 
 package:
   name: {{ name|lower }}
@@ -8,16 +8,12 @@ package:
 source:
   - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
   #- url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 87f56fd8aedd2e429047c40397e9be48
+    md5: 755db0527410df135609b51defa1a689
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
       - patches/0015-qt6-conf-osx.patch
-
-      # https://github.com/conda-forge/qt-main-feedstock/pull/170#issuecomment-1610753495
-      # https://bugreports.qt.io/browse/QTBUG-114918
-      - patches/qvksc_fix_f5c6433.diff
 
       # https://bugreports.qt.io/browse/QTBUG-115446
       - patches/cocoa_opengl.patch
@@ -25,12 +21,15 @@ source:
       # https://bugreports.qt.io/browse/QTBUG-117950
       - patches/0015-remove-deleted-xkb-keys.patch
 
+      # https://bugreports.qt.io/browse/QTBUG-117974
+      - patches/qhelpgenerator_plugins_dep.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 6
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
