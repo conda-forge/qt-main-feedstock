@@ -139,7 +139,9 @@ requirements:
     - zlib
     - libxcb                             # [linux]
     - libdrm                             # [linux]
-    - openssl
+    # https://bugreports.qt.io/browse/QTBUG-119510
+    - openssl <3.2                       # [win]
+    - openssl                            # [not win]
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
