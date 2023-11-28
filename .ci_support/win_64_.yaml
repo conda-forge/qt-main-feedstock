@@ -26,6 +26,8 @@ libtiff:
 - '4.6'
 libwebp:
 - '1'
+openssl:
+- '3'
 pcre2:
 - '10.40'
 target_platform:
