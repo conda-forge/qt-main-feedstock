@@ -20,7 +20,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 2
+  number: 3
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -139,8 +139,7 @@ requirements:
     - zlib
     - libxcb                             # [linux]
     - libdrm                             # [linux]
-    # https://github.com/conda-forge/postgresql-feedstock/issues/178
-    - openssl <3.2
+    - openssl
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
