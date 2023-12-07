@@ -52,6 +52,8 @@ libxcb:
 - '1.15'
 libxml2:
 - '2.11'
+openssl:
+- '3'
 pcre2:
 - '10.40'
 postgresql:
