@@ -102,6 +102,7 @@ qtshadertools;\
 qtsvg;\
 qttools;\
 qttranslations;\
+qt5compat;\
 qtwebchannel;\
 qtwebsockets" \
   ..

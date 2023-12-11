@@ -10,6 +10,7 @@ set "MODS=%MODS%;qtshadertools"
 set "MODS=%MODS%;qtsvg"
 set "MODS=%MODS%;qttools"
 set "MODS=%MODS%;qttranslations"
+set "MODS=%MODS%;qt5compat"
 set "MODS=%MODS%;qtwebchannel"
 set "MODS=%MODS%;qtwebsockets"
 
