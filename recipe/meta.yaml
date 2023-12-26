@@ -6,7 +6,7 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: 776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9
+    sha256: 7426b1eaab52ed169ce53804bdd05dfe364f761468f888a0f15a308dc1dc2951
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
