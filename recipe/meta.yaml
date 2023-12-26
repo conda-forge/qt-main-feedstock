@@ -1,4 +1,4 @@
-{% set version = "5.15.8" %}
+{% set version = "5.15.11" %}
 
 package:
   name: qt-main
