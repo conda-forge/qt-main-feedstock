@@ -1,7 +1,8 @@
 {% set version = "5.15.8" %}
+{% set library = "Library/" if (target_platform == 'win_64') else "" %}
 
 package:
-  name: qt-main
+  name: qt-split
   version: {{ version }}
 
 source:
@@ -47,8 +48,6 @@ source:
 build:
   number: 18
   detect_binary_files_with_prefix: true
-  run_exports:
-    - {{ pin_subpackage('qt-main', max_pin='x.x') }}
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
     - /usr/lib/libcups.2.dylib  # [osx]
@@ -165,10 +164,6 @@ requirements:
     - xcb-util-keysyms                   # [linux]
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
-    # https://github.com/conda-forge/xorg-libx11-feedstock/pull/28
-    - xorg-libx11                        # [linux]
-    # https://github.com/conda-forge/xorg-libxext-feedstock/pull/12
-    - xorg-libxext                       # [linux]
     # no run_export
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
@@ -178,32 +173,239 @@ requirements:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
 
-test:
-  requires:
-    - {{ compiler('cxx') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
-    - make                               # [unix]
-    - xcb-util                           # [linux]
-    - xorg-libxdamage                    # [linux]
-    # https://github.com/conda-forge/staged-recipes/pull/22084
-    - xorg-libxxf86vm                    # [linux]
-  files:
-    - test/hello.pro
-    - test/main-qtwebengine.cpp
-    - test/main.cpp
-    - test/main.qml
-    - test/qml.qrc
-    - test/qrc_qml.cpp
-    - test/qtwebengine.pro
-    - test/test_qmimedatabase.pro
-    - test/test_qmimedatabase.cpp
-    - xcodebuild
-    - xcrun
+outputs:
+
+  # Everything except shared libraries in lib and plugins
+  - name: qt-main
+    build:
+      run_exports:
+        - {{ pin_subpackage('libqt5', max_pin='x.x') }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - sysroot_linux-64 2.17              # [linux]
+        - {{ cdt('mesa-libgl-devel') }}      # [linux]
+        - {{ cdt('mesa-libegl-devel') }}     # [linux]
+        - {{ cdt('mesa-dri-drivers') }}      # [linux]
+        - {{ cdt('libdrm-devel') }}          # [linux]
+        - {{ cdt('libglvnd-glx') }}          # [linux]
+        - {{ cdt('libglvnd-egl') }}          # [linux]
+      host:
+        - {{ pin_subpackage('libqt5', exact=True) }}
+        - alsa-lib                           # [linux]
+        - clangdev >=9, <16
+        - dbus                               # [linux]
+        - expat                              # [linux]
+        - fontconfig                         # [linux]
+        - freetype                           # [linux]
+        - glib
+        - gst-plugins-base  {{ gstreamer }}
+        - gstreamer
+        - harfbuzz                           # [linux]
+        - icu
+        - krb5
+        - libclang                             # [not osx]
+        - libclang {{ cxx_compiler_version }}  # [osx]
+        - libcups                            # [linux]
+        - libevent                           # [linux]
+        - libjpeg-turbo
+        - libpng
+        - libsqlite
+        - libxcb                             # [linux]
+        - libxkbcommon                       # [linux]
+        - libxml2                            # [linux]
+        - llvmdev
+        - mysql-devel                        # [not win]
+        - nspr                               # [unix]
+        - nss                                # [unix]
+        - openssl                            # [not osx]
+        - postgresql                         # [not win]
+        - pthread-stubs                      # [linux]
+        - pulseaudio-client                  # [linux]
+        - xcb-util                           # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-renderutil                # [linux]
+        - xcb-util-wm                        # [linux]
+        - xorg-libice                        # [linux]
+        - xorg-libsm                         # [linux]
+        - xorg-libx11                        # [linux]
+        - xorg-libxdamage                    # [linux]
+        - xorg-libxext                       # [linux]
+        - xorg-libxxf86vm                    # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+        - zlib
+        - zstd
+      run:
+        - {{ pin_compatible("libclang") }}
+        - {{ pin_compatible("nspr") }}       # [unix]
+        - {{ pin_compatible("nss") }}        # [unix]
+        - {{ pin_subpackage('libqt5', exact=True) }}
+        - libxcb                             # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-renderutil                # [linux]
+        - xcb-util-wm                        # [linux]
+        - xorg-libice                        # [linux]
+        - xorg-libsm                         # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+      run_constrained:
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
+        - qt {{ version }}
+    files:
+      - {{ library }}bin/Assistant.app                                        # [osx]
+      - {{ library }}bin/Designer.app                                         # [osx]
+      - {{ library }}bin/Linguist.app                                         # [osx]
+      - {{ library }}bin/pixeltool.app                                        # [osx]
+      - {{ library }}bin/qdbusviewer.app                                      # [osx]
+      - {{ library }}bin/qml.app                                              # [osx]
+      - {{ library }}bin/xc-avoidance                                         # [osx]
+      - {{ library }}bin/assistant* # [not osx]
+      - {{ library }}bin/balsam*
+      - {{ library }}bin/canbusutil*
+      - {{ library }}bin/designer*  # [not osx]
+      - {{ library }}bin/dumpcpp*                                             # [win]
+      - {{ library }}bin/dumpdoc*                                             # [win]
+      - {{ library }}bin/fixqt4headers.pl*
+      - {{ library }}bin/idc*                                                 # [win]
+      - {{ library }}bin/lconvert*
+      - {{ library }}bin/libEGL.dll                                           # [win]
+      - {{ library }}bin/libGLESv2.dll                                        # [win]
+      - {{ library }}bin/linguist*                                            # [not osx]
+      - {{ library }}bin/lprodump*
+      - {{ library }}bin/lrelease*
+      - {{ library }}bin/lupdate*
+      - {{ library }}bin/mac*qt                                               # [osx]
+      - {{ library }}bin/meshdebug*
+      - {{ library }}bin/moc*
+      - {{ library }}bin/opengl32sw.dll                                       # [win]
+      - {{ library }}bin/pixeltool*                                           # [not osx]
+      - {{ library }}bin/q*
+      - {{ library }}bin/rcc*
+      - {{ library }}bin/repc*
+      - {{ library }}bin/syncqt.pl*
+      - {{ library }}bin/testcon*                                             # [win]
+      - {{ library }}bin/tracegen*
+      - {{ library }}bin/uic*
+      - {{ library }}bin/windeployqt*                                         # [win]
+      - {{ library }}bin/xmlpatterns*
+      - {{ library }}doc/config/*qdocconf
+      - {{ library }}doc/global
+      - {{ library }}include/qt
+      - {{ library }}lib/cmake/Qt*/**/*
+      - {{ library }}lib/metatypes/qt*
+      - {{ library }}lib/pkgconfig/Qt*
+      - {{ library }}lib/libQt*{{ SHLIB_EXT }}                                # [unix]
+      - {{ library }}lib/libQt*.prl                                           # [unix]
+      - {{ library }}lib/libQt*.a                                             # [unix]
+      - {{ library }}lib/libEGL.*                                             # [win]
+      - {{ library }}lib/libGLESv2.*                                          # [win]
+      - {{ library }}lib/Qt*                                                  # [win]
+      - {{ library }}lib/qt*                                                  # [win]
+      - {{ library }}mkspecs
+      - {{ library }}phrasebooks
+      - {{ library }}qml
+      - {{ library }}share/qt
+      - {{ library }}translations/*.qm
+    test:
+      requires:
+        - {{ compiler('cxx') }}
+        - {{ cdt('mesa-libgl-devel') }}      # [linux]
+        - {{ cdt('mesa-libegl-devel') }}     # [linux]
+        - {{ cdt('mesa-dri-drivers') }}      # [linux]
+        - {{ cdt('libdrm-devel') }}          # [linux]
+        - {{ cdt('libglvnd-glx') }}          # [linux]
+        - {{ cdt('libglvnd-egl') }}          # [linux]
+        - make                               # [unix]
+        - xcb-util                           # [linux]
+        - xorg-libxdamage                    # [linux]
+        # https://github.com/conda-forge/staged-recipes/pull/22084
+        - xorg-libxxf86vm                    # [linux]
+      files:
+        - test/hello.pro
+        - test/main-qtwebengine.cpp
+        - test/main.cpp
+        - test/main.qml
+        - test/qml.qrc
+        - test/qrc_qml.cpp
+        - test/qtwebengine.pro
+        - test/test_qmimedatabase.pro
+        - test/test_qmimedatabase.cpp
+        - xcodebuild
+        - xcrun
+
+  # Only what's needed for run_exports downstream
+  - name: libqt5
+    build:
+      run_exports:
+        - {{ pin_subpackage('libqt5', max_pin='x.x') }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - sysroot_linux-64 2.17              # [linux]
+        - {{ cdt('mesa-libgl-devel') }}      # [linux]
+        - {{ cdt('mesa-libegl-devel') }}     # [linux]
+        - {{ cdt('mesa-dri-drivers') }}      # [linux]
+        - {{ cdt('libdrm-devel') }}          # [linux]
+        - {{ cdt('libglvnd-glx') }}          # [linux]
+        - {{ cdt('libglvnd-egl') }}          # [linux]
+        # Add openssl to build requirements so that it gets
+        # pinned correctly during the 1 -> 3 migration
+        - openssl                            # [not osx]
+      host:
+        - alsa-lib                           # [linux]
+        - dbus                               # [linux]
+        - fontconfig                         # [linux]
+        - freetype                           # [linux]
+        - glib
+        - gst-plugins-base  {{ gstreamer }}
+        - gstreamer
+        - harfbuzz                           # [linux]
+        - icu
+        - krb5
+        - libcups                            # [linux]
+        - libjpeg-turbo
+        - libpng
+        - libsqlite
+        - libxcb                             # [linux]
+        - libxkbcommon                       # [linux]
+        - mysql-devel                        # [not win]
+        - openssl                            # [not osx]
+        - postgresql                         # [not win]
+        - pthread-stubs                      # [linux]
+        - pulseaudio-client                  # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-renderutil                # [linux]
+        - xcb-util-wm                        # [linux]
+        - xorg-libice                        # [linux]
+        - xorg-libsm                         # [linux]
+        - xorg-libx11                        # [linux]
+        - xorg-libxdamage                    # [linux]
+        - xorg-libxext                       # [linux]
+        - xorg-libxxf86vm                    # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+        - zlib
+        - zstd
+      run:
+        - libxcb                             # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-renderutil                # [linux]
+        - xcb-util-wm                        # [linux]
+        - xorg-libice                        # [linux]
+        - xorg-libsm                         # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+      run_constrained:
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
+        - qt {{ version }}
+    files:
+      - {{ library }}plugins
+      - lib/libQt5*.so.5*                                                     # [linux]
+      - lib/libQt5*.5*.dylib                                                  # [osx]
+      - Library/bin/Qt5*.dll                                                  # [win]
 
 about:
   home: https://qt.io
@@ -229,3 +431,4 @@ extra:
     - Tobias-Fischer
     - matthiasdiener  # (currently building linux_ppc64le manually)
     - jschueller
+  feedstock-name: qt-main
