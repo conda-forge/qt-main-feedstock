@@ -1,5 +1,5 @@
 {% set version = "5.15.8" %}
-{% set library = "Library/" if (target_platform == 'win_64') else "" %}
+{% set library = "Library/" if (target_platform == "win-64") else "" %}
 
 package:
   name: qt-split
