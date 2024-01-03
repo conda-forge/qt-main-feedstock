@@ -1,29 +1,28 @@
-diff --git a/qmake/CMakeLists.txt b/qmake/CMakeLists.txt
-index 41bf2c77d9..8188227567 100644
---- a/qtbase/qmake/CMakeLists.txt
-+++ b/qtbase/qmake/CMakeLists.txt
-@@ -31,9 +31,11 @@ target_include_directories(QtLibraryInfo PUBLIC
- 
- # Chop off the "/mkspecs" part of INSTALL_MKSPECSDIR
- get_filename_component(hostdatadir "${INSTALL_MKSPECSDIR}" DIRECTORY)
-+message(STATUS "hostdatadir1=${hostdatadir}")
- if("${hostdatadir}" STREQUAL "")
-     set(hostdatadir ".")
- endif()
-+message(STATUS "hostdatadir2==${hostdatadir}")
- 
- qt_internal_library_deprecation_level(deprecation_define)
- 
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index a8934fa38c..3a2a7f0da8 100644
+index a8934fa38c..523ac4f808 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -460,7 +460,7 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+@@ -458,19 +458,19 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+         "Prefix", ".",
+         "Documentation", "doc", // should be ${Data}/doc
          "Headers", "include",
-         "Libraries", "lib",
+-        "Libraries", "lib",
++        "Libraries", "Library/lib",
  #ifdef Q_OS_WIN
 -        "LibraryExecutables", "bin",
-+        "LibraryExecutables", "lib/qt6",
++        "LibraryExecutables", "Library/lib/qt6",
  #else
          "LibraryExecutables", "libexec", // should be ${ArchData}/libexec
  #endif
+-        "Binaries", "bin",
++        "Binaries", "Library/lib/qt6",
+         "Plugins", "plugins", // should be ${ArchData}/plugins
+ 
+         "QmlImports", "qml", // should be ${ArchData}/qml
+ 
+         "ArchData", ".",
+-        "Data", ".",
++        "Data", "Library/share/qt6",
+         "Translations", "translations", // should be ${Data}/translations
+         "Examples", "examples",
+         "Tests", "tests"
