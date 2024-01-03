@@ -106,6 +106,7 @@ qt5compat;\
 qtwebchannel;\
 qtwebsockets" \
   ..
+exit 0
 cmake --build . --target install
 
 cd ${PREFIX}
