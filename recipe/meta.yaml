@@ -46,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 18
+  number: 19
   detect_binary_files_with_prefix: true
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
