@@ -14,3 +14,16 @@ index 41bf2c77d9..8188227567 100644
  
  qt_internal_library_deprecation_level(deprecation_define)
  
+diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
+index a8934fa38c..3a2a7f0da8 100644
+--- a/qtbase/src/corelib/global/qlibraryinfo.cpp
++++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
+@@ -460,7 +460,7 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+         "Headers", "include",
+         "Libraries", "lib",
+ #ifdef Q_OS_WIN
+-        "LibraryExecutables", "bin",
++        "LibraryExecutables", "lib/qt6",
+ #else
+         "LibraryExecutables", "libexec", // should be ${ArchData}/libexec
+ #endif

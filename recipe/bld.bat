@@ -54,7 +54,6 @@ cmake -LAH -G "Ninja" ^
     ..
 if errorlevel 1 exit 1
 
-exit 1
 cmake --build . --target install --config Release
 if errorlevel 1 exit 1
 
@@ -89,3 +88,6 @@ echo Examples = %LIBRARY_PREFIX:\=/%/share/doc/qt6/examples     >> %LIBRARY_BIN%
 echo Tests = %LIBRARY_PREFIX:\=/%/tests                         >> %LIBRARY_BIN%\qt6.conf
 :: Some things go looking in the prefix root (pyqt, for example)
 copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
+
+qmake6 -query
+if errorlevel 1 exit 1
