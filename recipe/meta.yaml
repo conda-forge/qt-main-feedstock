@@ -261,10 +261,10 @@ outputs:
       - {{ library }}bin/qdbusviewer.app                                      # [osx]
       - {{ library }}bin/qml.app                                              # [osx]
       - {{ library }}bin/xc-avoidance                                         # [osx]
-      - {{ library }}bin/assistant* # [not osx]
+      - {{ library }}bin/assistant*                                           # [not osx]
       - {{ library }}bin/balsam*
       - {{ library }}bin/canbusutil*
-      - {{ library }}bin/designer*  # [not osx]
+      - {{ library }}bin/designer*                                            # [not osx]
       - {{ library }}bin/dumpcpp*                                             # [win]
       - {{ library }}bin/dumpdoc*                                             # [win]
       - {{ library }}bin/fixqt4headers.pl*
