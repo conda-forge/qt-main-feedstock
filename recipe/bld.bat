@@ -76,7 +76,7 @@ echo Translations = %LIBRARY_PREFIX:\=/%/share/qt6/translations >> %LIBRARY_BIN%
 echo Examples = %LIBRARY_PREFIX:\=/%/share/doc/qt6/examples     >> %LIBRARY_BIN%\qt6.conf
 echo Tests = %LIBRARY_PREFIX:\=/%/tests                         >> %LIBRARY_BIN%\qt6.conf
 :: Some things go looking in the prefix root (pyqt, for example)
-copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
+copy "%LIBRARY_BIN%\qt6.conf" "%LIBRARY_PREFIX%\qt6.conf"
 
 qmake6 -query
 if errorlevel 1 exit 1
