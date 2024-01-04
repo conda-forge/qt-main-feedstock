@@ -2,7 +2,7 @@
 {% set library = "Library/" if (target_platform == "win-64") else "" %}
 
 package:
-  name: qt-main
+  name: qt-main-split
   version: {{ version }}
 
 source:
@@ -127,8 +127,7 @@ requirements:
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
-    - libclang {{ cxx_compiler_version }}  # [osx]
-    - libclang                             # [not osx]
+    - libclang {{ libclang }}
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
@@ -152,27 +151,6 @@ requirements:
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
     - xorg-xf86vidmodeproto              # [linux]
-  run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
-    - libxcb                             # [linux]
-    # Adding the following xcb-util run requirements resolves issue
-    # that may exhibit as segfault due to missing libraries
-    # in some lighter weight linux installations
-    # https://github.com/conda-forge/qt-main-feedstock/issues/32
-    - xcb-util-wm                        # [linux]
-    - xcb-util-keysyms                   # [linux]
-    - xcb-util-image                     # [linux]
-    - xcb-util-renderutil                # [linux]
-    # no run_export
-    - xorg-libsm                         # [linux]
-    - xorg-libice                        # [linux]
-    - xorg-xf86vidmodeproto              # [linux]
-    - {{ pin_compatible("libclang") }}
-    - {{ pin_subpackage('libqt5', exact=True) }}
-  run_constrained:
-    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
-    - qt {{ version }}
 
 outputs:
 
@@ -182,6 +160,124 @@ outputs:
       detect_binary_files_with_prefix: true
       run_exports:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - sysroot_linux-64 2.17              # [linux]
+        - {{ cdt('mesa-libgl-devel') }}      # [linux]
+        - {{ cdt('mesa-libegl-devel') }}     # [linux]
+        - {{ cdt('mesa-dri-drivers') }}      # [linux]
+        - {{ cdt('libdrm-devel') }}          # [linux]
+        - {{ cdt('libglvnd-glx') }}          # [linux]
+        - {{ cdt('libglvnd-egl') }}          # [linux]
+        # For fontconfig + freetype
+        - pkg-config                         # [unix]
+        - make                               # [unix]
+        - ninja
+        - ruby >=2.5                         # [linux]
+        - bison                              # [linux]
+        - flex                               # [linux]
+        - gperf                              # [linux]
+        - m2-gperf                           # [win]
+        - m2-bison                           # [win]
+        - m2-flex                            # [win]
+        - m2-patch                           # [win]
+        - jom                                # [win]
+        - curl                               # [win]
+        - perl 5
+        # Add openssl to build requirements so that it gets
+        # pinned correctly during the 1 -> 3 migration
+        - openssl                            # [not osx]
+        # libclang is required in order to enable simultaneous x86_64 and
+        # arm64 support for QDoc
+        - libclang                           # [arm64]
+        # Although these should be host-only dependencies, they are needed when
+        # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
+        # cannot be executed on x86_64 to locate libclang successfully
+        - llvmdev                           # [arm64]
+        # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
+        - clangdev >=9, <16                 # [arm64]
+      host:
+        # For pkg-config gl, fontconfig + freetype
+        - pthread-stubs                      # [linux]
+        - dbus                               # [linux]
+        - fontconfig                         # [linux]
+        - freetype                           # [linux]
+        - glib
+        - gst-plugins-base  {{ gstreamer }}
+        - gstreamer
+        - pulseaudio-client                  # [linux]
+        - libxml2                            # [linux]
+        - libxkbcommon                       # [linux]
+        - expat                              # [linux]
+        - libevent                           # [linux]
+        - icu
+        - libjpeg-turbo
+        - libpng
+        - nspr                               # [unix]
+        - nss                                # [unix]
+        - libsqlite
+        - mysql-devel                        # [not win]
+        - postgresql                         # [not win]
+        - zlib
+        - libxcb                             # [linux]
+        - openssl                            # [not osx]
+        # For QDoc
+        # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
+        # Only libclang is needed, but needs the full package for detection.
+        - llvmdev
+        # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
+        - clangdev >=9, <16
+        # Ensure that build and host have the same clang version on osx
+        # otherwise qt6 may be out of sync compared to the pinned compiler
+        # version
+        - libclang {{ libclang }}
+        - libcups                            # [linux]
+        - zstd
+        - alsa-lib                           # [linux]
+        - krb5
+        - harfbuzz                           # [linux]
+        # The xcb-util packages are necessary to build the Qt xcb plugin.
+        # It was decided to not use CDTs for qt to resolve issues
+        # that may exhibit as segfault due to missing libraries
+        # in some lighter weight linux installations
+        # https://github.com/conda-forge/qt-main-feedstock/issues/32
+        - xcb-util                           # [linux]
+        - xcb-util-wm                        # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-renderutil                # [linux]
+        - xorg-libx11                        # [linux]
+        - xorg-libxext                       # [linux]
+        - xorg-libxdamage                    # [linux]
+        - xorg-libsm                         # [linux]
+        - xorg-libice                        # [linux]
+        # https://github.com/conda-forge/staged-recipes/pull/22084
+        - xorg-libxxf86vm                    # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+        - {{ pin_subpackage('libqt5', exact=True) }}
+      run:
+        # For unknown reasons, conda-build does not like when this section
+        # contains pin_compatible jinja templates
+        - libxcb                             # [linux]
+        # Adding the following xcb-util run requirements resolves issue
+        # that may exhibit as segfault due to missing libraries
+        # in some lighter weight linux installations
+        # https://github.com/conda-forge/qt-main-feedstock/issues/32
+        - xcb-util-wm                        # [linux]
+        - xcb-util-keysyms                   # [linux]
+        - xcb-util-image                     # [linux]
+        - xcb-util-renderutil                # [linux]
+        # no run_export
+        - xorg-libsm                         # [linux]
+        - xorg-libice                        # [linux]
+        - xorg-xf86vidmodeproto              # [linux]
+        - libclang {{ libclang }}
+        - {{ pin_subpackage('libqt5', exact=True) }}
+      run_constrained:
+        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
+        - qt {{ version }}
     files:
       - {{ library }}bin/Assistant.app                                        # [osx]
       - {{ library }}bin/Designer.app                                         # [osx]
