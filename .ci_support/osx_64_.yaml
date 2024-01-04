@@ -41,7 +41,7 @@ macos_machine:
 openssl:
 - '3'
 pcre2:
-- '10.40'
+- '10.42'
 postgresql:
 - '16'
 target_platform:
