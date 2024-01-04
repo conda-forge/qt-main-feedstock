@@ -81,7 +81,7 @@ copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
 qmake6 -query
 if errorlevel 1 exit 1
 
-xcopy /s /e /i %LIBRARY_PREFIX%\lib\qt6\mkspecs %LIBRARY_PREFIX%\share\qt6\mkspecs
+::xcopy /s /e /i %LIBRARY_PREFIX%\lib\qt6\mkspecs %LIBRARY_PREFIX%\share\qt6\mkspecs
 
 git clone --depth 1 https://github.com/jschueller/qwt.git
 cd qwt

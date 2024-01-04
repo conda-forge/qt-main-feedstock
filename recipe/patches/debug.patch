@@ -1,12 +1,14 @@
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index a8934fa38c..523ac4f808 100644
+index a8934fa38c..fb06e83456 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -458,19 +458,19 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+@@ -457,20 +457,20 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+     static constexpr auto qtConfEntries = qOffsetStringArray(
          "Prefix", ".",
          "Documentation", "doc", // should be ${Data}/doc
-         "Headers", "include",
+-        "Headers", "include",
 -        "Libraries", "lib",
++        "Headers", "Library/include/qt6",
 +        "Libraries", "Library/lib",
  #ifdef Q_OS_WIN
 -        "LibraryExecutables", "bin",
@@ -22,7 +24,7 @@ index a8934fa38c..523ac4f808 100644
  
          "ArchData", ".",
 -        "Data", ".",
-+        "Data", "Library/share/qt6",
++        "Data", "Library/lib/qt6",
          "Translations", "translations", // should be ${Data}/translations
          "Examples", "examples",
          "Tests", "tests"
