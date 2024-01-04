@@ -18,7 +18,7 @@ mkdir build && cd build
 :: have to set path for internal tools: https://bugreports.qt.io/browse/QTBUG-107009
 set "PATH=%SRC_DIR%\build\qtbase\lib\qt6\bin;%PATH%"
 
-cmake -LAH -G "Ninja" ^
+cmake -LAH -G "Ninja" --log-level=STATUS ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
     -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
