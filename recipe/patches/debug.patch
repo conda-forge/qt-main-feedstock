@@ -1,3 +1,22 @@
+diff --git a/qmake/CMakeLists.txt b/qmake/CMakeLists.txt
+index 41bf2c77d9..8c09c22f2f 100644
+--- a/qtbase/qmake/CMakeLists.txt
++++ b/qtbase/qmake/CMakeLists.txt
+@@ -31,10 +31,14 @@ target_include_directories(QtLibraryInfo PUBLIC
+ 
+ # Chop off the "/mkspecs" part of INSTALL_MKSPECSDIR
+ get_filename_component(hostdatadir "${INSTALL_MKSPECSDIR}" DIRECTORY)
++message(STATUS "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1 QT_HOST_DATADIR=${hostdatadir}")
++
+ if("${hostdatadir}" STREQUAL "")
+     set(hostdatadir ".")
+ endif()
+ 
++message(STATUS "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz2 QT_HOST_DATADIR=${hostdatadir}")
++
+ qt_internal_library_deprecation_level(deprecation_define)
+ 
+ target_compile_definitions(QtLibraryInfo PUBLIC
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
 index a8934fa38c..fb06e83456 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
