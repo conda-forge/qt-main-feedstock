@@ -62,7 +62,7 @@ if errorlevel 1 exit 1
 :: for conda, this becomes LIBRARY_BIN
 :: https://doc.qt.io/qt-6/qt-conf.html
 echo [Paths]                                                     > %LIBRARY_BIN%\qt6.conf
-echo Prefix = %LIBRARY_PREFIX:\=/%                              >> %LIBRARY_BIN%\qt6.conf
+echo Prefix = %PREFIX:\=/%                                      >> %LIBRARY_BIN%\qt6.conf
 echo Documentation = %LIBRARY_PREFIX:\=/%/share/doc/qt6         >> %LIBRARY_BIN%\qt6.conf
 echo Headers = %LIBRARY_INC:\=/%/qt6                            >> %LIBRARY_BIN%\qt6.conf
 echo Libraries = %LIBRARY_LIB:\=/%                              >> %LIBRARY_BIN%\qt6.conf
@@ -76,7 +76,18 @@ echo Translations = %LIBRARY_PREFIX:\=/%/share/qt6/translations >> %LIBRARY_BIN%
 echo Examples = %LIBRARY_PREFIX:\=/%/share/doc/qt6/examples     >> %LIBRARY_BIN%\qt6.conf
 echo Tests = %LIBRARY_PREFIX:\=/%/tests                         >> %LIBRARY_BIN%\qt6.conf
 :: Some things go looking in the prefix root (pyqt, for example)
-copy "%LIBRARY_BIN%\qt6.conf" "%LIBRARY_PREFIX%\qt6.conf"
+copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
 
 qmake6 -query
+if errorlevel 1 exit 1
+
+git clone --depth 1 https://github.com/jschueller/qwt.git
+cd qwt
+
+mkdir build && cd build
+
+qmake6 ..\qwt.pro
+if errorlevel 1 exit 1
+
+nmake
 if errorlevel 1 exit 1
