@@ -169,6 +169,7 @@ requirements:
     - xorg-libice                        # [linux]
     - xorg-xf86vidmodeproto              # [linux]
     - {{ pin_compatible("libclang") }}
+    - {{ pin_subpackage('libqt5', exact=True) }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
