@@ -62,7 +62,7 @@ if errorlevel 1 exit 1
 :: for conda, this becomes LIBRARY_BIN
 :: https://doc.qt.io/qt-6/qt-conf.html
 echo [Paths]                                                     > %LIBRARY_BIN%\qt6.conf
-echo Prefix = %PREFIX:\=/%                                      >> %LIBRARY_BIN%\qt6.conf
+echo Prefix = %LIBRARY_PREFIX:\=/%                              >> %LIBRARY_BIN%\qt6.conf
 echo Documentation = %LIBRARY_PREFIX:\=/%/share/doc/qt6         >> %LIBRARY_BIN%\qt6.conf
 echo Headers = %LIBRARY_INC:\=/%/qt6                            >> %LIBRARY_BIN%\qt6.conf
 echo Libraries = %LIBRARY_LIB:\=/%                              >> %LIBRARY_BIN%\qt6.conf
