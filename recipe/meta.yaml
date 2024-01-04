@@ -2,7 +2,7 @@
 {% set library = "Library/" if (target_platform == "win-64") else "" %}
 
 package:
-  name: qt-split
+  name: qt-main
   version: {{ version }}
 
 source:
@@ -178,81 +178,9 @@ outputs:
   # Everything except shared libraries in lib and plugins
   - name: qt-main
     build:
+      detect_binary_files_with_prefix: true
       run_exports:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ compiler('cxx') }}
-        - sysroot_linux-64 2.17              # [linux]
-        - {{ cdt('mesa-libgl-devel') }}      # [linux]
-        - {{ cdt('mesa-libegl-devel') }}     # [linux]
-        - {{ cdt('mesa-dri-drivers') }}      # [linux]
-        - {{ cdt('libdrm-devel') }}          # [linux]
-        - {{ cdt('libglvnd-glx') }}          # [linux]
-        - {{ cdt('libglvnd-egl') }}          # [linux]
-      host:
-        - {{ pin_subpackage('libqt5', exact=True) }}
-        - alsa-lib                           # [linux]
-        - clangdev >=9, <16
-        - dbus                               # [linux]
-        - expat                              # [linux]
-        - fontconfig                         # [linux]
-        - freetype                           # [linux]
-        - glib
-        - gst-plugins-base  {{ gstreamer }}
-        - gstreamer
-        - harfbuzz                           # [linux]
-        - icu
-        - krb5
-        - libclang                             # [not osx]
-        - libclang {{ cxx_compiler_version }}  # [osx]
-        - libcups                            # [linux]
-        - libevent                           # [linux]
-        - libjpeg-turbo
-        - libpng
-        - libsqlite
-        - libxcb                             # [linux]
-        - libxkbcommon                       # [linux]
-        - libxml2                            # [linux]
-        - llvmdev
-        - mysql-devel                        # [not win]
-        - nspr                               # [unix]
-        - nss                                # [unix]
-        - openssl                            # [not osx]
-        - postgresql                         # [not win]
-        - pthread-stubs                      # [linux]
-        - pulseaudio-client                  # [linux]
-        - xcb-util                           # [linux]
-        - xcb-util-image                     # [linux]
-        - xcb-util-keysyms                   # [linux]
-        - xcb-util-renderutil                # [linux]
-        - xcb-util-wm                        # [linux]
-        - xorg-libice                        # [linux]
-        - xorg-libsm                         # [linux]
-        - xorg-libx11                        # [linux]
-        - xorg-libxdamage                    # [linux]
-        - xorg-libxext                       # [linux]
-        - xorg-libxxf86vm                    # [linux]
-        - xorg-xf86vidmodeproto              # [linux]
-        - zlib
-        - zstd
-      run:
-        - {{ pin_compatible("libclang") }}
-        - {{ pin_compatible("nspr") }}       # [unix]
-        - {{ pin_compatible("nss") }}        # [unix]
-        - {{ pin_subpackage('libqt5', exact=True) }}
-        - libxcb                             # [linux]
-        - xcb-util-image                     # [linux]
-        - xcb-util-keysyms                   # [linux]
-        - xcb-util-renderutil                # [linux]
-        - xcb-util-wm                        # [linux]
-        - xorg-libice                        # [linux]
-        - xorg-libsm                         # [linux]
-        - xorg-xf86vidmodeproto              # [linux]
-      run_constrained:
-        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
-        - qt {{ version }}
     files:
       - {{ library }}bin/Assistant.app                                        # [osx]
       - {{ library }}bin/Designer.app                                         # [osx]
@@ -338,6 +266,7 @@ outputs:
   # Only what's needed for run_exports downstream
   - name: libqt5
     build:
+      detect_binary_files_with_prefix: true
       run_exports:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
     requirements:
