@@ -40,6 +40,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_quick3d_assimp=OFF ^
     -DFEATURE_vulkan=ON ^
     -DINPUT_opengl=%OPENGLVER% ^
+    -DCMAKE_VERBOSE_MAKEFILE=ON ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     ..
 if errorlevel 1 exit 1
