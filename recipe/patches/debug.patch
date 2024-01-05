@@ -1,46 +1,12 @@
-diff --git a/qmake/qmakelibraryinfo.cpp b/qmake/qmakelibraryinfo.cpp
-index 531eb2372b..4f7ebaa20e 100644
---- a/qtbase/qmake/qmakelibraryinfo.cpp
-+++ b/qtbase/qmake/qmakelibraryinfo.cpp
-@@ -76,12 +76,14 @@ void QMakeLibraryInfo::sysrootify(QString &path)
-     if (sysroot.isEmpty())
-         return;
- 
-+    std::cout << "QMakeLibraryInfo::sysrootify path0="<<path.toStdString() << std::endl;
-     if (path.size() > 2 && path.at(1) == QLatin1Char(':')
-         && (path.at(2) == QLatin1Char('/') || path.at(2) == QLatin1Char('\\'))) {
-         path.replace(0, 2, sysroot); // Strip out the drive on Windows targets
-     } else {
-         path.prepend(sysroot);
-     }
-+    std::cout << "QMakeLibraryInfo::sysrootify path1="<<path.toStdString() << std::endl;
- }
- 
- QString QMakeLibraryInfo::path(int loc)
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index a8934fa38c..20df0797fd 100644
+index a8934fa38c..3ff8be9290 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -457,10 +457,10 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
-     static constexpr auto qtConfEntries = qOffsetStringArray(
-         "Prefix", ".",
-         "Documentation", "doc", // should be ${Data}/doc
--        "Headers", "include",
--        "Libraries", "lib",
-+        "Headers", "Library/include/qt6",
-+        "Libraries", "Library/lib",
- #ifdef Q_OS_WIN
--        "LibraryExecutables", "bin",
-+        "LibraryExecutables", "Library/lib/qt6",
- #else
-         "LibraryExecutables", "libexec", // should be ${ArchData}/libexec
- #endif
-@@ -470,7 +470,7 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
-         "QmlImports", "qml", // should be ${ArchData}/qml
- 
-         "ArchData", ".",
--        "Data", ".",
-+        "Data", "Library/lib/qt6",
-         "Translations", "translations", // should be ${Data}/translations
-         "Examples", "examples",
-         "Tests", "tests"
+@@ -401,6 +401,7 @@ static QString getRelocatablePrefix(QLibraryInfoPrivate::UsageMode usageMode)
+                 + slash + QT_CONFIGURE_LIBLOCATION_TO_PREFIX_PATH
+                 + slash + libdir
+                 + slash + qtCoreImpLibFileName;
++	std::cout << "zzzzzzzzzzzzzzzzzz qtCoreImpLibPath="<<qtCoreImpLibPath.toStdString()<<std::endl;
+         if (!QFileInfo::exists(qtCoreImpLibPath)) {
+             // We did not find a corresponding import library and conclude that this is a
+             // windeployqt'ed executable.
