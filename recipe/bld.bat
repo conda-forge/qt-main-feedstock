@@ -54,6 +54,7 @@ if errorlevel 1 exit 1
 
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
 copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
+copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_PREFIX%\bin\qtdiag6.exe
 if errorlevel 1 exit 1
 
 :: You can find the expected values of these files in the log
@@ -84,6 +85,9 @@ echo HostLibraries = %LIBRARY_LIB:\=/%                          >> %LIBRARY_BIN%
 copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
 
 qmake6 -query
+if errorlevel 1 exit 1
+
+qtdiag6
 if errorlevel 1 exit 1
 
 ::xcopy /s /e /i %LIBRARY_PREFIX%\lib\qt6\mkspecs %LIBRARY_PREFIX%\share\qt6\mkspecs
