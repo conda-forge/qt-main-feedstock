@@ -1,27 +1,27 @@
-diff --git a/qmake/CMakeLists.txt b/qmake/CMakeLists.txt
-index 41bf2c77d9..8c09c22f2f 100644
---- a/qtbase/qmake/CMakeLists.txt
-+++ b/qtbase/qmake/CMakeLists.txt
-@@ -31,10 +31,14 @@ target_include_directories(QtLibraryInfo PUBLIC
+diff --git a/qmake/qmakelibraryinfo.cpp b/qmake/qmakelibraryinfo.cpp
+index 531eb2372b..4f7ebaa20e 100644
+--- a/qtbase/qmake/qmakelibraryinfo.cpp
++++ b/qtbase/qmake/qmakelibraryinfo.cpp
+@@ -76,12 +76,14 @@ void QMakeLibraryInfo::sysrootify(QString &path)
+     if (sysroot.isEmpty())
+         return;
  
- # Chop off the "/mkspecs" part of INSTALL_MKSPECSDIR
- get_filename_component(hostdatadir "${INSTALL_MKSPECSDIR}" DIRECTORY)
-+message(STATUS "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz1 QT_HOST_DATADIR=${hostdatadir}")
-+
- if("${hostdatadir}" STREQUAL "")
-     set(hostdatadir ".")
- endif()
++    std::cout << "QMakeLibraryInfo::sysrootify path0="<<path.toStdString() << std::endl;
+     if (path.size() > 2 && path.at(1) == QLatin1Char(':')
+         && (path.at(2) == QLatin1Char('/') || path.at(2) == QLatin1Char('\\'))) {
+         path.replace(0, 2, sysroot); // Strip out the drive on Windows targets
+     } else {
+         path.prepend(sysroot);
+     }
++    std::cout << "QMakeLibraryInfo::sysrootify path1="<<path.toStdString() << std::endl;
+ }
  
-+message(STATUS "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz2 QT_HOST_DATADIR=${hostdatadir}")
-+
- qt_internal_library_deprecation_level(deprecation_define)
- 
- target_compile_definitions(QtLibraryInfo PUBLIC
+ QString QMakeLibraryInfo::path(int loc)
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index a8934fa38c..fb06e83456 100644
+index a8934fa38c..20df0797fd 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -457,20 +457,20 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
+@@ -457,10 +457,10 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
      static constexpr auto qtConfEntries = qOffsetStringArray(
          "Prefix", ".",
          "Documentation", "doc", // should be ${Data}/doc
@@ -35,10 +35,7 @@ index a8934fa38c..fb06e83456 100644
  #else
          "LibraryExecutables", "libexec", // should be ${ArchData}/libexec
  #endif
--        "Binaries", "bin",
-+        "Binaries", "Library/lib/qt6",
-         "Plugins", "plugins", // should be ${ArchData}/plugins
- 
+@@ -470,7 +470,7 @@ QLibraryInfoPrivate::LocationInfo QLibraryInfoPrivate::locationInfo(QLibraryInfo
          "QmlImports", "qml", // should be ${ArchData}/qml
  
          "ArchData", ".",
