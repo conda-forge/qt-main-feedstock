@@ -334,6 +334,8 @@ outputs:
       - {{ library }}share/qt
       - {{ library }}translations/*.qm
     test:
+      script: run_test.sh  # [unix]
+      script: run_test.bat  # [win]
       requires:
         - {{ compiler('cxx') }}
         - {{ cdt('mesa-libgl-devel') }}      # [linux]
