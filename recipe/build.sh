@@ -94,19 +94,8 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
-  -DQT_BUILD_SUBMODULES="qtbase;\
-qtdeclarative;\
-qtimageformats;\
-qtmultimedia;\
-qtshadertools;\
-qtsvg;\
-qttools;\
-qttranslations;\
-qt5compat;\
-qtwebchannel;\
-qtwebsockets" \
+  -DQT_BUILD_SUBMODULES="qtbase" \
   ..
-exit 0
 cmake --build . --target install
 
 cd ${PREFIX}
@@ -138,3 +127,5 @@ Translations = ${PREFIX}/share/qt6/translations
 Examples = ${PREFIX}/share/doc/qt6/examples
 Tests = ${PREFIX}/tests
 EOF
+
+qmake6 -query
