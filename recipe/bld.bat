@@ -2,6 +2,9 @@
 setlocal EnableExtensions EnableDelayedExpansion
 set SHORT_VERSION=%PKG_VERSION:~0,-2%
 
+set STAGE=%SRC_DIR%\stage
+mkdir %STAGE%
+
 :: You may not always want this when doing dirty builds (debugging late stage
 :: problems, but if debugging configure time issues you probably do want this).
 if exist config.cache del config.cache
@@ -59,12 +62,12 @@ pushd b
 :: QMAKE_PRL_TARGET = Qt5Bootstrap.condad.lib
 :: for some odd reason.
 call "../configure" ^
-     -prefix %LIBRARY_PREFIX% ^
-     -libdir %LIBRARY_LIB% ^
-     -bindir %LIBRARY_BIN% ^
-     -headerdir %LIBRARY_INC%\qt ^
-     -archdatadir %LIBRARY_PREFIX% ^
-     -datadir %LIBRARY_PREFIX% ^
+     -prefix %STAGE% ^
+     -libdir %STAGE%\lib ^
+     -bindir %STAGE%\bin ^
+     -headerdir %STAGE%\include\qt ^
+     -archdatadir %STAGE% ^
+     -datadir %STAGE% ^
      -optimized-tools ^
      %LIBRARY_PATHS% ^
      -L %LIBRARY_LIB% ^
@@ -117,12 +120,7 @@ copy qtbase\bin\qmake.exe %LIBRARY_BIN%\qmake.exe
 
 popd
 pushd qtcharts
-%LIBRARY_BIN%\qmake.exe qtcharts.pro PREFIX=%PREFIX%
+%STAGE%\bin\qmake.exe qtcharts.pro PREFIX=%STAGE%
 jom
 jom install
 popd
-
-:: To rewrite qt.conf contents per conda environment
-if not exist %PREFIX%\Scripts mkdir %PREFIX%\Scripts
-copy "%RECIPE_DIR%\write_qtconf.bat" "%PREFIX%\Scripts\.qt-post-link.bat"
-if %errorlevel% neq 0 exit /b %errorlevel%

@@ -46,7 +46,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 19
+  number: 20
   detect_binary_files_with_prefix: true
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
@@ -156,6 +156,7 @@ outputs:
 
   # Everything except shared libraries in lib and plugins
   - name: qt-main
+    script: install.py
     build:
       detect_binary_files_with_prefix: true
       run_exports:
@@ -278,61 +279,6 @@ outputs:
       run_constrained:
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
         - qt {{ version }}
-    files:
-      - {{ library }}bin/Assistant.app                                        # [osx]
-      - {{ library }}bin/Designer.app                                         # [osx]
-      - {{ library }}bin/Linguist.app                                         # [osx]
-      - {{ library }}bin/pixeltool.app                                        # [osx]
-      - {{ library }}bin/qdbusviewer.app                                      # [osx]
-      - {{ library }}bin/qml.app                                              # [osx]
-      - {{ library }}bin/xc-avoidance                                         # [osx]
-      - {{ library }}bin/assistant*                                           # [not osx]
-      - {{ library }}bin/balsam*
-      - {{ library }}bin/canbusutil*
-      - {{ library }}bin/designer*                                            # [not osx]
-      - {{ library }}bin/dumpcpp*                                             # [win]
-      - {{ library }}bin/dumpdoc*                                             # [win]
-      - {{ library }}bin/fixqt4headers.pl*
-      - {{ library }}bin/idc*                                                 # [win]
-      - {{ library }}bin/lconvert*
-      - {{ library }}bin/libEGL.dll                                           # [win]
-      - {{ library }}bin/libGLESv2.dll                                        # [win]
-      - {{ library }}bin/linguist*                                            # [not osx]
-      - {{ library }}bin/lprodump*
-      - {{ library }}bin/lrelease*
-      - {{ library }}bin/lupdate*
-      - {{ library }}bin/mac*qt                                               # [osx]
-      - {{ library }}bin/meshdebug*
-      - {{ library }}bin/moc*
-      - {{ library }}bin/opengl32sw.dll                                       # [win]
-      - {{ library }}bin/pixeltool*                                           # [not osx]
-      - {{ library }}bin/q*
-      - {{ library }}bin/rcc*
-      - {{ library }}bin/repc*
-      - {{ library }}bin/syncqt.pl*
-      - {{ library }}bin/testcon*                                             # [win]
-      - {{ library }}bin/tracegen*
-      - {{ library }}bin/uic*
-      - {{ library }}bin/windeployqt*                                         # [win]
-      - {{ library }}bin/xmlpatterns*
-      - {{ library }}doc/config/*qdocconf
-      - {{ library }}doc/global
-      - {{ library }}include/qt
-      - {{ library }}lib/cmake/Qt*/**/*
-      - {{ library }}lib/metatypes/qt*
-      - {{ library }}lib/pkgconfig/Qt*
-      - {{ library }}lib/libQt*{{ SHLIB_EXT }}                                # [unix]
-      - {{ library }}lib/libQt*.prl                                           # [unix]
-      - {{ library }}lib/libQt*.a                                             # [unix]
-      - {{ library }}lib/libEGL.*                                             # [win]
-      - {{ library }}lib/libGLESv2.*                                          # [win]
-      - {{ library }}lib/Qt*                                                  # [win]
-      - {{ library }}lib/qt*                                                  # [win]
-      - {{ library }}mkspecs
-      - {{ library }}phrasebooks
-      - {{ library }}qml
-      - {{ library }}share/qt
-      - {{ library }}translations/*.qm
     test:
       script: run_test.sh  # [unix]
       script: run_test.bat  # [win]
@@ -364,6 +310,7 @@ outputs:
 
   # Only what's needed for run_exports downstream
   - name: libqt5
+    script: install.py
     build:
       detect_binary_files_with_prefix: true
       run_exports:
@@ -429,11 +376,6 @@ outputs:
       run_constrained:
         - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
         - qt {{ version }}
-    files:
-      - {{ library }}plugins
-      - lib/libQt5*.so.5*                                                     # [linux]
-      - lib/libQt5*.5*.dylib                                                  # [osx]
-      - Library/bin/Qt5*.dll                                                  # [win]
 
 about:
   home: https://qt.io
@@ -447,6 +389,7 @@ about:
   dev_url: https://github.com/qt
 
 extra:
+  feedstock-name: qt-main
   recipe-maintainers:
     - andfoy
     - ccordoba12
@@ -459,4 +402,3 @@ extra:
     - Tobias-Fischer
     - matthiasdiener  # (currently building linux_ppc64le manually)
     - jschueller
-  feedstock-name: qt-main
