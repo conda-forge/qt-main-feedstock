@@ -2,7 +2,7 @@
 setlocal EnableExtensions EnableDelayedExpansion
 set SHORT_VERSION=%PKG_VERSION:~0,-2%
 
-set STAGE=%SRC_DIR%\stage
+set STAGE="%SRC_DIR%\stage"
 mkdir %STAGE%
 
 :: You may not always want this when doing dirty builds (debugging late stage
