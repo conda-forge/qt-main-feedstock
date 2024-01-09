@@ -10,6 +10,9 @@ if [[ -d qt-build ]]; then
   rm -rf qt-build
 fi
 
+STAGE=${SRC_DIR}/stage
+mkdir ${STAGE}
+
 mkdir qt-build
 pushd qt-build
 
@@ -96,12 +99,12 @@ if [[ $(uname) == "Linux" ]]; then
     # -no-optimize-size is passed as a workaround for https://github.com/conda-forge/qt-feedstock/issues/241 and
     # https://bugreports.qt.io/browse/QTBUG-99545 . Once we bump the release to qt 5.15.11, we can change it back
     # to -optimize-size for consistency with Windows and macOS
-    ../configure -prefix ${PREFIX} \
-                -libdir ${PREFIX}/lib \
-                -bindir ${PREFIX}/bin \
-                -headerdir ${PREFIX}/include/qt \
-                -archdatadir ${PREFIX} \
-                -datadir ${PREFIX} \
+    ../configure -prefix ${STAGE} \
+                -libdir ${STAGE}/lib \
+                -bindir ${STAGE}/bin \
+                -headerdir ${STAGE}/include/qt \
+                -archdatadir ${STAGE} \
+                -datadir ${STAGE} \
                 -I ${PREFIX}/include \
                 -L ${PREFIX}/lib \
                 -L ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 \
@@ -211,12 +214,12 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     fi
     # On OSX, we use the native secure transport instead of openssl
     # https://forum.qt.io/topic/55853/openssl-and-mac-os-x/7
-    ../configure -prefix ${PREFIX} \
-                -libdir ${PREFIX}/lib \
-                -bindir ${PREFIX}/bin \
-                -headerdir ${PREFIX}/include/qt \
-                -archdatadir ${PREFIX} \
-                -datadir ${PREFIX} \
+    ../configure -prefix ${STAGE} \
+                -libdir ${STAGE}/lib \
+                -bindir ${STAGE}/bin \
+                -headerdir ${STAGE}/include/qt \
+                -archdatadir ${STAGE} \
+                -datadir ${STAGE} \
                 $PLATFORM \
                 -I ${PREFIX}/include \
                 -I ${PREFIX}/include/mysql \
@@ -265,16 +268,16 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     make install -j${MAKE_JOBS}
 
     # Avoid Xcode (2)
-    mkdir -p "${PREFIX}"/bin/xc-avoidance || true
-    cp "${RECIPE_DIR}"/xcrun "${PREFIX}"/bin/xc-avoidance/
-    cp "${RECIPE_DIR}"/xcodebuild "${PREFIX}"/bin/xc-avoidance/
+    mkdir -p "${STAGE}"/bin/xc-avoidance || true
+    cp "${RECIPE_DIR}"/xcrun "${STAGE}"/bin/xc-avoidance/
+    cp "${RECIPE_DIR}"/xcodebuild "${STAGE}"/bin/xc-avoidance/
 fi
 
 # Qt Charts
 # ---------
 popd
 pushd qtcharts
-${PREFIX}/bin/qmake qtcharts.pro PREFIX=${PREFIX}
+${STAGE}/bin/qmake qtcharts.pro PREFIX=${STAGE}
 make -j${MAKE_JOBS} || exit 1
 make install || exit 1
 popd
@@ -282,15 +285,15 @@ popd
 # Post build setup
 # ----------------
 # Remove static libraries that are not part of the Qt SDK.
-pushd "${PREFIX}"/lib > /dev/null
+pushd "${STAGE}"/lib > /dev/null
     find . -name "*.a" -and -not -name "libQt*" -exec rm -f {} \;
 popd > /dev/null
 
 # Add qt.conf file to the package to make it fully relocatable
-cp "${RECIPE_DIR}"/qt.conf "${PREFIX}"/bin/
+cp "${RECIPE_DIR}"/qt.conf "${STAGE}"/bin/
 
 if [[ ${HOST} =~ .*darwin.* ]]; then
-  pushd ${PREFIX}
+  pushd ${STAGE}
     # We built Qt itself with SDK 10.10, but we shouldn't
     # force users to also build their Qt apps with SDK 10.10
     # https://bugreports.qt.io/browse/QTBUG-41238
@@ -304,7 +307,7 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
   popd
 fi
 
-LICENSE_DIR="$PREFIX/share/qt/3rd_party_licenses"
+LICENSE_DIR="${STAGE}/share/qt/3rd_party_licenses"
 for f in $(find * -iname "*LICENSE*" -or -iname "*COPYING*" -or -iname "*COPYRIGHT*" -or -iname "NOTICE"); do
   mkdir -p "$LICENSE_DIR/$(dirname $f)"
   cp -rf $f "$LICENSE_DIR/$f"
