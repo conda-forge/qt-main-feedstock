@@ -2,9 +2,6 @@
 setlocal EnableExtensions EnableDelayedExpansion
 set SHORT_VERSION=%PKG_VERSION:~0,-2%
 
-set STAGE="%SRC_DIR%\stage"
-mkdir %STAGE%
-
 :: You may not always want this when doing dirty builds (debugging late stage
 :: problems, but if debugging configure time issues you probably do want this).
 if exist config.cache del config.cache
@@ -24,6 +21,9 @@ for /F "usebackq delims=" %%F in (`dir /b /ad-h`) do (
 )
 popd
 endlocal
+
+set STAGE=%SRC_DIR%\stage
+mkdir %STAGE%
 
 :: Set LLVM path in order to build docs
 set LLVM_INSTALL_DIR=%PREFIX%\Library
