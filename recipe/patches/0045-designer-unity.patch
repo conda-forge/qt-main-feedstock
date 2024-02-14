@@ -1,0 +1,13 @@
+diff --git a/src/designer/src/components/lib/CMakeLists.txt b/src/designer/src/components/lib/CMakeLists.txt
+index 6fe4d73da..8697e9f0e 100644
+--- a/qttools/src/designer/src/components/lib/CMakeLists.txt
++++ b/qttools/src/designer/src/components/lib/CMakeLists.txt
+@@ -96,6 +96,8 @@ qt_internal_add_module(DesignerComponentsPrivate
+         qdesigner_components.cpp
+     NO_UNITY_BUILD_SOURCES
+         ../tabordereditor/tabordereditor.cpp # redefinition of 'QMetaTypeId<QList<QWidget *>>' (from qdesigner_resource.cpp)
++        ../formeditor/deviceprofiledialog.cpp
++        ../formeditor/formwindow.cpp
+     DEFINES
+         QDESIGNER_COMPONENTS_LIBRARY
+         QT_STATICPLUGIN
