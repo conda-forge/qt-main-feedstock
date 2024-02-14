@@ -26,7 +26,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 8
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
