@@ -15,9 +15,6 @@ source:
 
       - patches/0015-qt6-conf-osx.patch
 
-      # https://bugreports.qt.io/browse/QTBUG-120487
-      - patches/0001-CMake-Fix-user_facing_tool_links.txt-for-Apple-platf.patch
-
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
