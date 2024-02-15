@@ -23,8 +23,6 @@ if not exist %LIBRARY_BIN%\opengl32sw.dll exit /b 1
 
 set OPENGLVER=dynamic
 
-mkdir build && cd build
-
 :: have to set path for internal tools: https://bugreports.qt.io/browse/QTBUG-107009
 set "PATH=%SRC_DIR%\build\qtbase\lib\qt6\bin;%PATH%"
 
@@ -51,10 +49,10 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_vulkan=ON ^
     -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
-    ..
+    -B build .
 if errorlevel 1 exit 1
 
-cmake --build . --target install --config Release
+cmake --build build --target install --config Release
 if errorlevel 1 exit 1
 
 :: we set INSTALL_BINDIR != /bin to avoid clobbering qt5 exes but still dlls in /bin
