@@ -16,8 +16,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       libglvnd-egl-${cdt_name}-x86_64
   fi
   (
-    mkdir -p build_native && cd build_native
-
     export CC=$CC_FOR_BUILD
     export CXX=$CXX_FOR_BUILD
     export LDFLAGS=${LDFLAGS//$PREFIX/$BUILD_PREFIX}
@@ -38,18 +36,16 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DFEATURE_system_sqlite=ON \
       -DFEATURE_framework=OFF \
       -DFEATURE_gssapi=OFF \
-      -DFEATURE_qml_animation=OFF \
       -DQT_BUILD_SUBMODULES="qtbase;qtshadertools;qttools" \
       -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
       -DFEATURE_opengl=OFF \
       -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
       -DBUILD_WITH_PCH=OFF \
-    ..
-    cmake --build . --target install
+      -B build_native .
+    cmake --build build_native --target install
     mv _hidden $BUILD_PREFIX/${HOST}
   )
-  rm -r build_native
   CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DBUILD_WITH_PCH=OFF"
 
   # Error: unknown architecture `nocona' on linux-aarch64
@@ -71,7 +67,6 @@ if test "${build_platform}" = "linux-64"; then
   CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
-mkdir build && cd build
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
@@ -105,8 +100,8 @@ qttranslations;\
 qt5compat;\
 qtwebchannel;\
 qtwebsockets" \
-  ..
-cmake --build . --target install
+  -B build .
+cmake --build build --target install
 
 cd ${PREFIX}
 mkdir -p bin
