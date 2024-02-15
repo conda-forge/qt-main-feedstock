@@ -98,6 +98,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
 qtdeclarative;\
 qtimageformats;\
 qtmultimedia;\
+qtpdf;\
 qtshadertools;\
 qtsvg;\
 qttools;\
