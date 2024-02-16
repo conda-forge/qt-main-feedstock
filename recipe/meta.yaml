@@ -72,7 +72,7 @@ requirements:
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [build_platform != target_platform]
-    - clangdev >=9, <16                 # [build_platform != target_platform]
+    - clangdev >=9                      # [build_platform != target_platform]
     # native libs
     - icu                               # [build_platform != target_platform]
     - double-conversion                 # [build_platform != target_platform]
