@@ -3,9 +3,3 @@ MACOSX_DEPLOYMENT_TARGET:  # [osx]
   - '11.0'                 # [osx]
 MACOSX_SDK_VERSION:        # [osx]
   - '12.3'                 # [osx]
-
-# https://bugreports.qt.io/browse/QTBUG-117951
-c_compiler_version:        # [osx]
-  - 15                     # [osx]
-cxx_compiler_version:      # [osx]
-  - 15                     # [osx]
