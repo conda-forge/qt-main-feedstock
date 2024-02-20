@@ -26,7 +26,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 0
+  number: 1
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -72,7 +72,7 @@ requirements:
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [build_platform != target_platform]
-    - clangdev >=9, <16                 # [build_platform != target_platform]
+    - clangdev >=9                      # [build_platform != target_platform]
     # native libs
     - icu                               # [build_platform != target_platform]
     - double-conversion                 # [build_platform != target_platform]
@@ -150,7 +150,7 @@ requirements:
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
     - llvmdev
-    - clangdev >=9, <16
+    - clangdev >=9
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
