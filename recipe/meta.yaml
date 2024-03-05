@@ -29,7 +29,7 @@ source:
 
       # Patch for openssl 3 compatibility, picked up from ubuntu, see
       # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c
-      - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
+      # - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
 
       # This helps compatibility between qt and CXX17
       # https://github.com/conda-forge/qt-main-feedstock/pull/136
