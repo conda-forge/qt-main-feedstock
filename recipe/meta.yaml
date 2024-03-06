@@ -117,7 +117,7 @@ requirements:
     - nspr                               # [unix]
     - nss                                # [unix]
     - libsqlite
-    - mysql-devel                        # [not win]
+    - mysql-devel ==8.0                  # [not win]
     - postgresql                         # [not win]
     - zlib
     - libxcb                             # [linux]
