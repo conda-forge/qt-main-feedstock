@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.10
+- '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -51,7 +51,7 @@ libxml2:
 openssl:
 - '3'
 pcre2:
-- '10.42'
+- '10.43'
 postgresql:
 - '16'
 pulseaudio:
