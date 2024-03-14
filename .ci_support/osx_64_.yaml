@@ -30,6 +30,8 @@ libsqlite:
 - '3'
 macos_machine:
 - x86_64-apple-darwin13.4.0
+mysql_devel:
+- '8.3'
 nspr:
 - '4'
 nss:
