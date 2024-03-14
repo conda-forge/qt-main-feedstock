@@ -38,6 +38,8 @@ libwebp:
 - '1'
 macos_machine:
 - arm64-apple-darwin20.0.0
+mysql_devel:
+- '8.3'
 openssl:
 - '3'
 pcre2:
