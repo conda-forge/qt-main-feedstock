@@ -117,7 +117,7 @@ requirements:
     - nspr                               # [unix]
     - nss                                # [unix]
     - libsqlite
-    - mysql-devel                        # [not win]
+    - mysql-devel 8.0                    # [not win]
     - postgresql                         # [not win]
     - zlib
     - libxcb                             # [linux]
@@ -125,14 +125,16 @@ requirements:
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
-    - llvmdev
+    - llvm
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
-    - libclang {{ cxx_compiler_version }}  # [osx]
-    - libclang                             # [not osx]
+    - libclang     {{ cxx_compiler_version }}     # [osx]
+    - libclang-cpp {{ cxx_compiler_version }}     # [osx]
+    - libclang                                    # [not osx]
+    - libclang-cpp                                # [not osx]
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
