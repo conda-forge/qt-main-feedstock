@@ -98,7 +98,7 @@ requirements:
     - libjpeg-turbo                     # [build_platform != target_platform]
     - libpng                            # [build_platform != target_platform]
     - libsqlite                         # [build_platform != target_platform]
-    - mysql-devel  8.0                  # [build_platform != target_platform]
+    - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
 
@@ -139,7 +139,7 @@ requirements:
     - libjpeg-turbo
     - libpng
     - libsqlite
-    - mysql-devel   8.0                  # [not win]
+    - mysql-devel                        # [not win]
     - postgresql                         # [not win]
     - pcre2
     - zlib
