@@ -48,7 +48,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 19
+  number: 20
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -176,7 +176,6 @@ requirements:
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
     - xorg-xf86vidmodeproto              # [linux]
-    - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
