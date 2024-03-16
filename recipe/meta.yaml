@@ -1,4 +1,4 @@
-{% set version = "5.15.8" %}
+{% set version = "5.15.13" %}
 
 package:
   name: qt-main
@@ -6,7 +6,7 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: 776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9
+    sha256: 9550ec8fc758d3d8d9090e261329700ddcd712e2dda97e5fcfeabfac22bea2ca
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -29,7 +29,7 @@ source:
 
       # Patch for openssl 3 compatibility, picked up from ubuntu, see
       # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c
-      - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
+      # - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
 
       # This helps compatibility between qt and CXX17
       # https://github.com/conda-forge/qt-main-feedstock/pull/136
@@ -48,7 +48,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 19
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -117,7 +117,7 @@ requirements:
     - nspr                               # [unix]
     - nss                                # [unix]
     - libsqlite
-    - mysql-devel                        # [not win]
+    - mysql-devel ==8.0                  # [not win]
     - postgresql                         # [not win]
     - zlib
     - libxcb                             # [linux]

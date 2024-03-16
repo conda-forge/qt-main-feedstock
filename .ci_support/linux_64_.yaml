@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.10
+- '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
