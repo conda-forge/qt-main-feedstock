@@ -50,6 +50,8 @@ libxcb:
 - '1.15'
 libxml2:
 - '2'
+mysql_devel:
+- '8.3'
 nspr:
 - '4'
 nss:
