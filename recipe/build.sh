@@ -126,6 +126,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -plugin-sql-sqlite \
                 -plugin-sql-mysql \
                 -plugin-sql-psql \
+                -vulkan \
                 -egl \
                 -eglfs \
                 -xcb \
