@@ -56,7 +56,7 @@ openssl:
 - '3'
 postgresql:
 - '16'
-pulseaudio:
+pulseaudio_client:
 - '17'
 target_platform:
 - linux-64
