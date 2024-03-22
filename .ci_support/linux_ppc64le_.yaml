@@ -56,8 +56,8 @@ openssl:
 - '3'
 postgresql:
 - '16'
-pulseaudio_client:
-- '16.1'
+pulseaudio:
+- '17'
 target_platform:
 - linux-ppc64le
 zip_keys:
