@@ -57,7 +57,7 @@ pcre2:
 postgresql:
 - '16'
 pulseaudio:
-- '16.1'
+- '17'
 target_platform:
 - linux-64
 zip_keys:
