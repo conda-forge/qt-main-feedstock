@@ -1,7 +1,7 @@
 BUILD:
 - aarch64-conda_cos7-linux-gnu
 alsa_lib:
-- 1.2.10
+- '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -59,7 +59,7 @@ openssl:
 postgresql:
 - '16'
 pulseaudio_client:
-- '16.1'
+- '17'
 target_platform:
 - linux-aarch64
 zip_keys:
