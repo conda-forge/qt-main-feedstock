@@ -53,7 +53,11 @@ requirements:
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
-    - cmake >=3.16
+    - cmake
+    # hmaarrfk -- trying to debug the builds on OSX
+    # it seems like when cmake switched from 3.28.3 to 3.29.0
+    # on osx, a few files stopped being compiled according to the logs
+    - cmake 3.28.*                       # [osx]
     - ninja
     - ruby >=2.5                         # [linux]
     - bison                              # [linux]
