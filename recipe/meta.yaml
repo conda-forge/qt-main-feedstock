@@ -43,12 +43,17 @@ source:
       # https://github.com/Homebrew/homebrew-core/pull/145729
       - patches/0016-qmake-xcode15.patch
 
+      # https://bugreports.qt.io/browse/QTBUG-121183
+      # https://codereview.qt-project.org/c/qt/qtbase/+/532555
+      - patches/0017-Backport-fixes-for-compatibility-with-mysql-8.3.patch
+      - patches/0018-Avoid-usage-of-mysql_ssl_set.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 19
+  number: 20
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -125,14 +130,16 @@ requirements:
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
-    - llvmdev
+    - llvm
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
-    - libclang {{ cxx_compiler_version }}  # [osx]
-    - libclang                             # [not osx]
+    - libclang     {{ cxx_compiler_version }}     # [osx]
+    - libclang-cpp {{ cxx_compiler_version }}     # [osx]
+    - libclang                                    # [not osx]
+    - libclang-cpp                                # [not osx]
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
@@ -176,7 +183,6 @@ requirements:
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
     - xorg-xf86vidmodeproto              # [linux]
-    - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}

@@ -1,5 +1,5 @@
 alsa_lib:
-- 1.2.10
+- '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -46,6 +46,8 @@ libxcb:
 - '1.15'
 libxml2:
 - '2'
+mysql_devel:
+- '8.3'
 nspr:
 - '4'
 nss:
@@ -55,7 +57,7 @@ openssl:
 postgresql:
 - '16'
 pulseaudio_client:
-- '16.1'
+- '17'
 target_platform:
 - linux-ppc64le
 zip_keys:
