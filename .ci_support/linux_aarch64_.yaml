@@ -52,6 +52,8 @@ libxcb:
 - '1.15'
 libxml2:
 - '2'
+mysql_devel:
+- '8.3'
 openssl:
 - '3'
 pcre2:
@@ -59,7 +61,7 @@ pcre2:
 postgresql:
 - '16'
 pulseaudio:
-- '16.1'
+- '17'
 target_platform:
 - linux-aarch64
 zip_keys:

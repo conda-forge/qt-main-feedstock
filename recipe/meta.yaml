@@ -26,7 +26,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -53,7 +53,11 @@ requirements:
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
-    - cmake >=3.16
+    - cmake
+    # hmaarrfk -- trying to debug the builds on OSX
+    # it seems like when cmake switched from 3.28.3 to 3.29.0
+    # on osx, a few files stopped being compiled according to the logs
+    - cmake 3.28.*                       # [osx]
     - ninja
     - ruby >=2.5                         # [linux]
     - bison                              # [linux]
@@ -149,13 +153,15 @@ requirements:
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
-    - llvmdev
+    - llvm
     - clangdev >=9
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
-    - libclang {{ cxx_compiler_version }}  # [osx]
-    - libclang                             # [not osx]
+    - libclang     {{ cxx_compiler_version }}     # [osx]
+    - libclang-cpp {{ cxx_compiler_version }}     # [osx]
+    - libclang                                    # [not osx]
+    - libclang-cpp                                # [not osx]
     - libcups                            # [linux]
     - zstd
     - alsa-lib                           # [linux]
@@ -198,7 +204,6 @@ requirements:
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
     - xcb-util-cursor                    # [linux]
-    - {{ pin_compatible("libclang") }}
   run_constrained:
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
