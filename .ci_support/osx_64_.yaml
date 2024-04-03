@@ -42,8 +42,6 @@ libwebp:
 - '1'
 macos_machine:
 - x86_64-apple-darwin13.4.0
-mysql_devel:
-- '8.3'
 openssl:
 - '3'
 pcre2:
@@ -55,8 +53,6 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - c_stdlib_version
-  - MACOSX_DEPLOYMENT_TARGET
 zlib:
 - '1.2'
 zstd:
