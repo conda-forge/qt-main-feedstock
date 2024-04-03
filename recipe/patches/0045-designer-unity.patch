@@ -1,13 +1,143 @@
-diff --git a/src/designer/src/components/lib/CMakeLists.txt b/src/designer/src/components/lib/CMakeLists.txt
-index 6fe4d73da..8697e9f0e 100644
---- a/qttools/src/designer/src/components/lib/CMakeLists.txt
-+++ b/qttools/src/designer/src/components/lib/CMakeLists.txt
-@@ -96,6 +96,8 @@ qt_internal_add_module(DesignerComponentsPrivate
-         qdesigner_components.cpp
-     NO_UNITY_BUILD_SOURCES
-         ../tabordereditor/tabordereditor.cpp # redefinition of 'QMetaTypeId<QList<QWidget *>>' (from qdesigner_resource.cpp)
-+        ../formeditor/deviceprofiledialog.cpp
-+        ../formeditor/formwindow.cpp
-     DEFINES
-         QDESIGNER_COMPONENTS_LIBRARY
-         QT_STATICPLUGIN
+From ba222afd56f3766152cfdd79e24bf1450c1a8a5f Mon Sep 17 00:00:00 2001
+From: Friedemann Kleint <Friedemann.Kleint@qt.io>
+Date: Thu, 15 Feb 2024 14:36:22 +0100
+Subject: [PATCH] Qt Designer: Potential fix for Unity builds
+
+Fully qualify all classes in Ui namespaces.
+
+Fixes: QTBUG-120751
+Task-number: QTBUG-115448
+Pick-to: 6.7 6.6
+Change-Id: Ic85fc5604b237ba84c2e4a9c50f4b94cdbb3037c
+---
+
+diff --git a/src/designer/src/components/formeditor/deviceprofiledialog.cpp b/src/designer/src/components/formeditor/deviceprofiledialog.cpp
+index 6deabba..188e24c 100644
+--- a/qttools/src/designer/src/components/formeditor/deviceprofiledialog.cpp
++++ b/qttools/src/designer/src/components/formeditor/deviceprofiledialog.cpp
+@@ -44,7 +44,7 @@
+ 
+ DeviceProfileDialog::DeviceProfileDialog(QDesignerDialogGuiInterface *dlgGui, QWidget *parent) :
+     QDialog(parent),
+-    m_ui(new Ui::DeviceProfileDialog),
++    m_ui(new QT_PREPEND_NAMESPACE(Ui)::DeviceProfileDialog),
+     m_dlgGui(dlgGui)
+ {
+     setModal(true);
+diff --git a/src/designer/src/components/formeditor/formwindowsettings.cpp b/src/designer/src/components/formeditor/formwindowsettings.cpp
+index df3fa01..ad0e32f 100644
+--- a/qttools/src/designer/src/components/formeditor/formwindowsettings.cpp
++++ b/qttools/src/designer/src/components/formeditor/formwindowsettings.cpp
+@@ -143,7 +143,7 @@
+ 
+ FormWindowSettings::FormWindowSettings(QDesignerFormWindowInterface *parent) :
+     QDialog(parent),
+-    m_ui(new ::Ui::FormWindowSettings),
++    m_ui(new QT_PREPEND_NAMESPACE(Ui)::FormWindowSettings),
+     m_formWindow(qobject_cast<FormWindowBase*>(parent)),
+     m_oldData(new FormWindowData)
+ {
+diff --git a/src/designer/src/components/formeditor/templateoptionspage.cpp b/src/designer/src/components/formeditor/templateoptionspage.cpp
+index b549812..2063972 100644
+--- a/qttools/src/designer/src/components/formeditor/templateoptionspage.cpp
++++ b/qttools/src/designer/src/components/formeditor/templateoptionspage.cpp
+@@ -20,7 +20,7 @@
+ TemplateOptionsWidget::TemplateOptionsWidget(QDesignerFormEditorInterface *core, QWidget *parent) :
+     QWidget(parent),
+     m_core(core),
+-    m_ui(new Ui::TemplateOptionsWidget)
++    m_ui(new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::TemplateOptionsWidget)
+ {
+     m_ui->setupUi(this);
+ 
+diff --git a/src/designer/src/components/propertyeditor/newdynamicpropertydialog.cpp b/src/designer/src/components/propertyeditor/newdynamicpropertydialog.cpp
+index 6ac1638..a8972c3 100644
+--- a/qttools/src/designer/src/components/propertyeditor/newdynamicpropertydialog.cpp
++++ b/qttools/src/designer/src/components/propertyeditor/newdynamicpropertydialog.cpp
+@@ -18,7 +18,7 @@
+                                                        QWidget *parent)   :
+     QDialog(parent),
+     m_dialogGui(dialogGui),
+-    m_ui(new Ui::NewDynamicPropertyDialog)
++    m_ui(new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::NewDynamicPropertyDialog)
+ {
+     m_ui->setupUi(this);
+     connect(m_ui->m_lineEdit, &QLineEdit::textChanged, this, &NewDynamicPropertyDialog::nameChanged);
+diff --git a/src/designer/src/designer/preferencesdialog.cpp b/src/designer/src/designer/preferencesdialog.cpp
+index 6c597c6..eac6e82 100644
+--- a/qttools/src/designer/src/designer/preferencesdialog.cpp
++++ b/qttools/src/designer/src/designer/preferencesdialog.cpp
+@@ -15,7 +15,7 @@
+ 
+ PreferencesDialog::PreferencesDialog(QDesignerFormEditorInterface *core, QWidget *parentWidget) :
+     QDialog(parentWidget),
+-    m_ui(new Ui::PreferencesDialog()),
++    m_ui(new QT_PREPEND_NAMESPACE(Ui)::PreferencesDialog()),
+     m_core(core)
+ {
+     m_ui->setupUi(this);
+diff --git a/src/designer/src/designer/qdesigner_appearanceoptions.cpp b/src/designer/src/designer/qdesigner_appearanceoptions.cpp
+index 4c68a44..a4e0621 100644
+--- a/qttools/src/designer/src/designer/qdesigner_appearanceoptions.cpp
++++ b/qttools/src/designer/src/designer/qdesigner_appearanceoptions.cpp
+@@ -29,7 +29,7 @@
+ // ---------------- QDesignerAppearanceOptionsWidget
+ QDesignerAppearanceOptionsWidget::QDesignerAppearanceOptionsWidget(QWidget *parent) :
+     QWidget(parent),
+-    m_ui(new Ui::AppearanceOptionsWidget)
++    m_ui(new QT_PREPEND_NAMESPACE(Ui)::AppearanceOptionsWidget)
+ {
+     m_ui->setupUi(this);
+ 
+diff --git a/src/designer/src/lib/shared/gridpanel.cpp b/src/designer/src/lib/shared/gridpanel.cpp
+index 645c799..a5f6ae6 100644
+--- a/qttools/src/designer/src/lib/shared/gridpanel.cpp
++++ b/qttools/src/designer/src/lib/shared/gridpanel.cpp
+@@ -12,7 +12,7 @@
+ GridPanel::GridPanel(QWidget *parentWidget) :
+     QWidget(parentWidget)
+ {
+-    m_ui = new Ui::GridPanel;
++    m_ui = new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::GridPanel;
+     m_ui->setupUi(this);
+ 
+     connect(m_ui->m_resetButton, &QAbstractButton::clicked, this, &GridPanel::reset);
+diff --git a/src/designer/src/lib/shared/newactiondialog.cpp b/src/designer/src/lib/shared/newactiondialog.cpp
+index 7c27e3a..598549e 100644
+--- a/qttools/src/designer/src/lib/shared/newactiondialog.cpp
++++ b/qttools/src/designer/src/lib/shared/newactiondialog.cpp
+@@ -44,7 +44,7 @@
+ // -------------------- NewActionDialog
+ NewActionDialog::NewActionDialog(ActionEditor *parent) :
+     QDialog(parent, Qt::Sheet),
+-    m_ui(new Ui::NewActionDialog),
++    m_ui(new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::NewActionDialog),
+     m_actionEditor(parent),
+     m_autoUpdateObjectName(true)
+ {
+diff --git a/src/designer/src/lib/shared/newformwidget.cpp b/src/designer/src/lib/shared/newformwidget.cpp
+index 1cf1c8b..383b3fc 100644
+--- a/qttools/src/designer/src/lib/shared/newformwidget.cpp
++++ b/qttools/src/designer/src/lib/shared/newformwidget.cpp
+@@ -102,7 +102,7 @@
+ NewFormWidget::NewFormWidget(QDesignerFormEditorInterface *core, QWidget *parentWidget) :
+     QDesignerNewFormWidgetInterface(parentWidget),
+     m_core(core),
+-    m_ui(new Ui::NewFormWidget),
++      m_ui(new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::NewFormWidget),
+     m_currentItem(nullptr),
+     m_acceptedItem(nullptr)
+ {
+diff --git a/src/designer/src/lib/shared/orderdialog.cpp b/src/designer/src/lib/shared/orderdialog.cpp
+index be94b51..faa1350 100644
+--- a/qttools/src/designer/src/lib/shared/orderdialog.cpp
++++ b/qttools/src/designer/src/lib/shared/orderdialog.cpp
+@@ -21,7 +21,7 @@
+ 
+ OrderDialog::OrderDialog(QWidget *parent) :
+     QDialog(parent),
+-    m_ui(new Ui::OrderDialog),
++    m_ui(new QT_PREPEND_NAMESPACE(qdesigner_internal)::Ui::OrderDialog),
+     m_format(PageOrderFormat)
+ {
+     m_ui->setupUi(this);
