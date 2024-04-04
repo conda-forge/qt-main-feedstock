@@ -13,6 +13,7 @@ source:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
+      # dont look for qt.conf in bundle directory
       - patches/0015-qt6-conf-osx.patch
 
       # https://bugreports.qt.io/browse/QTBUG-120751
