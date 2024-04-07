@@ -4,6 +4,10 @@ c_compiler:
 - clang
 c_compiler_version:
 - '15'
+c_stdlib:
+- macosx_deployment_target
+c_stdlib_version:
+- '11.0'
 channel_sources:
 - conda-forge
 channel_targets:
@@ -15,7 +19,7 @@ cxx_compiler_version:
 glib:
 - '2'
 gstreamer:
-- '1.22'
+- '1.24'
 icu:
 - '73'
 krb5:
@@ -28,8 +32,6 @@ libsqlite:
 - '3'
 macos_machine:
 - arm64-apple-darwin20.0.0
-mysql_devel:
-- '8.3'
 nspr:
 - '4'
 nss:
