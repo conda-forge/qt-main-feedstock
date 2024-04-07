@@ -23,7 +23,7 @@ cxx_compiler_version:
 glib:
 - '2'
 gstreamer:
-- '1.22'
+- '1.24'
 harfbuzz:
 - '8'
 icu:
