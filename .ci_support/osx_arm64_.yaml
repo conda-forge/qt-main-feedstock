@@ -20,10 +20,10 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '16'
+ffmpeg:
+- '6'
 glib:
 - '2'
-gstreamer:
-- '1.24'
 harfbuzz:
 - '8'
 icu:

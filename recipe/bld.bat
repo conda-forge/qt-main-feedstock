@@ -47,6 +47,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_system_sqlite=ON ^
     -DFEATURE_quick3d_assimp=OFF ^
     -DFEATURE_vulkan=ON ^
+    -DQT_MEDIA_BACKEND=ffmpeg ^
     -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     -B build .
