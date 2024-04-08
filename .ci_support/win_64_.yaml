@@ -1,5 +1,7 @@
 c_compiler:
 - vs2019
+c_stdlib:
+- vs
 channel_sources:
 - conda-forge
 channel_targets:
@@ -11,7 +13,7 @@ cxx_compiler:
 glib:
 - '2'
 gstreamer:
-- '1.22'
+- '1.24'
 icu:
 - '73'
 krb5:
