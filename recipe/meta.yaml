@@ -88,7 +88,6 @@ requirements:
     - freetype                          # [(build_platform != target_platform) and linux]
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
-    - ffmpeg                            # [build_platform != target_platform]
     - pulseaudio                        # [(build_platform != target_platform) and linux]
     - libxml2                           # [(build_platform != target_platform) and linux]
     - libxkbcommon                      # [(build_platform != target_platform) and linux]
