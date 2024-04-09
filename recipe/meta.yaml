@@ -88,6 +88,8 @@ requirements:
     - freetype                          # [(build_platform != target_platform) and linux]
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
+    - gst-plugins-base {{ gstreamer }}  # [(build_platform != target_platform) and linux]
+    - gstreamer                         # [(build_platform != target_platform) and linux]
     - pulseaudio                        # [(build_platform != target_platform) and linux]
     - libxml2                           # [(build_platform != target_platform) and linux]
     - libxkbcommon                      # [(build_platform != target_platform) and linux]
@@ -132,7 +134,9 @@ requirements:
     - freetype                           # [linux]
     - harfbuzz
     - glib
-    - ffmpeg
+    - gst-plugins-base {{ gstreamer }}   # [linux and not x86_64]
+    - gstreamer                          # [linux and not x86_64]
+    - ffmpeg                             # [not (linux and not x86_64)]
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
