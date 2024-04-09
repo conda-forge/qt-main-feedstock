@@ -1,8 +1,11 @@
 #!/bin/sh
 set -ex
 
+export QT_MEDIA_BACKEND=ffmpeg
+
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   if [[ "${build_platform}" == "linux-64" ]]; then
+    export QT_MEDIA_BACKEND=gstreamer
     # There are probably equivalent CDTs to install if your build platform
     # is something else. However, it is most common in 2023 to use the x86_64
     # hardware to cross compile for other architectures.
@@ -41,7 +44,6 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DFEATURE_opengl=OFF \
       -DFEATURE_linguist=OFF \
       -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
-      -DQT_DEFAULT_MEDIA_BACKEND=ffmpeg \
       -DBUILD_WITH_PCH=OFF \
       -B build_native .
     cmake --build build_native --target install
@@ -89,7 +91,6 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
-  -DQT_DEFAULT_MEDIA_BACKEND=ffmpeg \
   -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\
 qtdeclarative;\
