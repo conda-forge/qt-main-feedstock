@@ -42,6 +42,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - sysroot_linux-64 2.17              # [linux]
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
@@ -203,7 +204,6 @@ requirements:
     - xcb-util-renderutil                # [linux]
     - xcb-util-cursor                    # [linux]
   run_constrained:
-    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
 
 test:
