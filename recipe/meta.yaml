@@ -27,7 +27,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -106,6 +106,7 @@ requirements:
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
+    - wayland                           # [(build_platform != target_platform) and linux]
 
     - xcb-util                          # [(build_platform != target_platform) and linux]
     - xcb-util-wm                       # [(build_platform != target_platform) and linux]
@@ -170,6 +171,7 @@ requirements:
     - double-conversion
     - libtiff
     - libwebp
+    - wayland                            # [linux]
     # The xcb-util packages are necessary to build the Qt xcb plugin.
     # It was decided to not use CDTs for qt to resolve issues
     # that may exhibit as segfault due to missing libraries
