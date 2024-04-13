@@ -255,6 +255,10 @@ test:
     - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so  # [linux]
     - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
     - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
+    # We needed to add a related flag, but these two SO files should be part of the
+    # qt6-wayland conda package
+    - test ! -f $PREFIX/lib/libQt6WaylandClient${SHLIB_EXT}  # [unix]
+    - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}  # [unix]
     - qmake6 --version
 
 about:
