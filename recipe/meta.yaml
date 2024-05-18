@@ -27,7 +27,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 2
+  number: 3
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -42,7 +42,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - sysroot_linux-64 2.17              # [linux]
+    - {{ stdlib('c') }}
     - {{ cdt('mesa-libgl-devel') }}      # [linux]
     - {{ cdt('mesa-libegl-devel') }}     # [linux]
     - {{ cdt('mesa-dri-drivers') }}      # [linux]
@@ -208,7 +208,6 @@ requirements:
     - xcb-util-renderutil                # [linux]
     - xcb-util-cursor                    # [linux]
   run_constrained:
-    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.14") }}  # [osx and x86_64]
     - qt {{ version }}
 
 test:
