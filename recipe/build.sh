@@ -34,6 +34,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
       -DCMAKE_INSTALL_RPATH:STRING=${BUILD_PREFIX}/lib \
       -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
       -DFEATURE_system_sqlite=ON \
+      -DFEATURE_gstreamer=OFF \
       -DFEATURE_framework=OFF \
       -DFEATURE_gssapi=OFF \
       -DQT_BUILD_SUBMODULES="qtbase;qtshadertools;qttools" \
@@ -82,11 +83,11 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DINSTALL_MKSPECSDIR=lib/qt6/mkspecs \
   -DINSTALL_EXAMPLESDIR=share/doc/qt6/examples \
   -DFEATURE_system_sqlite=ON \
+  -DFEATURE_gstreamer=OFF \
   -DFEATURE_framework=OFF \
   -DFEATURE_linux_v4l=OFF \
   -DFEATURE_gssapi=OFF \
   -DFEATURE_enable_new_dtags=OFF \
-  -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES="qtbase;\

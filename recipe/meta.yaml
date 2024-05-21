@@ -24,7 +24,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 0
+  number: 1
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -85,8 +85,6 @@ requirements:
     - freetype                          # [(build_platform != target_platform) and linux]
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
-    - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform]
-    - gstreamer                         # [build_platform != target_platform]
     - pulseaudio                        # [(build_platform != target_platform) and linux]
     - libxml2                           # [(build_platform != target_platform) and linux]
     - libxkbcommon                      # [(build_platform != target_platform) and linux]
@@ -132,9 +130,6 @@ requirements:
     - freetype                           # [linux]
     - harfbuzz
     - glib
-    - gst-plugins-base  {{ gstreamer }}  # [unix]
-    # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
-    - gstreamer                          # [unix]
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
