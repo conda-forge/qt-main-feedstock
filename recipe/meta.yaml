@@ -267,8 +267,7 @@ test:
     - test ! -f $PREFIX/lib/libQt6WaylandClient${SHLIB_EXT}  # [unix]
     - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}  # [unix]
     - qmake6 --version
-
-      # QtMultimedia will be split off to a separate feedstock after 6.7.1
+    # QtMultimedia will be split off to a separate feedstock after 6.7.1
     - test ! -f $PREFIX/lib/libQtMultimedia${SHLIB_EXT}  # [unix and version != "6.7.1"]
     - if exist %PREFIX%\\Library\\lib\\Qt6Multimedia.lib exit 1  # [win and version != "6.7.1"]
     - if exist %PREFIX%\\Library\\bin\\Qt6Multimedia.dll exit 1  # [win and version != "6.7.1"]
