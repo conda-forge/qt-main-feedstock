@@ -249,8 +249,6 @@ test:
                       "Quick",
                       "Widgets",
                       "Xml"] %}
-    # QtMultimedia will be split off to a separate feedstock after 6.7.1
-    {% qt_libs.append("Multimedia") %}   # [version == "6.7.1"]
     {% for each_qt_lib in qt_libs %}
     - test -d $PREFIX/include/qt6/Qt{{ each_qt_lib }}  # [unix]
     - test -f $PREFIX/lib/libQt6{{ each_qt_lib }}${SHLIB_EXT}  # [unix]
