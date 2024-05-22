@@ -85,6 +85,8 @@ requirements:
     - freetype                          # [(build_platform != target_platform) and linux]
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
+    - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform]
+    - gstreamer                         # [build_platform != target_platform]
     - ffmpeg                            # [build_platform != target_platform]
     - pulseaudio                        # [(build_platform != target_platform) and linux]
     - libxml2                           # [(build_platform != target_platform) and linux]
@@ -131,6 +133,9 @@ requirements:
     - freetype                           # [linux]
     - harfbuzz
     - glib
+    - gst-plugins-base  {{ gstreamer }}  # [unix]
+    # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
+    - gstreamer                          # [unix]
     - ffmpeg
     - pulseaudio                         # [linux]
     - libxml2                            # [linux]
