@@ -10,8 +10,6 @@ curl:
 - '8'
 cxx_compiler:
 - vs2019
-ffmpeg:
-- '6'
 glib:
 - '2'
 harfbuzz:

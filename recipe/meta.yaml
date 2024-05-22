@@ -88,7 +88,6 @@ requirements:
     # QtMultimedia will be split off to a separate feedstock after 6.7.1
     - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform and version == "6.7.1"]
     - gstreamer                         # [build_platform != target_platform and version == "6.7.1"]
-    - ffmpeg                            # [build_platform != target_platform and version == "6.7.1"]
     - pulseaudio                        # [(build_platform != target_platform) and linux and version == "6.7.1"]
     - libxml2                           # [(build_platform != target_platform) and linux]
     - libxkbcommon                      # [(build_platform != target_platform) and linux]
@@ -138,7 +137,6 @@ requirements:
     - gst-plugins-base  {{ gstreamer }}  # [unix and version == "6.7.1"]
     # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
     - gstreamer                          # [unix and version == "6.7.1"]
-    - ffmpeg                             # [version == "6.7.1"]
     - pulseaudio                         # [linux and version == "6.7.1"]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
@@ -270,11 +268,7 @@ test:
     - if exist %PREFIX%\\Library\\lib\\Qt6Multimedia.lib exit 1  # [win and version != "6.7.1"]
     - if exist %PREFIX%\\Library\\bin\\Qt6Multimedia.dll exit 1  # [win and version != "6.7.1"]
     - test -f $PREFIX/lib/qt6/plugins/multimedia/libgstreamermediaplugin${SHLIB_EXT}  # [unix and version == "6.7.1"]
-    - test -f $PREFIX/lib/qt6/plugins/multimedia/libffmpegmediaplugin${SHLIB_EXT}  # [unix and version == "6.7.1"]
-    - if not exist %PREFIX%\\Library\\lib\\qt6\\plugins\\multimedia\\ffmpegmediaplugin.dll exit 1  # [win and version == "6.7.1"]
     - test ! -f $PREFIX/lib/qt6/plugins/multimedia/libgstreamermediaplugin${SHLIB_EXT}  # [unix and version != "6.7.1"]
-    - test ! -f $PREFIX/lib/qt6/plugins/multimedia/libffmpegmediaplugin${SHLIB_EXT}  # [unix and version != "6.7.1"]
-    - if exist %PREFIX%\\Library\\lib\\qt6\\plugins\\multimedia\\ffmpegmediaplugin.dll exit 1  # [win and version != "6.7.1"]
 
 about:
   home: https://qt.io

@@ -6,7 +6,7 @@ set "MODS=qtbase"
 set "MODS=%MODS%;qtdeclarative"
 set "MODS=%MODS%;qtimageformats"
 :REM qt-multimedia will be a separate pacakge after 6.7.1
-IF %PKG_VERSION%="6.7.1" (
+IF %PKG_VERSION%=="6.7.1" (
    set "MODS=%MODS%;qtmultimedia"
 )
 set "MODS=%MODS%;qtshadertools"
