@@ -69,29 +69,19 @@ if test "${build_platform}" = "linux-64"; then
 fi
 
 # QtMultimedia will be split off to a separate feedstock after 6.7.1
+QT_SUBMODULES="qtbase;\
+qtdeclarative;\
+qtimageformats;\
+qtshadertools;\
+qtsvg;\
+qttools;\
+qttranslations;\
+qt5compat;\
+qtwebchannel;\
+qtwebsockets"
 if test "${PKG_VERSION}" = "6.7.1"; then
-  QT_SUBMODULES="qtbase;\
-qtdeclarative;\
-qtimageformats;\
-qtmultimedia;\
-qtshadertools;\
-qtsvg;\
-qttools;\
-qttranslations;\
-qt5compat;\
-qtwebchannel;\
-qtwebsockets"
-else
-  QT_SUBMODULES="qtbase;\
-qtdeclarative;\
-qtimageformats;\
-qtshadertools;\
-qtsvg;\
-qttools;\
-qttranslations;\
-qt5compat;\
-qtwebchannel;\
-qtwebsockets"
+  QT_SUBMODULES="qtmultimedia;\
+${QT_SUBMODULES}"
 fi
 
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
