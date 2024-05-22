@@ -1,8 +1,6 @@
 #!/bin/sh
 set -ex
 
-export QT_MEDIA_BACKEND=ffmpeg
-
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
   if [[ "${build_platform}" == "linux-64" ]]; then
     # There are probably equivalent CDTs to install if your build platform
@@ -70,6 +68,32 @@ if test "${build_platform}" = "linux-64"; then
   CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
+# QtMultimedia will be split off to a separate feedstock after 6.7.1
+if test "${PKG_VERSION}" = "6.7.1"; then
+  QT_SUBMODULES="qtbase;\
+qtdeclarative;\
+qtimageformats;\
+qtmultimedia;\
+qtshadertools;\
+qtsvg;\
+qttools;\
+qttranslations;\
+qt5compat;\
+qtwebchannel;\
+qtwebsockets"
+else
+  QT_SUBMODULES="qtbase;\
+qtdeclarative;\
+qtimageformats;\
+qtshadertools;\
+qtsvg;\
+qttools;\
+qttranslations;\
+qt5compat;\
+qtwebchannel;\
+qtwebsockets"
+fi
+
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
@@ -92,17 +116,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
-  -DQT_BUILD_SUBMODULES="qtbase;\
-qtdeclarative;\
-qtimageformats;\
-qtmultimedia;\
-qtshadertools;\
-qtsvg;\
-qttools;\
-qttranslations;\
-qt5compat;\
-qtwebchannel;\
-qtwebsockets" \
+  -DQT_BUILD_SUBMODULES=${QT_SUBMODULES} \
   -B build .
 cmake --build build --target install
 
