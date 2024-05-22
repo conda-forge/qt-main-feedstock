@@ -24,6 +24,8 @@ ffmpeg:
 - '6'
 glib:
 - '2'
+gstreamer:
+- '1.24'
 harfbuzz:
 - '8'
 icu:
