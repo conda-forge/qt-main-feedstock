@@ -134,9 +134,11 @@ requirements:
     - harfbuzz
     - glib
     # QtMultimedia will be split off to a separate feedstock after 6.7.1
-    - gst-plugins-base  {{ gstreamer }}  # [unix and version == "6.7.1"]
+    {% if version == "6.7.1" %}
+    - gst-plugins-base  {{ gstreamer }}  # [unix]
     # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
-    - gstreamer                          # [unix and version == "6.7.1"]
+    - gstreamer                          # [unix]
+    {% endif %}
     - pulseaudio                         # [linux and version == "6.7.1"]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
