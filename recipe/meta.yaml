@@ -138,8 +138,8 @@ requirements:
     - gst-plugins-base  {{ gstreamer }}  # [unix]
     # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
     - gstreamer                          # [unix]
+    - pulseaudio                         # [linux]
     {% endif %}
-    - pulseaudio                         # [linux and version == "6.7.1"]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
     - icu
