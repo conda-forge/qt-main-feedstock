@@ -86,9 +86,11 @@ requirements:
     - harfbuzz                          # [build_platform != target_platform]
     - glib                              # [build_platform != target_platform]
     # QtMultimedia will be split off to a separate feedstock after 6.7.1
-    - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform and version == "6.7.1"]
-    - gstreamer                         # [build_platform != target_platform and version == "6.7.1"]
-    - pulseaudio                        # [(build_platform != target_platform) and linux and version == "6.7.1"]
+    {% if version == "6.7.1" %}
+    - gst-plugins-base {{ gstreamer }}  # [build_platform != target_platform]
+    - gstreamer                         # [build_platform != target_platform]
+    - pulseaudio-client                 # [(build_platform != target_platform) and linux]
+    {% endif %}
     - libxml2                           # [(build_platform != target_platform) and linux]
     - libxkbcommon                      # [(build_platform != target_platform) and linux]
     - zlib                              # [build_platform != target_platform]
@@ -138,7 +140,7 @@ requirements:
     - gst-plugins-base  {{ gstreamer }}  # [unix]
     # gstreamer plugin not supported on win32: https://bugreports.qt.io/browse/QTBUG-107073
     - gstreamer                          # [unix]
-    - pulseaudio                         # [linux]
+    - pulseaudio-client                  # [linux]
     {% endif %}
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
