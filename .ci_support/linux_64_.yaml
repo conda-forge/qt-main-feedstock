@@ -58,7 +58,7 @@ pcre2:
 - '10.43'
 postgresql:
 - '16'
-pulseaudio:
+pulseaudio_client:
 - '17.0'
 target_platform:
 - linux-64
