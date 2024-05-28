@@ -5,7 +5,6 @@ mkdir %LIBRARY_PREFIX%\lib\cmake\tiff\include
 set "MODS=qtbase"
 set "MODS=%MODS%;qtdeclarative"
 set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtmultimedia"
 set "MODS=%MODS%;qtshadertools"
 set "MODS=%MODS%;qtsvg"
 set "MODS=%MODS%;qttools"

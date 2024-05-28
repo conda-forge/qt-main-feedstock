@@ -59,12 +59,29 @@ fi
 if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
 fi
 
 if test "${build_platform}" = "linux-64"; then
   # In 2023/07/06 we started having trouble with "running out of space"
   # on azure for linux64 builds, then linux-aarch64.
   CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
+fi
+
+# QtMultimedia will be split off to a separate feedstock after 6.7.1
+QT_SUBMODULES="qtbase;\
+qtdeclarative;\
+qtimageformats;\
+qtshadertools;\
+qtsvg;\
+qttools;\
+qttranslations;\
+qt5compat;\
+qtwebchannel;\
+qtwebsockets"
+if test "${PKG_VERSION}" = "6.7.1"; then
+  QT_SUBMODULES="qtmultimedia;\
+${QT_SUBMODULES}"
 fi
 
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
@@ -89,17 +106,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
   -DFEATURE_quick3d_assimp=OFF \
-  -DQT_BUILD_SUBMODULES="qtbase;\
-qtdeclarative;\
-qtimageformats;\
-qtmultimedia;\
-qtshadertools;\
-qtsvg;\
-qttools;\
-qttranslations;\
-qt5compat;\
-qtwebchannel;\
-qtwebsockets" \
+  -DQT_BUILD_SUBMODULES=${QT_SUBMODULES} \
   -B build .
 cmake --build build --target install
 
