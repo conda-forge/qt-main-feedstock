@@ -76,6 +76,7 @@ qtshadertools;\
 qtsvg;\
 qttools;\
 qttranslations;\
+qtquick3d;\
 qt5compat;\
 qtwebchannel;\
 qtwebsockets"

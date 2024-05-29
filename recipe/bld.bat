@@ -9,6 +9,7 @@ set "MODS=%MODS%;qtimageformats"
 IF %PKG_VERSION%=="6.7.1" (
    set "MODS=%MODS%;qtmultimedia"
 )
+set "MODS=%MODS%;qtquick3d"
 set "MODS=%MODS%;qtshadertools"
 set "MODS=%MODS%;qtsvg"
 set "MODS=%MODS%;qttools"
