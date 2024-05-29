@@ -249,6 +249,7 @@ test:
                       "Test",
                       "Qml",
                       "Quick",
+                      "Quick3D",
                       "Widgets",
                       "Xml"] %}
     {% for each_qt_lib in qt_libs %}
