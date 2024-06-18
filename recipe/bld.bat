@@ -5,11 +5,6 @@ mkdir %LIBRARY_PREFIX%\lib\cmake\tiff\include
 set "MODS=qtbase"
 set "MODS=%MODS%;qtdeclarative"
 set "MODS=%MODS%;qtimageformats"
-:REM qt-multimedia will be a separate pacakge after 6.7.1
-IF %PKG_VERSION%=="6.7.1" (
-   set "MODS=%MODS%;qtmultimedia"
-)
-set "MODS=%MODS%;qtquick3d"
 set "MODS=%MODS%;qtshadertools"
 set "MODS=%MODS%;qtsvg"
 set "MODS=%MODS%;qttools"
@@ -46,12 +41,9 @@ cmake -LAH -G "Ninja" ^
     -DINSTALL_EXAMPLESDIR=share/doc/qt6/examples ^
     -DINSTALL_DATADIR=share/qt6 ^
     -DFEATURE_openssl_linked=ON ^
-    -DFEATURE_gstreamer=OFF ^
     -DFEATURE_system_freetype=ON ^
     -DFEATURE_system_sqlite=ON ^
-    -DFEATURE_quick3d_assimp=OFF ^
     -DFEATURE_vulkan=ON ^
-    -DQT_MEDIA_BACKEND=ffmpeg ^
     -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
     -B build .

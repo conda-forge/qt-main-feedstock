@@ -68,7 +68,6 @@ if test "${build_platform}" = "linux-64"; then
   CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
-# QtMultimedia will be split off to a separate feedstock after 6.7.1
 QT_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
@@ -76,14 +75,9 @@ qtshadertools;\
 qtsvg;\
 qttools;\
 qttranslations;\
-qtquick3d;\
 qt5compat;\
 qtwebchannel;\
 qtwebsockets"
-if test "${PKG_VERSION}" = "6.7.1"; then
-  QT_SUBMODULES="qtmultimedia;\
-${QT_SUBMODULES}"
-fi
 
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
@@ -104,9 +98,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_linux_v4l=OFF \
   -DFEATURE_gssapi=OFF \
   -DFEATURE_enable_new_dtags=OFF \
-  -DFEATURE_gstreamer_gl=OFF \
   -DFEATURE_openssl_linked=ON \
-  -DFEATURE_quick3d_assimp=OFF \
   -DQT_BUILD_SUBMODULES=${QT_SUBMODULES} \
   -B build .
 cmake --build build --target install
