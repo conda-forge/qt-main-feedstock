@@ -135,7 +135,7 @@ requirements:
     - mysql-devel                        # [not win]
     - postgresql                         # [not win]
     - pcre2
-    - zlib
+    - libzlib
     - libxcb                             # [linux]
     - libdrm                             # [linux]
     - openssl
