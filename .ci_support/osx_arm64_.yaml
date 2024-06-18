@@ -22,8 +22,6 @@ cxx_compiler_version:
 - '16'
 glib:
 - '2'
-gstreamer:
-- '1.24'
 harfbuzz:
 - '8'
 icu:
@@ -54,6 +52,6 @@ zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
 zlib:
-- '1.2'
+- '1'
 zstd:
 - '1.5'
