@@ -46,6 +46,8 @@ libtiff:
 - '4.6'
 libwebp:
 - '1'
+libxcb:
+- '1.16'
 libxml2:
 - '2'
 openssl:
