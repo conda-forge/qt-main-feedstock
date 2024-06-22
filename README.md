@@ -215,7 +215,6 @@ Feedstock Maintainers
 * [@Tobias-Fischer](https://github.com/Tobias-Fischer/)
 * [@andfoy](https://github.com/andfoy/)
 * [@ccordoba12](https://github.com/ccordoba12/)
-* [@duncanmmacleod](https://github.com/duncanmmacleod/)
 * [@gillins](https://github.com/gillins/)
 * [@jschueller](https://github.com/jschueller/)
 * [@matthiasdiener](https://github.com/matthiasdiener/)
