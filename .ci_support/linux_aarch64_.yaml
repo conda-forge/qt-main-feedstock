@@ -35,7 +35,7 @@ freetype:
 glib:
 - '2'
 harfbuzz:
-- '8'
+- '9'
 icu:
 - '73'
 krb5:
