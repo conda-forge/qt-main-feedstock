@@ -46,7 +46,7 @@ if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
     cmake --build build_native --target install
     mv _hidden $BUILD_PREFIX/${HOST}
   )
-  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DQT_REQUIRE_HOST_PATH_CHECK=OFF -DBUILD_WITH_PCH=OFF"
+  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DQT_NO_REQUIRE_HOST_PATH_CHECK=ON -DBUILD_WITH_PCH=OFF"
 
   # Error: unknown architecture `nocona' on linux-aarch64
   if test "${target_platform}" = "linux-aarch64"
