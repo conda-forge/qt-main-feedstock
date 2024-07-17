@@ -8,7 +8,6 @@ azure:
   # since build 24 was triggered in order to address the
   # inability to download build 23 on linux-64
   # https://github.com/conda-forge/qt-main-feedstock/issues/280
-  settings_windows:
     timeoutInMinutes: 1
   settings_osx:
     timeoutInMinutes: 1
