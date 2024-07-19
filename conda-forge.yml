@@ -1,16 +1,11 @@
 azure:
   free_disk_space: true
-  settings_win:
-    variables:
-      CONDA_BLD_PATH: C:\bld\
-  # These timeout settings are set to avoid a rebuild of
-  # build 24 for osx and windows
-  # since build 24 was triggered in order to address the
-  # inability to download build 23 on linux-64
-  # https://github.com/conda-forge/qt-main-feedstock/issues/280
-    timeoutInMinutes: 1
   settings_osx:
     timeoutInMinutes: 1
+  settings_win:
+    timeoutInMinutes: 1
+    variables:
+      CONDA_BLD_PATH: C:\bld\
 bot:
   abi_migration_branches:
   - qt6
