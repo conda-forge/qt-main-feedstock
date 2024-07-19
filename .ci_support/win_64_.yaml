@@ -15,7 +15,7 @@ glib:
 harfbuzz:
 - '9'
 icu:
-- '73'
+- '75'
 krb5:
 - '1.21'
 libjpeg_turbo:
@@ -31,7 +31,7 @@ libwebp:
 openssl:
 - '3'
 pcre2:
-- '10.43'
+- '10.44'
 target_platform:
 - win-64
 zlib:

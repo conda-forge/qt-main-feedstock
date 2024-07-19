@@ -37,7 +37,7 @@ glib:
 harfbuzz:
 - '9'
 icu:
-- '73'
+- '75'
 krb5:
 - '1.21'
 libjpeg_turbo:
@@ -57,7 +57,7 @@ libxml2:
 openssl:
 - '3'
 pcre2:
-- '10.43'
+- '10.44'
 postgresql:
 - '16'
 target_platform:
