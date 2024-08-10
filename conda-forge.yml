@@ -1,9 +1,6 @@
 azure:
   free_disk_space: true
-  settings_osx:
-    timeoutInMinutes: 1
   settings_win:
-    timeoutInMinutes: 1
     variables:
       CONDA_BLD_PATH: C:\bld\
 bot:
