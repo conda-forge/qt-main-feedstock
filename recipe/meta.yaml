@@ -69,9 +69,6 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - libgl-devel                        # [linux]
-    - libegl-devel                       # [linux]
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
@@ -100,6 +97,9 @@ requirements:
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16                 # [arm64]
   host:
+    - libdrm                             # [linux]
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
     - dbus                               # [linux]
@@ -186,7 +186,6 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('libdrm-devel') }}          # [linux]
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
     - make                               # [unix]
