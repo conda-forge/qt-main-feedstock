@@ -69,6 +69,7 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
+    - {{ cdt('libdrm-devel') }}          # [linux]
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
     # For fontconfig + freetype
@@ -185,6 +186,7 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
+    - {{ cdt('libdrm-devel') }}          # [linux]
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
     - make                               # [unix]
