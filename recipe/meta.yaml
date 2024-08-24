@@ -21,6 +21,9 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
+  # hmaarrfk
+  # Accidentally created this branch. this is to avoid any uploads
+  skip: true
   number: 5
   detect_binary_files_with_prefix: true
   run_exports:
