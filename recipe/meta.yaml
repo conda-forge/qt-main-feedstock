@@ -21,7 +21,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -35,16 +35,8 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ stdlib('c') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
-    - {{ cdt('libglvnd-devel') }}        # [linux]
 
     # For fontconfig + freetype
     - pkg-config                         # [unix]
@@ -98,8 +90,11 @@ requirements:
     - mysql-devel                       # [build_platform != target_platform]
     - postgresql                        # [build_platform != target_platform]
     - pcre2                             # [build_platform != target_platform]
-    - wayland                           # [(build_platform != target_platform) and linux]
 
+    - libdrm                            # [(build_platform != target_platform) and linux]
+    - libgl-devel                       # [(build_platform != target_platform) and linux]
+    - libegl-devel                      # [(build_platform != target_platform) and linux]
+    - wayland                           # [(build_platform != target_platform) and linux]
     - xcb-util                          # [(build_platform != target_platform) and linux]
     - xcb-util-wm                       # [(build_platform != target_platform) and linux]
     - xcb-util-keysyms                  # [(build_platform != target_platform) and linux]
@@ -118,6 +113,9 @@ requirements:
     - xorg-xf86vidmodeproto             # [(build_platform != target_platform) and linux]
 
   host:
+    - libdrm                             # [linux]
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     - libvulkan-headers                  # [not osx]
     - libvulkan-loader                   # [not osx]
     # For pkg-config gl, fontconfig + freetype
@@ -201,13 +199,9 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl') }}           # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
+    - {{ stdlib('c') }}
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     - make                               # [unix]
     - cmake >=3.16
     - xcb-util                           # [linux]
