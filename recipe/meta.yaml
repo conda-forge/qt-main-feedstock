@@ -21,30 +21,28 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 4
+  number: 5
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
-  missing_dso_whitelist:  # [osx]
-    - /usr/lib/libbsm.0.dylib  # [osx]
-    - /usr/lib/libcups.2.dylib  # [osx]
-    - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib/libsandbox.1.dylib  # [osx]
+  # There only exists a few example python scripts
+  # At best, they are compiled for the wrong version of python
+  # at worst, it causes a compilation error on OSX
+  # since we can't emulate arm64 on x86-64 runners
+  skip_compile_pyc:
+    - "*.py"
+  missing_dso_whitelist:                                      # [osx]
+    - /usr/lib/libbsm.0.dylib                                 # [osx]
+    - /usr/lib/libcups.2.dylib                                # [osx]
+    - /usr/lib/libresolv.9.dylib                              # [osx]
+    - /usr/lib/libsandbox.1.dylib                             # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - {{ stdlib('c') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
-    - {{ cdt('libglvnd-devel') }}        # [linux]
 
     # For fontconfig + freetype
     - pkg-config                         # [unix]
@@ -73,51 +71,13 @@ requirements:
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [build_platform != target_platform]
     - clangdev >=9                      # [build_platform != target_platform]
-    # native libs
-    - icu                               # [build_platform != target_platform]
-    - double-conversion                 # [build_platform != target_platform]
-    - libtiff                           # [build_platform != target_platform]
-    - libwebp                           # [build_platform != target_platform]
-    - dbus                              # [(build_platform != target_platform) and linux]
-    - fontconfig                        # [(build_platform != target_platform) and linux]
-    - freetype                          # [(build_platform != target_platform) and linux]
-    - harfbuzz                          # [build_platform != target_platform]
-    - glib                              # [build_platform != target_platform]
-    - libxml2                           # [(build_platform != target_platform) and linux]
-    - libxkbcommon                      # [(build_platform != target_platform) and linux]
-    - zlib                              # [build_platform != target_platform]
-    - libxcb                            # [(build_platform != target_platform) and linux]
-    - libdrm                            # [(build_platform != target_platform) and linux]
-    - openssl                           # [build_platform != target_platform]
-    - libcups                           # [(build_platform != target_platform) and linux]
-    - zstd                              # [build_platform != target_platform]
-    - krb5                              # [build_platform != target_platform]
-    - libjpeg-turbo                     # [build_platform != target_platform]
-    - libpng                            # [build_platform != target_platform]
-    - libsqlite                         # [build_platform != target_platform]
-    - mysql-devel                       # [build_platform != target_platform]
-    - postgresql                        # [build_platform != target_platform]
-    - pcre2                             # [build_platform != target_platform]
-    - wayland                           # [(build_platform != target_platform) and linux]
-
-    - xcb-util                          # [(build_platform != target_platform) and linux]
-    - xcb-util-wm                       # [(build_platform != target_platform) and linux]
-    - xcb-util-keysyms                  # [(build_platform != target_platform) and linux]
-    - xcb-util-image                    # [(build_platform != target_platform) and linux]
-    - xcb-util-renderutil               # [(build_platform != target_platform) and linux]
-    - xorg-libx11                       # [(build_platform != target_platform) and linux]
-    - xorg-libxext                      # [(build_platform != target_platform) and linux]
-    - xorg-libxdamage                   # [(build_platform != target_platform) and linux]
-    - xorg-libxrandr                    # [(build_platform != target_platform) and linux]
-    - xorg-libxcomposite                # [(build_platform != target_platform) and linux]
-    - xorg-libxcursor                   # [(build_platform != target_platform) and linux]
-    - xorg-libsm                        # [(build_platform != target_platform) and linux]
-    - xorg-libice                       # [(build_platform != target_platform) and linux]
-    - xorg-libxxf86vm                   # [(build_platform != target_platform) and linux]
-    - xorg-libxtst                      # [(build_platform != target_platform) and linux]
-    - xorg-xf86vidmodeproto             # [(build_platform != target_platform) and linux]
+    # circular dependency... but it helps when cross compiling
+    - qt6-main   {{ version }}          # [build_platform != target_platform]
 
   host:
+    - libdrm                             # [linux]
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     - libvulkan-headers                  # [not osx]
     - libvulkan-loader                   # [not osx]
     # For pkg-config gl, fontconfig + freetype
@@ -201,13 +161,9 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl') }}           # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
+    - {{ stdlib('c') }}
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     - make                               # [unix]
     - cmake >=3.16
     - xcb-util                           # [linux]

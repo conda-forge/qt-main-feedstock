@@ -1,71 +1,16 @@
 #!/bin/sh
 set -ex
 
-if [[ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]]; then
-  if [[ "${build_platform}" == "linux-64" ]]; then
-    # There are probably equivalent CDTs to install if your build platform
-    # is something else. However, it is most common in 2023 to use the x86_64
-    # hardware to cross compile for other architectures.
-    mamba install --yes \
-      --prefix ${BUILD_PREFIX} \
-      mesa-libgl-devel-${cdt_name}-x86_64  \
-      mesa-libegl-devel-${cdt_name}-x86_64 \
-      mesa-dri-drivers-${cdt_name}-x86_64  \
-      libdrm-devel-${cdt_name}-x86_64 \
-      libglvnd-glx-${cdt_name}-x86_64 \
-      libglvnd-egl-${cdt_name}-x86_64
-  fi
-  (
-    export CC=$CC_FOR_BUILD
-    export CXX=$CXX_FOR_BUILD
-    export LDFLAGS=${LDFLAGS//$PREFIX/$BUILD_PREFIX}
-    export PKG_CONFIG_PATH=${PKG_CONFIG_PATH//$PREFIX/$BUILD_PREFIX}
-    export CFLAGS=${CFLAGS//$PREFIX/$BUILD_PREFIX}
-    export CXXFLAGS=${CXXFLAGS//$PREFIX/$BUILD_PREFIX}
-
-    # hide host libs
-    mkdir -p $BUILD_PREFIX/${HOST}
-    mv $BUILD_PREFIX/${HOST} _hidden
-
-    cmake -LAH -G "Ninja" \
-      -DCMAKE_PREFIX_PATH=${BUILD_PREFIX} \
-      -DCMAKE_IGNORE_PREFIX_PATH="${PREFIX}" \
-      -DCMAKE_FIND_FRAMEWORK=LAST \
-      -DCMAKE_INSTALL_RPATH:STRING=${BUILD_PREFIX}/lib \
-      -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
-      -DFEATURE_system_sqlite=ON \
-      -DFEATURE_framework=OFF \
-      -DFEATURE_gssapi=OFF \
-      -DQT_BUILD_SUBMODULES="qtbase;qtshadertools;qttools" \
-      -DCMAKE_RANLIB=$BUILD_PREFIX/bin/${CONDA_TOOLCHAIN_BUILD}-ranlib \
-      -DFEATURE_opengl=OFF \
-      -DFEATURE_linguist=OFF \
-      -DCMAKE_INSTALL_PREFIX=${BUILD_PREFIX} \
-      -DBUILD_WITH_PCH=OFF \
-      -B build_native .
-    cmake --build build_native --target install
-    mv _hidden $BUILD_PREFIX/${HOST}
-  )
-  CMAKE_ARGS="${CMAKE_ARGS} -DQT_HOST_PATH=${BUILD_PREFIX} -DQT_FORCE_BUILD_TOOLS=ON -DQT_REQUIRE_HOST_PATH_CHECK=OFF -DBUILD_WITH_PCH=OFF"
-
-  # Error: unknown architecture `nocona' on linux-aarch64
-  if test "${target_platform}" = "linux-aarch64"
-  then
-    CFLAGS=${CFLAGS// -march=nocona/}
-    CXXFLAGS=${CXXFLAGS// -march=nocona/}
-  fi
+if [[ "$build_platform" != "$target_platform" ]]; then
+    # This flag is used in conjunction with QT_FORCE_BUILD_TOOLS=ON
+    # https://github.com/qt/qtbase/commit/acfbe3b7795c741b269fc23ed2c51c5937cd7f4f
+    export QT_HOST_PATH="$BUILD_PREFIX"
 fi
 
 if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
-fi
-
-if test "${build_platform}" = "linux-64"; then
-  # In 2023/07/06 we started having trouble with "running out of space"
-  # on azure for linux64 builds, then linux-aarch64.
-  CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
 QT_SUBMODULES="qtbase;\
@@ -80,10 +25,12 @@ qtwebchannel;\
 qtwebsockets"
 
 cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
+  -DQT_FORCE_BUILD_TOOLS=ON \
   -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_FIND_FRAMEWORK=LAST \
   -DCMAKE_INSTALL_RPATH:STRING=${PREFIX}/lib \
-  -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
+  -DCMAKE_UNITY_BUILD=ON \
+  -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 \
   -DINSTALL_BINDIR=lib/qt6/bin \
   -DINSTALL_PUBLICBINDIR=bin \
   -DINSTALL_LIBEXECDIR=lib/qt6 \
