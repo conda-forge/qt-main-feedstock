@@ -48,6 +48,9 @@ source:
       - patches/0017-Backport-fixes-for-compatibility-with-mysql-8.3.patch
       - patches/0018-Avoid-usage-of-mysql_ssl_set.patch
 
+      # https://github.com/conda-forge/qt-main-feedstock/pull/282#issuecomment-2349349013
+      - patches/0019-do-not-use-cxx-icu-api-in-tests.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
