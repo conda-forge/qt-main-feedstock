@@ -48,6 +48,14 @@ source:
       - patches/0017-Backport-fixes-for-compatibility-with-mysql-8.3.patch
       - patches/0018-Avoid-usage-of-mysql_ssl_set.patch
 
+      # https://github.com/conda-forge/qt-main-feedstock/pull/282#issuecomment-2349349013
+      # icu 75 requires C++17, so enable it also in the dummy compilation of a icu snippet that qmake does for configuration
+      - patches/0019-use-cxx17-for-icu-config-tests.patch
+      # similarly, mapbox-gl-native uses icu, so we need to make sure that it compiles with C++17
+      - patches/0020-compile-mapbox-gl-native-with-cxx17-for-icu75-compat.patch
+      # mapbox-gl-native uses a old vendored boost, make sure that we used an up-to-date boost instead
+      - patches/0021-unvendor-boost-from-mapbox-gl-native.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
@@ -133,6 +141,9 @@ requirements:
     - llvm
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16
+    # llvm<16 require we manually add libcxx-devel on osx,
+    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
+    - libcxx-devel                       # [osx]
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
@@ -163,6 +174,8 @@ requirements:
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
     - xorg-xf86vidmodeproto              # [linux]
+    # qtlocation requires mapbox-gl-native that uses libbost-headers
+    - libboost-headers
   run:
     - {{ pin_compatible("nss") }}        # [unix]
     - {{ pin_compatible("nspr") }}       # [unix]
@@ -200,6 +213,9 @@ test:
     - xorg-libxdamage                    # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
+    # llvm<16 require we manually add libcxx-devel on osx,
+    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
+    - libcxx-devel                       # [osx]
   files:
     - test/hello.pro
     - test/main-qtwebengine.cpp
