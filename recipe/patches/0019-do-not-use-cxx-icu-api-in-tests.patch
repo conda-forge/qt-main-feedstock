@@ -4,13 +4,13 @@ Date: Fri, 13 Sep 2024 18:53:10 +0200
 Subject: [PATCH] Define U_SHOW_CPLUSPLUS_API to 0 in ICU test
 
 ---
- src/corelib/configure.json | 1 +
+ qtbase/src/corelib/configure.json | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/src/corelib/configure.json b/src/corelib/configure.json
 index a9025a2dd29..491f0dcd90a 100644
---- a/src/corelib/configure.json
-+++ b/src/corelib/configure.json
+--- a/qtbase/src/corelib/configure.json
++++ b/qtbase/src/corelib/configure.json
 @@ -97,6 +97,7 @@
          "icu": {
              "label": "ICU",
