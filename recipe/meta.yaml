@@ -137,6 +137,9 @@ requirements:
     - llvm
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16
+    # llvm<16 require we manually add libcxx-devel on osx,
+    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
+    - libcxx-devel                       # [osx]
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
