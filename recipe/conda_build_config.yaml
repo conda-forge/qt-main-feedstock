@@ -3,6 +3,9 @@ c_compiler_version:        # [osx]
   - 15                     # [osx]
 cxx_compiler_version:      # [osx]
   - 15                     # [osx]
+# pin libcxx to a version supported by clang 15
+libcxx:                    # [osx]
+  - 16                     # [osx]
 # Use gcc 12 to avoid https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351568471
 c_compiler_version:        # [linux]
   - 12                     # [linux]
