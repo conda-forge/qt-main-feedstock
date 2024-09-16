@@ -1,0 +1,22 @@
+From a1586ba7267b95322355578a4b5ebe0a8c5edcdd Mon Sep 17 00:00:00 2001
+From: Silvio Traversaro <silvio@traversaro.it>
+Date: Mon, 16 Sep 2024 22:03:08 +0200
+Subject: [PATCH] Do not use vendored boost in mapbox-gl-native
+
+---
+ mapbox-gl-native.pro | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/mapbox-gl-native.pro b/mapbox-gl-native.pro
+index 4d5835d73e..5343bd2a5d 100644
+--- a/mapbox-gl-native.pro
++++ b/mapbox-gl-native.pro
+@@ -405,8 +405,6 @@ HEADERS += \
+     platform/qt/src/timer_impl.hpp \
+ 
+ INCLUDEPATH += \
+-    deps/boost/1.65.1 \
+-    deps/boost/1.65.1/include \
+     deps/earcut/0.12.4 \
+     deps/earcut/0.12.4/include \
+     deps/geojson/0.4.2 \
