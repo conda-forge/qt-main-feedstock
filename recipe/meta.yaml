@@ -110,6 +110,9 @@ requirements:
     - llvmdev                           # [arm64]
     # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
     - clangdev >=9, <16                 # [arm64]
+    # llvm<16 require we manually add libcxx-devel on osx,
+    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
+    - libcxx-devel                       # [osx]
   host:
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
