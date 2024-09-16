@@ -4,13 +4,13 @@ Date: Mon, 16 Sep 2024 22:03:08 +0200
 Subject: [PATCH] Do not use vendored boost in mapbox-gl-native
 
 ---
- mapbox-gl-native.pro | 2 --
+ qtlocation/src/3rdparty/mapbox-gl-native/mapbox-gl-native.pro | 2 --
  1 file changed, 2 deletions(-)
 
 diff --git a/mapbox-gl-native.pro b/mapbox-gl-native.pro
 index 4d5835d73e..5343bd2a5d 100644
---- a/mapbox-gl-native.pro
-+++ b/mapbox-gl-native.pro
+--- a/qtlocation/src/3rdparty/mapbox-gl-native/mapbox-gl-native.pro
++++ b/qtlocation/src/3rdparty/mapbox-gl-native/mapbox-gl-native.pro
 @@ -405,8 +405,6 @@ HEADERS += \
      platform/qt/src/timer_impl.hpp \
  
