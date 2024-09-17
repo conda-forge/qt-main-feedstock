@@ -75,14 +75,8 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ stdlib("c") }}
+    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
@@ -114,6 +108,9 @@ requirements:
     # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
     - libcxx-devel                       # [osx]
   host:
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
+    - libdrm                             # [linux]
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
     - dbus                               # [linux]
@@ -205,12 +202,8 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}
-    - {{ cdt('mesa-libgl-devel') }}      # [linux]
-    - {{ cdt('mesa-libegl-devel') }}     # [linux]
-    - {{ cdt('mesa-dri-drivers') }}      # [linux]
-    - {{ cdt('libdrm-devel') }}          # [linux]
-    - {{ cdt('libglvnd-glx') }}          # [linux]
-    - {{ cdt('libglvnd-egl') }}          # [linux]
+    - libgl-devel                        # [linux]
+    - libegl-devel                       # [linux]
     - make                               # [unix]
     - xcb-util                           # [linux]
     - xorg-libxdamage                    # [linux]
