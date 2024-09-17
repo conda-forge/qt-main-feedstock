@@ -55,6 +55,9 @@ source:
       - patches/0020-compile-mapbox-gl-native-with-cxx17-for-icu75-compat.patch
       # mapbox-gl-native uses a old vendored boost, make sure that we used an up-to-date boost instead
       - patches/0021-unvendor-boost-from-mapbox-gl-native.patch
+      # Taken from debian for gcc 13 compatibility
+      # https://github.com/conda-forge/qt-main-feedstock/pull/289#issuecomment-2354739087
+      - patches/0022-gcc_13.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
