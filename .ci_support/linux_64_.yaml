@@ -39,7 +39,7 @@ icu:
 krb5:
 - '1.21'
 libboost_headers:
-- '1.84'
+- '1.86'
 libevent:
 - 2.1.12
 libjpeg_turbo:
