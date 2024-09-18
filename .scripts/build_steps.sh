@@ -34,31 +34,16 @@ CONDARC
 export CONDA_LIBMAMBA_SOLVER_NO_CHANNELS_FROM_INSTALLED=1
 
 mamba install --update-specs --yes --quiet --channel conda-forge --strict-channel-priority \
-    pip mamba conda-build liblief=0.11.5 conda-forge-ci-setup=3
+    pip mamba conda-build conda-forge-ci-setup=4 "conda-build>=24.1"
 mamba update --update-specs --yes --quiet --channel conda-forge --strict-channel-priority \
-    pip mamba conda-build liblief=0.11.5 conda-forge-ci-setup=3
+    pip mamba conda-build conda-forge-ci-setup=4 "conda-build>=24.1"
 
 # set up the condarc
 setup_conda_rc "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 
 source run_conda_forge_build_setup
 
-(
-# Due to https://bugzilla.redhat.com/show_bug.cgi?id=1537564 old versions of rpm
-# are drastically slowed down when the number of file descriptors is very high.
-# This can be visible during a `yum install` step of a feedstock build.
-# => Set a lower limit in a subshell for the `yum install`s only.
-ulimit -n 1024
-
-# Install the yum requirements defined canonically in the
-# "recipe/yum_requirements.txt" file. After updating that file,
-# run "conda smithy rerender" and this line will be updated
-# automatically.
-/usr/bin/sudo -n yum install -y mesa-libGL mesa-libGL-devel mesa-libEGL-devel mesa-dri-drivers libX11-devel libglvnd-glx
-
-
-
-)# make the build number clobber
+# make the build number clobber
 make_build_number "${FEEDSTOCK_ROOT}" "${RECIPE_ROOT}" "${CONFIG_FILE}"
 
 if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]] && [[ "${HOST_PLATFORM}" != linux-* ]] && [[ "${BUILD_WITH_CONDA_DEBUG:-0}" != 1 ]]; then
