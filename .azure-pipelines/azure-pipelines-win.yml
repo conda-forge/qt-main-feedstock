@@ -59,7 +59,6 @@ jobs:
         $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru -WindowStyle Hidden
         $process = Start-Process -FilePath cmd.exe -ArgumentList $Arguments -Wait -PassThru -WindowStyle Hidden
 
-
     - script: |
         call ".scripts\run_win_build.bat"
       displayName: Run Windows build
