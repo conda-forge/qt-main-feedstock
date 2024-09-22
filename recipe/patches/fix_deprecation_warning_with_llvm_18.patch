@@ -11,8 +11,8 @@ Reviewed-by: Lucie Gerard <lucie.gerard@qt.io>
 
 diff --git a/src/linguist/lupdate/clangtoolastreader.cpp b/src/linguist/lupdate/clangtoolastreader.cpp
 index 6b85c6ccb3..3db9e0d64a 100644
---- a/src/linguist/lupdate/clangtoolastreader.cpp
-+++ b/src/linguist/lupdate/clangtoolastreader.cpp
+--- a/qttools/src/linguist/lupdate/clangtoolastreader.cpp
++++ b/qttools/src/linguist/lupdate/clangtoolastreader.cpp
 @@ -782,8 +782,14 @@ bool LupdateVisitor::VisitNamedDecl(clang::NamedDecl *namedDeclaration)
      if (!fullLocation.isValid() || !fullLocation.getFileEntry())
          return true;
