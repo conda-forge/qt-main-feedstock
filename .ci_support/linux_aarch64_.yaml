@@ -47,7 +47,7 @@ libpng:
 libsqlite:
 - '3'
 libtiff:
-- '4.6'
+- '4.7'
 libwebp:
 - '1'
 libxcb:
