@@ -20,6 +20,7 @@ source:
       # Not yet in 6.7.2
       # https://github.com/qt/qttools/commit/687fc1601863ae7a67897bc3590b33bd3bdcc3bc
       - patches/fix_deprecation_warning_with_llvm_18.patch
+      - patches/qdoc_adapt_to_breaking_llvm19.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
