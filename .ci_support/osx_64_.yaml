@@ -5,7 +5,7 @@ MACOSX_SDK_VERSION:
 c_compiler:
 - clang
 c_compiler_version:
-- '16'
+- '17'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -19,7 +19,7 @@ curl:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '16'
+- '17'
 glib:
 - '2'
 harfbuzz:
@@ -35,7 +35,7 @@ libpng:
 libsqlite:
 - '3'
 libtiff:
-- '4.6'
+- '4.7'
 libwebp:
 - '1'
 macos_machine:
