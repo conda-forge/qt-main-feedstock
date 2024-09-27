@@ -51,7 +51,7 @@ libtiff:
 libwebp:
 - '1'
 libxcb:
-- '1.16'
+- '1'
 libxml2:
 - '2'
 openssl:
@@ -60,6 +60,8 @@ pcre2:
 - '10.44'
 postgresql:
 - '16'
+qt:
+- '5.15'
 target_platform:
 - linux-aarch64
 zip_keys:
