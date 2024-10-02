@@ -49,7 +49,7 @@ libpng:
 libsqlite:
 - '3'
 libxcb:
-- '1.16'
+- '1'
 libxml2:
 - '2'
 nspr:
@@ -59,7 +59,7 @@ nss:
 openssl:
 - '3'
 postgresql:
-- '16'
+- '17'
 pulseaudio_client:
 - '17.0'
 target_platform:
