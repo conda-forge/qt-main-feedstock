@@ -55,7 +55,7 @@ openssl:
 pcre2:
 - '10.44'
 postgresql:
-- '16'
+- '17'
 qt:
 - '5.15'
 target_platform:
