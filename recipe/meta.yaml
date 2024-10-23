@@ -189,6 +189,14 @@ outputs:
       detect_binary_files_with_prefix: true
       run_exports:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
+    files:
+      include:
+        - {{ library }}**
+      exclude:
+        - {{ library }}bin/*.dll         # [win]
+        - {{ library }}lib/lib*.*.dylib  # [osx]
+        - {{ library }}lib/lib*.so.*     # [linux]
+        - {{ library }}plugins/**
     requirements:
       build:
         - {{ compiler('c') }}
@@ -334,6 +342,12 @@ outputs:
       detect_binary_files_with_prefix: true
       run_exports:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
+    files:
+      include:
+        - {{ library }}bin/*.dll         # [win]
+        - {{ library }}lib/lib*.*.dylib  # [osx]
+        - {{ library }}lib/lib*.so.*     # [linux]
+        - {{ library }}plugins/**
     requirements:
       build:
         - {{ compiler('c') }}
