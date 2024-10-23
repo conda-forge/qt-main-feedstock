@@ -67,8 +67,6 @@ source:
 build:
   number: 27
   detect_binary_files_with_prefix: true
-  run_exports:
-    - {{ pin_subpackage('qt-main', max_pin='x.x') }}
   missing_dso_whitelist:  # [osx]
     - /usr/lib/libbsm.0.dylib  # [osx]
     - /usr/lib/libcups.2.dylib  # [osx]
@@ -191,12 +189,12 @@ outputs:
         - {{ pin_subpackage('libqt5', max_pin='x.x') }}
     files:
       include:
-        - {{ library }}**
+        - "{{ library }}**/*"
       exclude:
         - {{ library }}bin/*.dll         # [win]
         - {{ library }}lib/lib*.*.dylib  # [osx]
         - {{ library }}lib/lib*.so.*     # [linux]
-        - {{ library }}plugins/**
+        - "{{ library }}plugins/**"
     requirements:
       build:
         - {{ compiler('c') }}
@@ -347,7 +345,7 @@ outputs:
         - {{ library }}bin/*.dll         # [win]
         - {{ library }}lib/lib*.*.dylib  # [osx]
         - {{ library }}lib/lib*.so.*     # [linux]
-        - {{ library }}plugins/**
+        - "{{ library }}plugins/**/*"
     requirements:
       build:
         - {{ compiler('c') }}

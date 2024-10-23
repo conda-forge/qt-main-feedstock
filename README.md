@@ -96,6 +96,7 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libqt5-green.svg)](https://anaconda.org/conda-forge/libqt5) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libqt5.svg)](https://anaconda.org/conda-forge/libqt5) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libqt5.svg)](https://anaconda.org/conda-forge/libqt5) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libqt5.svg)](https://anaconda.org/conda-forge/libqt5) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-qt--main-green.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/qt-main.svg)](https://anaconda.org/conda-forge/qt-main) |
 
 Installing qt-main
@@ -108,41 +109,41 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `qt-main` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `libqt5, qt-main` can be installed with `conda`:
 
 ```
-conda install qt-main
-```
-
-or with `mamba`:
-
-```
-mamba install qt-main
-```
-
-It is possible to list all of the versions of `qt-main` available on your platform with `conda`:
-
-```
-conda search qt-main --channel conda-forge
+conda install libqt5 qt-main
 ```
 
 or with `mamba`:
 
 ```
-mamba search qt-main --channel conda-forge
+mamba install libqt5 qt-main
+```
+
+It is possible to list all of the versions of `libqt5` available on your platform with `conda`:
+
+```
+conda search libqt5 --channel conda-forge
+```
+
+or with `mamba`:
+
+```
+mamba search libqt5 --channel conda-forge
 ```
 
 Alternatively, `mamba repoquery` may provide more information:
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search qt-main --channel conda-forge
+mamba repoquery search libqt5 --channel conda-forge
 
-# List packages depending on `qt-main`:
-mamba repoquery whoneeds qt-main --channel conda-forge
+# List packages depending on `libqt5`:
+mamba repoquery whoneeds libqt5 --channel conda-forge
 
-# List dependencies of `qt-main`:
-mamba repoquery depends qt-main --channel conda-forge
+# List dependencies of `libqt5`:
+mamba repoquery depends libqt5 --channel conda-forge
 ```
 
 
