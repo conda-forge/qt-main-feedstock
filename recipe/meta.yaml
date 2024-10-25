@@ -1,4 +1,4 @@
-{% set version = "5.15.8" %}
+{% set version = "5.15.15" %}
 
 package:
   name: qt-main
@@ -6,7 +6,7 @@ package:
 
 source:
   - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: 776a9302c336671f9406a53bd30b8e36f825742b2ec44a57c08217bff0fa86b9
+    sha256: b423c30fe3ace7402e5301afbb464febfb3da33d6282a37a665be1e51502335e
     patches:
       # qtbase
       - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
@@ -27,8 +27,7 @@ source:
       # Patch for c++11 compatibility
       - patches/0012-include-utility-in-mbgl-util-unique_any.patch
 
-      # Patch for openssl 3 compatibility, picked up from ubuntu, see
-      # https://git.launchpad.net/ubuntu/+source/qtbase-opensource-src/commit/?h=applied/ubuntu/devel&id=6f147c166539b23792515445beadc02fb5565d0c
+      # Patch for openssl 3 compatibility, picked up from kde's patchset
       - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
 
       # This helps compatibility between qt and CXX17
@@ -58,13 +57,17 @@ source:
       # Taken from debian for gcc 13 compatibility
       # https://github.com/conda-forge/qt-main-feedstock/pull/289#issuecomment-2354739087
       - patches/0022-gcc_13.patch
+      # Patch from OpenMandriva also used by archlinux
+      - patches/0023-work-around-pyside2-llvm16.patch
+      # fix https://bugreports.qt.io/browse/QTBUG-123554 can be removed in 5.15.18
+      - patches/fix-touch-input-crash.diff
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 26
+  number: 0
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -105,11 +108,7 @@ requirements:
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [arm64]
-    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
-    - clangdev >=9, <16                 # [arm64]
-    # llvm<16 require we manually add libcxx-devel on osx,
-    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
-    - libcxx-devel                       # [osx]
+    - clangdev >=9                 # [arm64]
   host:
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
@@ -142,11 +141,7 @@ requirements:
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
     - llvm
-    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288
-    - clangdev >=9, <16
-    # llvm<16 require we manually add libcxx-devel on osx,
-    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
-    - libcxx-devel                       # [osx]
+    - clangdev >=9
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version

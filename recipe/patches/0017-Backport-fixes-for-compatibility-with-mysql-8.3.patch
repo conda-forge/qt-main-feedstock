@@ -8,20 +8,10 @@ See https://codereview.qt-project.org/c/qt/qtbase/+/532555
  src/plugins/sqldrivers/mysql/qsql_mysql.cpp | 33 ++++++++-------------
  1 file changed, 13 insertions(+), 20 deletions(-)
 
-diff --git a/src/plugins/sqldrivers/mysql/qsql_mysql.cpp b/src/plugins/sqldrivers/mysql/qsql_mysql.cpp
+diff --git a/qtbase/src/plugins/sqldrivers/mysql/qsql_mysql.cpp b/qtbase/src/plugins/sqldrivers/mysql/qsql_mysql.cpp
 index 7ca055eea2..8c98b6ddea 100644
 --- a/qtbase/src/plugins/sqldrivers/mysql/qsql_mysql.cpp
 +++ b/qtbase/src/plugins/sqldrivers/mysql/qsql_mysql.cpp
-@@ -922,7 +922,8 @@ bool QMYSQLResult::prepare(const QString& query)
-         return false;
-     }
- 
--    if (mysql_stmt_param_count(d->stmt) > 0) {// allocate memory for outvalues
-+    const auto paramCount = mysql_stmt_param_count(d->stmt);
-+    if (paramCount > 0) { // allocate memory for outvalues
-         d->outBinds = new MYSQL_BIND[mysql_stmt_param_count(d->stmt)];
-     }
- 
 @@ -956,8 +957,8 @@ bool QMYSQLResult::exec()
          return false;
      }

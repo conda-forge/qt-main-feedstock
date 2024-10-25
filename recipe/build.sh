@@ -93,9 +93,6 @@ if [[ $(uname) == "Linux" ]]; then
     # Had been trying with:
     #   -sysroot ${BUILD_PREFIX}/${HOST}/sysroot
     # .. but it probably requires changing -L ${BUILD_PREFIX}/${HOST}/sysroot/usr/lib64 to -L /usr/lib64
-    # -no-optimize-size is passed as a workaround for https://github.com/conda-forge/qt-feedstock/issues/241 and
-    # https://bugreports.qt.io/browse/QTBUG-99545 . Once we bump the release to qt 5.15.11, we can change it back
-    # to -optimize-size for consistency with Windows and macOS
     ../configure -prefix ${PREFIX} \
                 -libdir ${PREFIX}/lib \
                 -bindir ${PREFIX}/bin \
@@ -137,7 +134,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -no-libudev \
                 -no-avx \
                 -no-avx2 \
-                -no-optimize-size \
+                -optimize-size \
                 ${REDUCE_RELOCATIONS} \
                 -cups \
                 -openssl-linked \
@@ -173,10 +170,10 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     # Some test runs 'clang -v', but I do not want to add it as a requirement just for that.
     ln -s "${CXX}" ${HOST}-clang || true
     # For ltcg we cannot use libtool (or at least not the macOS 10.9 system one) due to lack of LLVM bitcode support.
-    ln -s "${LIBTOOL}" libtool || true
+    #ln -s "${LIBTOOL}" libtool || true
     # Just in-case our strip is better than the system one.
-    ln -s "${STRIP}" strip || true
-    chmod +x ${HOST}-clang libtool strip
+    #ln -s "${STRIP}" strip || true
+    #chmod +x ${HOST}-clang libtool strip
     # Qt passes clang flags to LD (e.g. -stdlib=c++)
     export LD=${CXX}
     PATH=${PWD}:${PATH}
