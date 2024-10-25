@@ -1,0 +1,37 @@
+From 2862cdb7ba22cc99d1db158888ba0bb32c47e8e8 Mon Sep 17 00:00:00 2001
+From: Liang Qi <liang.qi@qt.io>
+Date: Thu, 21 Mar 2024 12:34:06 +0100
+Subject: [PATCH] xcb: try to repopulate xinput2 devices when needed
+
+And try to not call Q_ASSERT() to avoid crash.
+
+Fixes: QTBUG-123554
+Pick-to: 6.7 6.6 6.5
+Change-Id: I9443c5f0ab4ca7a858df9b328f517b48ab8f122d
+Reviewed-by: Axel Spoerl <axel.spoerl@qt.io>
+Reviewed-by: Allan Sandfeld Jensen <allan.jensen@qt.io>
+---
+
+diff --git a/src/plugins/platforms/xcb/qxcbconnection_xi2.cpp b/src/plugins/platforms/xcb/qxcbconnection_xi2.cpp
+--- qtbase/src/plugins/platforms/xcb/qxcbconnection_xi2.cpp
++++ qtbase/src/plugins/platforms/xcb/qxcbconnection_xi2.cpp
+@@ -626,9 +626,18 @@
+ void QXcbConnection::xi2ProcessTouch(void *xiDevEvent, QXcbWindow *platformWindow)
+ {
+     auto *xiDeviceEvent = reinterpret_cast<xcb_input_touch_begin_event_t *>(xiDevEvent);
+     TouchDeviceData *dev = touchDeviceForId(xiDeviceEvent->sourceid);
+-    Q_ASSERT(dev);
++    if (!dev) {
++        qCDebug(lcQpaXInputEvents) << "didn't find the dev for given sourceid - " << xiDeviceEvent->sourceid
++            << ", try to repopulate xi2 devices";
++        xi2SetupDevices();
++        dev = touchDeviceForId(xiDeviceEvent->sourceid);
++        if (!dev) {
++            qCDebug(lcQpaXInputEvents) << "still can't find the dev for it, give up.";
++            return;
++        }
++    }
+     const bool firstTouch = dev->touchPoints.isEmpty();
+     if (xiDeviceEvent->event_type == XCB_INPUT_TOUCH_BEGIN) {
+         QWindowSystemInterface::TouchPoint tp;
+         tp.id = xiDeviceEvent->detail % INT_MAX;
