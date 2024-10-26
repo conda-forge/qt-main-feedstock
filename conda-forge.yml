@@ -7,7 +7,7 @@ azure:
 bot:
   abi_migration_branches:
   - qt6
-  - 'qt5.15.8'
+  - qt5.15.8
 build_platform:
   linux_aarch64: linux_aarch64
   linux_ppc64le: linux_ppc64le
