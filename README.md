@@ -223,6 +223,3 @@ Feedstock Maintainers
 * [@ocefpaf](https://github.com/ocefpaf/)
 * [@stuarteberg](https://github.com/stuarteberg/)
 
-
-<!-- dummy commit to enable rerendering -->
-
