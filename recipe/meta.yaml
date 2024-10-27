@@ -193,7 +193,6 @@ requirements:
     # no run_export
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
-    - xorg-xorgproto                     # [linux]
   run_constrained:
     - qt {{ version }}
 
