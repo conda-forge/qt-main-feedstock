@@ -9,7 +9,7 @@ c_stdlib:
 c_stdlib_version:
 - '2.17'
 cdt_name:
-- cos7
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
@@ -21,7 +21,7 @@ cxx_compiler_version:
 dbus:
 - '1'
 docker_image:
-- quay.io/condaforge/linux-anvil-ppc64le
+- quay.io/condaforge/linux-anvil-ppc64le:alma9
 expat:
 - '2'
 fontconfig:
@@ -62,13 +62,13 @@ postgresql:
 - '17'
 pulseaudio_client:
 - '17.0'
+qt:
+- '5.15'
 target_platform:
 - linux-ppc64le
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - c_stdlib_version
-  - cdt_name
 zlib:
 - '1'
 zstd:
