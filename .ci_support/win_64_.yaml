@@ -28,6 +28,8 @@ libsqlite:
 - '3'
 openssl:
 - '3'
+qt:
+- '5.15'
 target_platform:
 - win-64
 zlib:
