@@ -32,8 +32,6 @@ openssl:
 - '3'
 pcre2:
 - '10.44'
-qt:
-- '5.15'
 target_platform:
 - win-64
 zlib:
