@@ -75,6 +75,9 @@ requirements:
     - clangdev >=9                      # [build_platform != target_platform]
     # circular dependency... but it helps when cross compiling
     - qt6-main   {{ version }}          # [build_platform != target_platform]
+    # explicit libxml2+icu
+    - libxml2                           # [build_platform != target_platform]
+    - icu                               # [build_platform != target_platform]
 
   host:
     - libdrm                             # [linux]
