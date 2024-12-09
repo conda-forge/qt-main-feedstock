@@ -23,7 +23,7 @@ cxx_compiler_version:
 glib:
 - '2'
 harfbuzz:
-- '9'
+- '10'
 icu:
 - '75'
 krb5:
