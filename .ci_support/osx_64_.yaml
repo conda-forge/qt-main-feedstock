@@ -42,6 +42,8 @@ nss:
 - '3'
 postgresql:
 - '16'
+qt:
+- '5.15'
 target_platform:
 - osx-64
 zip_keys:
