@@ -67,7 +67,7 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 1
+  number: 2
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt-main', max_pin='x.x') }}
@@ -171,7 +171,7 @@ requirements:
     - xorg-libice                        # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
-    - xorg-xf86vidmodeproto              # [linux]
+    - xorg-xorgproto                    # [linux]
     # qtlocation requires mapbox-gl-native that uses libbost-headers
     - libboost-headers
   run:
@@ -186,14 +186,6 @@ requirements:
     - xcb-util-keysyms                   # [linux]
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
-    # https://github.com/conda-forge/xorg-libx11-feedstock/pull/28
-    - xorg-libx11                        # [linux]
-    # https://github.com/conda-forge/xorg-libxext-feedstock/pull/12
-    - xorg-libxext                       # [linux]
-    # no run_export
-    - xorg-libsm                         # [linux]
-    - xorg-libice                        # [linux]
-    - xorg-xf86vidmodeproto              # [linux]
   run_constrained:
     - qt {{ version }}
 
