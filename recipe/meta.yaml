@@ -103,8 +103,6 @@ requirements:
     - pcre2
     - zlib
     - libxcb                             # [linux]
-    # libxcb 1.16 has very strict pins and we want to avoid it
-    - libxcb >=1.17                      # [linux]
     - libdrm                             # [linux]
     - openssl
     # For QDoc
