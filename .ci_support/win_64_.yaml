@@ -13,7 +13,7 @@ cxx_compiler:
 glib:
 - '2'
 harfbuzz:
-- '8'
+- '9'
 icu:
 - '73'
 krb5:
@@ -25,13 +25,13 @@ libpng:
 libsqlite:
 - '3'
 libtiff:
-- '4.6'
+- '4.7'
 libwebp:
 - '1'
 openssl:
 - '3'
 pcre2:
-- '10.43'
+- '10.44'
 target_platform:
 - win-64
 zlib:

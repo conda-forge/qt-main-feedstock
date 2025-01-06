@@ -1,19 +1,15 @@
-BUILD:
-- aarch64-conda_cos7-linux-gnu
 alsa_lib:
 - '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
-- '12'
+- '13'
 c_stdlib:
 - sysroot
 c_stdlib_version:
 - '2.17'
-cdt_arch:
-- aarch64
 cdt_name:
-- cos7
+- conda
 channel_sources:
 - conda-forge
 channel_targets:
@@ -23,11 +19,11 @@ curl:
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '12'
+- '13'
 dbus:
 - '1'
 docker_image:
-- quay.io/condaforge/linux-anvil-cos7-x86_64
+- quay.io/condaforge/linux-anvil-x86_64:alma9
 fontconfig:
 - '2'
 freetype:
@@ -35,7 +31,7 @@ freetype:
 glib:
 - '2'
 harfbuzz:
-- '8'
+- '9'
 icu:
 - '73'
 krb5:
@@ -47,26 +43,24 @@ libpng:
 libsqlite:
 - '3'
 libtiff:
-- '4.6'
+- '4.7'
 libwebp:
 - '1'
 libxcb:
-- '1.16'
+- '1'
 libxml2:
 - '2'
 openssl:
 - '3'
 pcre2:
-- '10.43'
+- '10.44'
 postgresql:
-- '16'
+- '17'
 target_platform:
 - linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - c_stdlib_version
-  - cdt_name
 zlib:
 - '1'
 zstd:
