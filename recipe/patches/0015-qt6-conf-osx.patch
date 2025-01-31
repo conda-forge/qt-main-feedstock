@@ -1,10 +1,11 @@
-diff -ru a/qtbase/src/corelib/global/qlibraryinfo.cpp b/qtbase/src/corelib/global/qlibraryinfo.cpp
---- a/qtbase/src/corelib/global/qlibraryinfo.cpp	2023-06-02 23:53:41.966945291 -0400
-+++ b/qtbase/src/corelib/global/qlibraryinfo.cpp	2023-06-02 23:55:16.881661460 -0400
-@@ -95,21 +95,6 @@
+diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
+index 94f3e60deba..65b87778779 100644
+--- a/qtbase/src/corelib/global/qlibraryinfo.cpp
++++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
+@@ -105,21 +105,6 @@ static std::unique_ptr<QSettings> findConfiguration()
      QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
      if (QFile::exists(qtconfig))
-         return new QSettings(qtconfig, QSettings::IniFormat);
+         return std::make_unique<QSettings>(qtconfig, QSettings::IniFormat);
 -#ifdef Q_OS_DARWIN
 -    CFBundleRef bundleRef = CFBundleGetMainBundle();
 -    if (bundleRef) {
@@ -16,7 +17,7 @@ diff -ru a/qtbase/src/corelib/global/qlibraryinfo.cpp b/qtbase/src/corelib/globa
 -            QCFString path = CFURLCopyFileSystemPath(urlRef, kCFURLPOSIXPathStyle);
 -            qtconfig = QDir::cleanPath(path);
 -            if (QFile::exists(qtconfig))
--                return new QSettings(qtconfig, QSettings::IniFormat);
+-                return std::make_unique<QSettings>(qtconfig, QSettings::IniFormat);
 -        }
 -    }
 -#endif
