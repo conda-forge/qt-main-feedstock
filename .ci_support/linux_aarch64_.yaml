@@ -21,7 +21,7 @@ cxx_compiler_version:
 dbus:
 - '1'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64:alma9
+- quay.io/condaforge/linux-anvil-aarch64:cos7
 expat:
 - '2'
 fontconfig:
@@ -33,7 +33,7 @@ glib:
 gstreamer:
 - '1.24'
 harfbuzz:
-- '10'
+- '11'
 icu:
 - '75'
 krb5:
