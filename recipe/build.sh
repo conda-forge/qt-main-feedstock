@@ -14,6 +14,12 @@ if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
 fi
 
+if [[ $(uname) == "Darwin" ]]; then
+  # disable codesign command
+  # https://bugreports.qt.io/browse/QTBUG-135279
+  ln -sf /bin/echo $BUILD_PREFIX/bin/codesign
+fi
+
 QT_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
