@@ -15,9 +15,8 @@ if [[ $(uname) == "Linux" ]]; then
 fi
 
 if [[ $(uname) == "Darwin" ]]; then
-  # disable codesign command
   # https://bugreports.qt.io/browse/QTBUG-135279
-  ln -sf /bin/echo $BUILD_PREFIX/bin/codesign
+  CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-Wl,-no_adhoc_codesign"
 fi
 
 QT_SUBMODULES="qtbase;\
