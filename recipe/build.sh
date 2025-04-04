@@ -14,11 +14,6 @@ if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
 fi
 
-if [[ $(uname) == "Darwin" ]]; then
-  # https://bugreports.qt.io/browse/QTBUG-135279
-  CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-Wl,-no_adhoc_codesign"
-fi
-
 QT_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
