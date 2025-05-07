@@ -104,7 +104,6 @@ requirements:
     - libjpeg-turbo
     - libpng
     - libsqlite
-    - mysql-devel                        # [not win]
     - postgresql                         # [not win]
     - pcre2
     - zlib
