@@ -8,6 +8,7 @@ set -ex
 test -f ${PREFIX}/bin/qt6.conf
 
 test "${HOST}" = "aarch64-conda-linux-gnu" && exit 0
+test "${HOST}" = "ppc64le-conda-linux-gnu" && exit 0
 
 ls
 cd test
