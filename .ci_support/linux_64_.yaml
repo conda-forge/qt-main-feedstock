@@ -31,7 +31,7 @@ freetype:
 glib:
 - '2'
 harfbuzz:
-- '11'
+- 11.0.1
 icu:
 - '75'
 krb5:
@@ -49,7 +49,7 @@ libwebp:
 libxcb:
 - '1'
 libxml2:
-- '2'
+- '2.13'
 openssl:
 - '3'
 pcre2:
