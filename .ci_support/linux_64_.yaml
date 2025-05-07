@@ -33,7 +33,7 @@ glib:
 gstreamer:
 - '1.24'
 harfbuzz:
-- '11'
+- 11.0.1
 icu:
 - '75'
 krb5:
@@ -51,7 +51,9 @@ libsqlite:
 libxcb:
 - '1'
 libxml2:
-- '2'
+- '2.13'
+mysql_devel:
+- '9.0'
 nspr:
 - '4'
 nss:
