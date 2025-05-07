@@ -121,7 +121,6 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
-                -no-plugin-sql-mysql \
                 -plugin-sql-psql \
                 -egl \
                 -eglfs \
@@ -240,7 +239,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -system-zlib \
                 -system-sqlite \
                 -plugin-sql-sqlite \
-                -no-plugin-sql-mysql \
                 -plugin-sql-psql \
                 -qt-freetype \
                 -qt-pcre \
