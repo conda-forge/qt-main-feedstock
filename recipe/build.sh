@@ -121,7 +121,7 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
-                -plugin-sql-mysql \
+                -no-plugin-sql-mysql \
                 -plugin-sql-psql \
                 -egl \
                 -eglfs \
