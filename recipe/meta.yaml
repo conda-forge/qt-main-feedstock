@@ -97,6 +97,11 @@ requirements:
     - libjpeg-turbo
     - libpng
     - libsqlite
+    # We are deciding not to depend on mysql-devel
+    # to keep this package obviously LGPL licensed
+    # as opposed to "maybe GPL"
+    # https://github.com/conda-forge/qt-main-feedstock/issues/335
+    # - mysql-devel                       #[not win]
     - postgresql                         # [not win]
     - pcre2
     - zlib
