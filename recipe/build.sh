@@ -121,7 +121,6 @@ if [[ $(uname) == "Linux" ]]; then
                 -system-harfbuzz \
                 -system-sqlite \
                 -plugin-sql-sqlite \
-                -plugin-sql-mysql \
                 -plugin-sql-psql \
                 -egl \
                 -eglfs \
@@ -208,6 +207,9 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
     fi
     # On OSX, we use the native secure transport instead of openssl
     # https://forum.qt.io/topic/55853/openssl-and-mac-os-x/7
+    # We explicitely disable the mysql plugin at conda-forge in 2025
+    # If you plan to readd it, we used to use a flag like in the configuration
+    # -I ${PREFIX}/include/mysql
     ../configure -prefix ${PREFIX} \
                 -libdir ${PREFIX}/lib \
                 -bindir ${PREFIX}/bin \
@@ -216,7 +218,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -datadir ${PREFIX} \
                 $PLATFORM \
                 -I ${PREFIX}/include \
-                -I ${PREFIX}/include/mysql \
                 -I ${PREFIX}/include/gstreamer-1.0 \
                 -I ${PREFIX}/include/glib-2.0 \
                 -I ${PREFIX}/lib/glib-2.0/include \
@@ -238,7 +239,6 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
                 -system-zlib \
                 -system-sqlite \
                 -plugin-sql-sqlite \
-                -plugin-sql-mysql \
                 -plugin-sql-psql \
                 -qt-freetype \
                 -qt-pcre \
