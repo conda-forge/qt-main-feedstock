@@ -53,7 +53,7 @@ libxml2:
 openssl:
 - '3'
 pcre2:
-- '10.44'
+- '10.45'
 postgresql:
 - '17'
 target_platform:
