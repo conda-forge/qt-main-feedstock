@@ -31,7 +31,7 @@ libwebp:
 openssl:
 - '3'
 pcre2:
-- '10.44'
+- '10.45'
 target_platform:
 - win-64
 zlib:
