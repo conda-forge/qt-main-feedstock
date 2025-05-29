@@ -7,8 +7,6 @@ set -ex
 # See https://github.com/conda-forge/qt-main-feedstock/issues/99
 test -f ${PREFIX}/bin/qt6.conf
 
-test "${HOST}" = "aarch64-conda-linux-gnu" && exit 0
-
 ls
 cd test
 cmake .

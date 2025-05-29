@@ -23,7 +23,7 @@ cxx_compiler_version:
 glib:
 - '2'
 harfbuzz:
-- '11'
+- 11.0.1
 icu:
 - '75'
 krb5:
@@ -40,10 +40,12 @@ libwebp:
 - '1'
 macos_machine:
 - arm64-apple-darwin20.0.0
+mysql_devel:
+- '9.3'
 openssl:
 - '3'
 pcre2:
-- '10.44'
+- '10.45'
 postgresql:
 - '17'
 target_platform:
