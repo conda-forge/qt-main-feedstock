@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.9.0" %}
+{% set version = "6.9.1" %}
 
 package:
   name: {{ name|lower }}
@@ -8,16 +8,13 @@ package:
 source:
   - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     # url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: 6c3e4eceffe8a0e76c7a89a74d33be00
+    md5: 96dd62d709cc6bd626750ef41777cf2f
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
       # dont look for qt.conf in bundle directory
       - patches/0015-qt6-conf-osx.patch
-
-      # https://bugreports.qt.io/browse/QTBUG-135279
-      - patches/0008-qtdeclarative-codesign.patch
 
       # Ensure that cross-compiled builds and native builds generated the same cmake config files
       - patches/0020-remove-qt-host-path-check-in-cross-compiled-builds.patch
@@ -27,9 +24,9 @@ source:
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 3
+  number: 0
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  # skip: true  # [build_platform != target_platform]
+  skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
