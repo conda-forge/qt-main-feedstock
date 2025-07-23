@@ -27,7 +27,7 @@ icu:
 krb5:
 - '1.21'
 libboost_headers:
-- '1.86'
+- '1.88'
 libjpeg_turbo:
 - '3'
 libpng:
