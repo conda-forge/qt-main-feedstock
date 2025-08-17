@@ -32,8 +32,6 @@ glib:
 - '2'
 gstreamer:
 - '1.24'
-harfbuzz:
-- 11.0.1
 icu:
 - '75'
 krb5:
