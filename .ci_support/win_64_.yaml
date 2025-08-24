@@ -12,24 +12,26 @@ cxx_compiler:
 - vs2022
 glib:
 - '2'
-gstreamer:
-- '1.24'
+harfbuzz:
+- 11.0.1
 icu:
 - '75'
 krb5:
 - '1.21'
-libboost_headers:
-- '1.88'
 libjpeg_turbo:
 - '3'
 libpng:
 - '1.6'
 libsqlite:
 - '3'
+libtiff:
+- '4.7'
+libwebp:
+- '1'
 openssl:
 - '3'
-qt:
-- '5.15'
+pcre2:
+- '10.45'
 target_platform:
 - win-64
 zlib:
