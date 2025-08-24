@@ -32,14 +32,12 @@ glib:
 - '2'
 gstreamer:
 - '1.24'
-harfbuzz:
-- 11.0.1
 icu:
 - '75'
 krb5:
 - '1.21'
 libboost_headers:
-- '1.86'
+- '1.88'
 libevent:
 - 2.1.12
 libjpeg_turbo:

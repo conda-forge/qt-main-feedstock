@@ -1,5 +1,5 @@
 c_compiler:
-- vs2019
+- vs2022
 c_stdlib:
 - vs
 channel_sources:
@@ -9,7 +9,7 @@ channel_targets:
 curl:
 - '8'
 cxx_compiler:
-- vs2019
+- vs2022
 glib:
 - '2'
 gstreamer:
@@ -19,7 +19,7 @@ icu:
 krb5:
 - '1.21'
 libboost_headers:
-- '1.86'
+- '1.88'
 libjpeg_turbo:
 - '3'
 libpng:
