@@ -1,21 +1,18 @@
 @ECHO ON
 
-:: Test for presence of sql plugin
-if not exist %LIBRARY_PREFIX%\plugins\sqldrivers\qsqlite.dll exit 1
+
+:: If qt6.conf is not part of the package, it won't work when installed side by side with Qt5.
+:: See https://github.com/conda-forge/qt-main-feedstock/issues/99
+if not exist %LIBRARY_BIN%\qt6.conf exit 1
+if not exist %PREFIX%\qt6.conf exit 1
 
 pushd test
-if exist .qmake.stash del /a .qmake.stash
-qmake hello.pro
-if %ErrorLevel% neq 0 exit /b 1
-nmake
-if %ErrorLevel% neq 0 exit /b 1
-:: Only test that this builds
-nmake clean
-if %ErrorLevel% neq 0 exit /b 1
 
-qmake test_qmimedatabase.pro
-if %ErrorLevel% neq 0 exit /b 1
-nmake
-if %ErrorLevel% neq 0 exit /b 1
-release\test_qmimedatabase.exe
-if %ErrorLevel% neq 0 exit /b 1
+cmake -G"NMake Makefiles" -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" .
+if errorlevel 1 exit 1
+
+cmake --build . --config Release
+if errorlevel 1 exit 1
+
+ctest -C Release --output-on-failure
+if errorlevel 1 exit 1

@@ -1,26 +1,14 @@
-c_compiler_version:        # [unix]
-  - 13                     # [linux]
-  - 17                     # [osx]
-cxx_compiler_version:      # [unix]
-  - 13                     # [linux]
-  - 17                     # [osx]
+# https://doc.qt.io/qt-6/macos.html
+c_stdlib_version:          # [osx]
+  - 11.0                   # [osx]
+MACOSX_SDK_VERSION:        # [osx]
+  - '12.3'                 # [osx]
+  
+c_stdlib_version:          # [linux]
+  - 2.17                   # [linux]
 
-MACOSX_SDK_VERSION:        # [osx and x86_64]
-  - '10.14'                # [osx and x86_64]
-
-replacements:
-  all_replacements:
-    # These replacements avoid leakage of build time CONDA_BUILD_SYSROOT
-    # into cmake configuration files
-    - tag: 'qmake build metadata'
-      glob_patterns:
-        - '*.pri'
-        - '*.prl'
-      regex_re: '(?:-L|-I)?\"?([^;\s]+\/sysroot)'
-      replacement_re: '$(CONDA_BUILD_SYSROOT)'
-      regex_rg: '([^;\s"]+/sysroot)'
-    - tag: 'CMake build metadata'
-      glob_patterns:
-        - '*.cmake'
-      regex_re: '([^;\s"]+/sysroot)'
-      replacement_re: '$ENV{CONDA_BUILD_SYSROOT}'
+# Using vs2022
+c_compiler:    # [win]
+- vs2022       # [win]
+cxx_compiler:  # [win]
+- vs2022       # [win]

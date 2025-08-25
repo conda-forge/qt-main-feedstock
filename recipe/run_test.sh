@@ -1,28 +1,15 @@
 #!/bin/bash
+
 set -ex
 
-# test for presence of sql plugin
-test -f $PREFIX/plugins/sqldrivers/libqsqlite${SHLIB_EXT}
 
+# If qt6.conf is not part of the package, it won't work when installed side by side with Qt5.
+# See https://github.com/conda-forge/qt-main-feedstock/issues/99
+test -f ${PREFIX}/bin/qt6.conf
+
+ls
 cd test
-ln -sf ${GXX} g++
-cp ../xcrun .
-cp ../xcodebuild .
-export PATH=${PWD}:${PATH}
-
-# To learn about qmake flags, read
-# https://doc.qt.io/qt-5/qmake-variable-reference.html
-qmake                         \
-    QMAKE_LFLAGS="${LDFLAGS}" \
-    hello.pro
+cmake .
 make
-./hello
-# Only test that this builds
-make clean
-
-qmake                         \
-    QMAKE_LFLAGS="${LDFLAGS}" \
-    test_qmimedatabase.pro
-make
-./test_qmimedatabase
+ctest --output-on-failure
 make clean

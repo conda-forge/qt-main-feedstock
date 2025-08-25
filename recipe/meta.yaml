@@ -1,91 +1,61 @@
-{% set version = "5.15.15" %}
+{% set name = "qt6-main" %}
+{% set version = "6.9.1" %}
 
 package:
-  name: qt-main
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
-    sha256: b423c30fe3ace7402e5301afbb464febfb3da33d6282a37a665be1e51502335e
+  - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+    # url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+    md5: 96dd62d709cc6bd626750ef41777cf2f
     patches:
       # qtbase
-      - patches/0001-qtbase-osx-allow-any-xcrun-in-PATH.patch
-      - patches/0002-qtbase-use-better-clang-optimize-size.patch
-      - patches/0003-qtbase-never-enable-new-dtags.patch
-      - patches/0004-qtbase-fix-harcoded-sysroot-paths.patch
-      - patches/0005-qtbase-fix-internal-mimetypes-db-on-windows.patch
+      - patches/0003-qtbase-use-better-clang-optimize-size.patch
 
-      # The following patches are required to cross-compile Qt host tools (osx)
-      # to work both on x86_64 and arm64
-      - patches/0006-Add-arm64-support-for-host-tools.patch             # [arm64]
-      - patches/0007-Enable-arm64-x86_64-support-for-qttools.patch      # [arm64]
-      - patches/0008-Make-qml-host-tools-to-be-arm64-compatible.patch   # [arm64]
-      - patches/0009-Make-repc-arm64-compatible.patch                   # [arm64]
-      # - patches/0010-Enable-arm64-support-for-qgltf.patch               # [arm64]
-      - patches/0011-Enable-arm64-support-for-qscxmlc.patch             # [arm64]
+      # dont look for qt.conf in bundle directory
+      - patches/0015-qt6-conf-osx.patch
 
-      # Patch for c++11 compatibility
-      - patches/0012-include-utility-in-mbgl-util-unique_any.patch
+      # Ensure that cross-compiled builds and native builds generated the same cmake config files
+      - patches/0020-remove-qt-host-path-check-in-cross-compiled-builds.patch
 
-      # Patch for openssl 3 compatibility, picked up from kde's patchset
-      - patches/0013-upstream-fixes-to-support-OpenSSL-3.0.patch
-
-      # This helps compatibility between qt and CXX17
-      # https://github.com/conda-forge/qt-main-feedstock/pull/136
-      # https://github.com/conda-forge/libcxx-feedstock/issues/114#issuecomment-1490672500
-      - patches/0014-remove-usage-of-unary-operator.patch
-
-      # https://github.com/xkbcommon/libxkbcommon/blob/6073565903488cb5b9a8d37fdc4a7c2f9d7ad04d/NEWS#L11
-      # https://gitlab.freedesktop.org/xorg/proto/xorgproto/-/merge_requests/70
-      - patches/0015-remove-deleted-xkb-keys.patch
-
-      # https://github.com/Homebrew/homebrew-core/pull/145729
-      - patches/0016-qmake-xcode15.patch
-
-      # https://bugreports.qt.io/browse/QTBUG-121183
-      # https://codereview.qt-project.org/c/qt/qtbase/+/532555
-      - patches/0017-Backport-fixes-for-compatibility-with-mysql-8.3.patch
-      - patches/0018-Avoid-usage-of-mysql_ssl_set.patch
-
-      # https://github.com/conda-forge/qt-main-feedstock/pull/282#issuecomment-2349349013
-      # icu 75 requires C++17, so enable it also in the dummy compilation of a icu snippet that qmake does for configuration
-      - patches/0019-use-cxx17-for-icu-config-tests.patch
-      # similarly, mapbox-gl-native uses icu, so we need to make sure that it compiles with C++17
-      - patches/0020-compile-mapbox-gl-native-with-cxx17-for-icu75-compat.patch
-      # mapbox-gl-native uses a old vendored boost, make sure that we used an up-to-date boost instead
-      - patches/0021-unvendor-boost-from-mapbox-gl-native.patch
-      # Taken from debian for gcc 13 compatibility
-      # https://github.com/conda-forge/qt-main-feedstock/pull/289#issuecomment-2354739087
-      - patches/0022-gcc_13.patch
-      # Patch from OpenMandriva also used by archlinux
-      - patches/0023-work-around-pyside2-llvm16.patch
-      # fix https://bugreports.qt.io/browse/QTBUG-123554 can be removed in 5.15.18
-      - patches/fix-touch-input-crash.diff
+      # remove AGL framework as it is no longer in macOS 26 and is unused
+      - patches/0025-macos-no-agl-framework.patch
 
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z     # [win64]
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15                                      # [win64]
     folder: opengl32sw                                                                                            # [win64]
 
 build:
-  number: 5
+  number: 3
+  # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
+  # skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
-    - {{ pin_subpackage('qt-main', max_pin='x.x') }}
-  missing_dso_whitelist:  # [osx]
-    - /usr/lib/libbsm.0.dylib  # [osx]
-    - /usr/lib/libcups.2.dylib  # [osx]
-    - /usr/lib/libresolv.9.dylib  # [osx]
-    - /usr/lib/libsandbox.1.dylib  # [osx]
+    - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
+  # There only exists a few example python scripts
+  # At best, they are compiled for the wrong version of python
+  # at worst, it causes a compilation error on OSX
+  # since we can't emulate arm64 on x86-64 runners
+  skip_compile_pyc:
+    - "*.py"
+  missing_dso_whitelist:                                      # [osx]
+    - /usr/lib/libbsm.0.dylib                                 # [osx]
+    - /usr/lib/libcups.2.dylib                                # [osx]
+    - /usr/lib/libresolv.9.dylib                              # [osx]
+    - /usr/lib/libsandbox.1.dylib                             # [osx]
     - '/System/Library/Frameworks/CoreLocation.framework/**'  # [osx]
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
+
     # For fontconfig + freetype
     - pkg-config                         # [unix]
     - make                               # [unix]
+    - cmake
     - ninja
     - ruby >=2.5                         # [linux]
     - bison                              # [linux]
@@ -95,42 +65,40 @@ requirements:
     - m2-bison                           # [win]
     - m2-flex                            # [win]
     - m2-patch                           # [win]
-    - jom                                # [win]
-    - curl                               # [win]
+    - curl
     - perl 5
-    # Add openssl to build requirements so that it gets
-    # pinned correctly during the 1 -> 3 migration
-    - openssl                            # [not osx]
     # libclang is required in order to enable simultaneous x86_64 and
     # arm64 support for QDoc
-    - libclang                           # [arm64]
+    - libclang                           # [build_platform != target_platform]
     # Although these should be host-only dependencies, they are needed when
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
-    - llvmdev                           # [arm64]
-    - clangdev >=9                 # [arm64]
+    - llvmdev                           # [build_platform != target_platform]
+    - clangdev >=9                      # [build_platform != target_platform]
+    # circular dependency... but it helps when cross compiling
+    - qt6-main   {{ version }}          # [build_platform != target_platform]
+    # explicit libxml2+icu
+    - libxml2                           # [build_platform != target_platform]
+    - icu                               # [build_platform != target_platform]
+
   host:
+    - libdrm                             # [linux]
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
-    - libdrm                             # [linux]
+    - libvulkan-headers                  # [not osx]
+    - libvulkan-loader                   # [not osx]
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
     - dbus                               # [linux]
     - fontconfig                         # [linux]
     - freetype                           # [linux]
+    - harfbuzz
     - glib
-    - gst-plugins-base  {{ gstreamer }}
-    - gstreamer
-    - pulseaudio-client                  # [linux]
     - libxml2                            # [linux]
     - libxkbcommon                       # [linux]
-    - expat                              # [linux]
-    - libevent                           # [linux]
     - icu
     - libjpeg-turbo
     - libpng
-    - nspr                               # [unix]
-    - nss                                # [unix]
     - libsqlite
     # We are deciding not to depend on mysql-devel
     # to keep this package obviously LGPL licensed
@@ -138,9 +106,11 @@ requirements:
     # https://github.com/conda-forge/qt-main-feedstock/issues/335
     # - mysql-devel                       # [not win]
     - postgresql                         # [not win]
+    - pcre2
     - zlib
     - libxcb                             # [linux]
-    - openssl                            # [not osx]
+    - libdrm                             # [linux]
+    - openssl
     # For QDoc
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
@@ -157,7 +127,10 @@ requirements:
     - zstd
     - alsa-lib                           # [linux]
     - krb5
-    - harfbuzz                           # [linux]
+    - double-conversion
+    - libtiff
+    - libwebp
+    - wayland                            # [linux]
     # The xcb-util packages are necessary to build the Qt xcb plugin.
     # It was decided to not use CDTs for qt to resolve issues
     # that may exhibit as segfault due to missing libraries
@@ -168,61 +141,89 @@ requirements:
     - xcb-util-keysyms                   # [linux]
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
+    - xcb-util-cursor                    # [linux]
     - xorg-libx11                        # [linux]
     - xorg-libxext                       # [linux]
     - xorg-libxdamage                    # [linux]
+    - xorg-libxrandr                     # [linux]
+    - xorg-libxcomposite                 # [linux]
+    - xorg-libxcursor                    # [linux]
     - xorg-libsm                         # [linux]
     - xorg-libice                        # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
-    - xorg-xorgproto                    # [linux]
-    # qtlocation requires mapbox-gl-native that uses libbost-headers
-    - libboost-headers
+    - xorg-libxtst                       # [linux]
+    - xorg-xorgproto                     # [linux]
   run:
-    - {{ pin_compatible("nss") }}        # [unix]
-    - {{ pin_compatible("nspr") }}       # [unix]
     - libxcb                             # [linux]
     # Adding the following xcb-util run requirements resolves issue
     # that may exhibit as segfault due to missing libraries
     # in some lighter weight linux installations
     # https://github.com/conda-forge/qt-main-feedstock/issues/32
+    - xcb-util                           # [linux]
     - xcb-util-wm                        # [linux]
     - xcb-util-keysyms                   # [linux]
     - xcb-util-image                     # [linux]
     - xcb-util-renderutil                # [linux]
+    - xcb-util-cursor                    # [linux]
   run_constrained:
     - qt {{ version }}
 
 test:
   requires:
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
     - libgl-devel                        # [linux]
     - libegl-devel                       # [linux]
     - make                               # [unix]
+    - cmake >=3.16
     - xcb-util                           # [linux]
     - xorg-libxdamage                    # [linux]
     # https://github.com/conda-forge/staged-recipes/pull/22084
     - xorg-libxxf86vm                    # [linux]
-    # llvm<16 require we manually add libcxx-devel on osx,
-    # see https://github.com/conda-forge/qt-main-feedstock/pull/288#issuecomment-2351649435
-    - libcxx-devel                       # [osx]
   files:
-    - test/hello.pro
     - test/main-qtwebengine.cpp
     - test/main.cpp
     - test/main.qml
     - test/qml.qrc
     - test/qrc_qml.cpp
-    - test/qtwebengine.pro
-    - test/test_qmimedatabase.pro
     - test/test_qmimedatabase.cpp
-    - xcodebuild
-    - xcrun
+    - test/CMakeLists.txt
+  commands:
+    {% set qt_libs = ["Core",
+                      "Gui",
+                      "Network",
+                      "OpenGL",
+                      "OpenGLWidgets",
+                      "PrintSupport",
+                      "ShaderTools",
+                      "Svg",
+                      "Test",
+                      "Qml",
+                      "Quick",
+                      "Widgets",
+                      "Xml"] %}
+    {% for each_qt_lib in qt_libs %}
+    - test -d $PREFIX/include/qt6/Qt{{ each_qt_lib }}  # [unix]
+    - test -f $PREFIX/lib/libQt6{{ each_qt_lib }}${SHLIB_EXT}  # [unix]
+    - if not exist %PREFIX%\\Library\\include\\qt6\\Qt{{ each_qt_lib }} exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\Qt6{{ each_qt_lib }}.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\bin\\Qt6{{ each_qt_lib }}.dll exit 1  # [win]
+    {% endfor %}
+    - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so  # [linux]
+    - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so  # [linux]
+    - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}  # [unix]
+    - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
+    # We needed to add a related flag, but these two SO files should be part of the
+    # qt6-wayland conda package
+    - test ! -f $PREFIX/lib/libQt6WaylandClient${SHLIB_EXT}  # [unix]
+    - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}  # [unix]
+    - qmake6 --version
 
 about:
   home: https://qt.io
   license: LGPL-3.0-only
-  license_file: LICENSE.LGPLv3
+  license_file: LICENSES/LGPL-3.0-only.txt
   summary: 'Qt is a cross-platform application and UI framework.'
   description: |
     Qt helps you create connected devices, UIs & applications that run
@@ -240,6 +241,5 @@ extra:
     - ocefpaf
     - stuarteberg
     - Tobias-Fischer
-    - matthiasdiener  # (currently building linux_ppc64le manually)
+    - matthiasdiener
     - jschueller
-    - traversaro

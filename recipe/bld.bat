@@ -1,43 +1,14 @@
-@echo on
-setlocal EnableExtensions EnableDelayedExpansion
-set SHORT_VERSION=%PKG_VERSION:~0,-2%
 
-:: You may not always want this when doing dirty builds (debugging late stage
-:: problems, but if debugging configure time issues you probably do want this).
-if exist config.cache del config.cache
-
-:: if "%DXSDK_DIR%" == "" (
-::   echo You do not appear to have the DirectX SDK installed.  Please get it from
-::   echo    https://www.microsoft.com/en-us/download/details.aspx?id=6812
-::   echo and try this build again.  If you have installed it, and are still seeing
-::   echo this message, please open a new console to refresh your environment variables.
-::   exit /b 1
-:: )
-
-:: Set each include folder as a include flag to MSVC
-pushd %LIBRARY_INC%
-for /F "usebackq delims=" %%F in (`dir /b /ad-h`) do (
-    set LIBRARY_PATHS=!LIBRARY_PATHS! -I %LIBRARY_INC%\%%F
-)
-popd
-endlocal
-
-:: Set LLVM path in order to build docs
-set LLVM_INSTALL_DIR=%PREFIX%\Library
-
-:: Compilation fails due to long path names in the case of angle
-:: We create a symlink to the actual folder and then instruct Qt
-:: to locate angle under our symlink
-mklink /D %cd%\angle %cd%\qtbase\src\3rdparty\angle
-set ANGLE_DIR=%cd%\angle
-
-set QT_LIBINFIX=_conda
-
-where perl.exe
-if %ERRORLEVEL% neq 0 (
-  echo Could not find perl.exe
-  exit /b 1
-)
+set "MODS=qtbase"
+set "MODS=%MODS%;qtdeclarative"
+set "MODS=%MODS%;qtimageformats"
+set "MODS=%MODS%;qtshadertools"
+set "MODS=%MODS%;qtsvg"
+set "MODS=%MODS%;qttools"
+set "MODS=%MODS%;qttranslations"
+set "MODS=%MODS%;qt5compat"
+set "MODS=%MODS%;qtwebchannel"
+set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
@@ -48,81 +19,71 @@ if not exist %LIBRARY_BIN%\opengl32sw.dll exit /b 1
 
 set OPENGLVER=dynamic
 
-mkdir b
-pushd b
+:: have to set path for internal tools: https://bugreports.qt.io/browse/QTBUG-107009
+set "PATH=%SRC_DIR%\build\qtbase\lib\qt6\bin;%PATH%"
 
-:: See http://doc-snapshot.qt-project.org/qt5-5.4/windows-requirements.html
-:: this needs to be CALLed due to an exit statement at the end of configure:
-:: optimized-tools is necessary for qtlibinfix, otherwise:
-:: qtbase/lib/Qt5Bootstrap.prl
-:: ends up containing:
-:: QMAKE_PRL_TARGET = Qt5Bootstrap.condad.lib
-:: for some odd reason.
-call "../configure" ^
-     -prefix %LIBRARY_PREFIX% ^
-     -libdir %LIBRARY_LIB% ^
-     -bindir %LIBRARY_BIN% ^
-     -headerdir %LIBRARY_INC%\qt ^
-     -archdatadir %LIBRARY_PREFIX% ^
-     -datadir %LIBRARY_PREFIX% ^
-     -optimized-tools ^
-     %LIBRARY_PATHS% ^
-     -L %LIBRARY_LIB% ^
-     -I %LIBRARY_INC% ^
-     -confirm-license ^
-     -no-fontconfig ^
-     -icu ^
-     -no-separate-debug-info ^
-     -no-warnings-are-errors ^
-     -nomake examples ^
-     -nomake tests ^
-     -no-warnings-are-errors ^
-     -skip qtwebengine ^
-     -opengl %OPENGLVER% ^
-     -opensource ^
-     -openssl-linked ^
-     -platform win32-msvc ^
-     -release ^
-     -shared ^
-     -qt-freetype ^
-     -system-libjpeg ^
-     -system-libpng ^
-     -system-sqlite ^
-     -system-zlib ^
-     -no-harfbuzz ^
-     -plugin-sql-sqlite ^
-     -qtlibinfix %QT_LIBINFIX% ^
-     -verbose
+cmake -LAH -G "Ninja" ^
+    -DCMAKE_BUILD_TYPE=Release ^
+    -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
+    -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
+    -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 ^
+    -DINSTALL_BINDIR=lib/qt6/bin ^
+    -DINSTALL_PUBLICBINDIR=bin ^
+    -DINSTALL_LIBEXECDIR=lib/qt6 ^
+    -DINSTALL_DOCDIR=share/doc/qt6 ^
+    -DINSTALL_ARCHDATADIR=lib/qt6 ^
+    -DINSTALL_DATADIR=share/qt6 ^
+    -DINSTALL_INCLUDEDIR=include/qt6 ^
+    -DINSTALL_MKSPECSDIR=lib/qt6/mkspecs ^
+    -DINSTALL_EXAMPLESDIR=share/doc/qt6/examples ^
+    -DINSTALL_DATADIR=share/qt6 ^
+    -DFEATURE_openssl_linked=ON ^
+    -DFEATURE_system_freetype=ON ^
+    -DFEATURE_system_sqlite=ON ^
+    -DFEATURE_vulkan=ON ^
+    -DINPUT_opengl=%OPENGLVER% ^
+    -DQT_BUILD_SUBMODULES="%MODS%" ^
+    -B build .
+if errorlevel 1 exit 1
 
-if %errorlevel% neq 0 exit /b %errorlevel%
+cmake --build build --target install --config Release
+if errorlevel 1 exit 1
 
-:: re-enable echoing which is disabled by configure
-echo on
+:: we set INSTALL_BINDIR != /bin to avoid clobbering qt5 exes but still dlls in /bin
+xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
+if errorlevel 1 exit 1
 
-:: To get a much quicker turnaround you can add this: (remember also to add the hat symbol after -plugin-sql-sqlite)
-::     -skip %WEBBACKEND% -skip qtwebsockets -skip qtwebchannel -skip qtwayland -skip qtwinextras -skip qtsvg -skip qtsensors ^
-::     -skip qtcanvas3d -skip qtconnectivity -skip declarative -skip multimedia -skip qttools
+:: link public exes with suffix (mklink does not play well with new .conda zip format)
+copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
+copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_PREFIX%\bin\qtpaths6.exe
+copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_PREFIX%\bin\qtdiag6.exe
+copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_PREFIX%\bin\androiddeployqt6.exe
+copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_PREFIX%\bin\windeployqt6.exe
+if errorlevel 1 exit 1
 
-jom
-if %errorlevel% neq 0 exit /b %errorlevel%
-echo Finished `jom -U release`
-jom install
-if %errorlevel% neq 0 exit /b %errorlevel%
-echo Finished `jom -U install`
-
-if exist %LIBRARY_BIN%\qmake.exe goto ok_qmake_exists
-echo Warning %LIBRARY_BIN%\qmake.exe does not exist jom -U install failed, very strange. Copying it from qtbase\bin\qmake.exe
-copy qtbase\bin\qmake.exe %LIBRARY_BIN%\qmake.exe
-:ok_qmake_exists
-
-popd
-pushd qtcharts
-%LIBRARY_BIN%\qmake.exe qtcharts.pro PREFIX=%PREFIX%
-jom
-jom install
-popd
-
-:: To rewrite qt.conf contents per conda environment
-if not exist %PREFIX%\Scripts mkdir %PREFIX%\Scripts
-copy "%RECIPE_DIR%\write_qtconf.bat" "%PREFIX%\Scripts\.qt-post-link.bat"
-if %errorlevel% neq 0 exit /b %errorlevel%
+:: You can find the expected values of these files in the log
+:: For example Translations will be listed as
+:: INSTALL_TRANSLATIONSDIR
+:: This file should be in the location of the user's executable
+:: for conda, this becomes LIBRARY_BIN
+:: https://doc.qt.io/qt-6/qt-conf.html
+echo [Paths]                                                     > %LIBRARY_BIN%\qt6.conf
+echo Prefix = %PREFIX:\=/%                                      >> %LIBRARY_BIN%\qt6.conf
+echo Documentation = %LIBRARY_PREFIX:\=/%/share/doc/qt6         >> %LIBRARY_BIN%\qt6.conf
+echo Headers = %LIBRARY_INC:\=/%/qt6                            >> %LIBRARY_BIN%\qt6.conf
+echo Libraries = %LIBRARY_LIB:\=/%                              >> %LIBRARY_BIN%\qt6.conf
+echo LibraryExecutables = %LIBRARY_LIB:\=/%/qt6                 >> %LIBRARY_BIN%\qt6.conf
+echo Binaries = %LIBRARY_LIB:\=/%/qt6/bin                       >> %LIBRARY_BIN%\qt6.conf
+echo Plugins = %LIBRARY_LIB:\=/%/qt6/plugins                    >> %LIBRARY_BIN%\qt6.conf
+echo QmlImports = %LIBRARY_LIB:\=/%/qt6/qml                     >> %LIBRARY_BIN%\qt6.conf
+echo ArchData = %LIBRARY_LIB:\=/%/qt6                           >> %LIBRARY_BIN%\qt6.conf
+echo Data = %LIBRARY_PREFIX:\=/%/share/qt6                      >> %LIBRARY_BIN%\qt6.conf
+echo Translations = %LIBRARY_PREFIX:\=/%/share/qt6/translations >> %LIBRARY_BIN%\qt6.conf
+echo Examples = %LIBRARY_PREFIX:\=/%/share/doc/qt6/examples     >> %LIBRARY_BIN%\qt6.conf
+echo Tests = %LIBRARY_PREFIX:\=/%/tests                         >> %LIBRARY_BIN%\qt6.conf
+echo HostData = %LIBRARY_PREFIX:\=/%/lib/qt6                    >> %LIBRARY_BIN%\qt6.conf
+echo HostBinaries = %LIBRARY_LIB:\=/%/qt6/bin                   >> %LIBRARY_BIN%\qt6.conf
+echo HostLibraryExecutables = %LIBRARY_LIB:\=/%/qt6             >> %LIBRARY_BIN%\qt6.conf
+echo HostLibraries = %LIBRARY_LIB:\=/%                          >> %LIBRARY_BIN%\qt6.conf
+:: Some things go looking in the prefix root (pyqt, for example)
+copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
