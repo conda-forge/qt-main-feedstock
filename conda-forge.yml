@@ -3,6 +3,9 @@ azure:
   settings_win:
     variables:
       CONDA_BLD_PATH: C:\bld\
+bot:
+  abi_migration_branches:
+  - qt5
 build_platform:
   linux_aarch64: linux_64
   osx_arm64: osx_64
@@ -15,6 +18,3 @@ github:
 provider:
   linux_aarch64: default
 test: native_and_emulated
-bot:
-  abi_migration_branches:
-  - qt5
