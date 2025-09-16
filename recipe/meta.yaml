@@ -24,9 +24,9 @@ source:
     folder: opengl32sw  # [win64]
 
 build:
-  number: 1
+  number: 2
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  #skip: true  # [build_platform != target_platform]
+  skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -75,7 +75,7 @@ requirements:
     # circular dependency... but it helps when cross compiling
     - qt6-main   {{ version }}          # [build_platform != target_platform]
     # explicit libxml2+icu
-    - libxml2                           # [build_platform != target_platform]
+    - libxml2-devel                     # [build_platform != target_platform]
     - icu                               # [build_platform != target_platform]
 
   host:
@@ -91,7 +91,7 @@ requirements:
     - freetype                           # [linux]
     - harfbuzz
     - glib
-    - libxml2                            # [linux]
+    - libxml2-devel                      # [linux]
     - libxkbcommon                       # [linux]
     - icu
     - libjpeg-turbo
