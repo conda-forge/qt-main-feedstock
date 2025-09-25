@@ -57,7 +57,7 @@ nss:
 openssl:
 - '3'
 postgresql:
-- '17'
+- '18'
 pulseaudio_client:
 - '17.0'
 qt:
