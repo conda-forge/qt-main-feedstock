@@ -41,7 +41,7 @@ nspr:
 nss:
 - '3'
 postgresql:
-- '17'
+- '18'
 qt:
 - '5.15'
 target_platform:
