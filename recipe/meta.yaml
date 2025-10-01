@@ -230,6 +230,7 @@ about:
 
 extra:
   recipe-maintainers:
+    - traversaro
     - andfoy
     - ccordoba12
     - gillins
