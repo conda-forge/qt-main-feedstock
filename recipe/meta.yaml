@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
+  - url: https://download.qt.io/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-opensource-src-{{ version }}.tar.xz
     sha256: b423c30fe3ace7402e5301afbb464febfb3da33d6282a37a665be1e51502335e
     patches:
       # qtbase
