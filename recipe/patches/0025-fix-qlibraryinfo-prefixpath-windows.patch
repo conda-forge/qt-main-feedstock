@@ -5,13 +5,13 @@ Subject: [PATCH] Handle library location path for Windows builds
 
 Add conditional path handling for Windows in QtQmakeHelpers.
 ---
- cmake/QtQmakeHelpers.cmake | 10 +++++++++-
+ qtbase/cmake/QtQmakeHelpers.cmake | 10 +++++++++-
  1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/cmake/QtQmakeHelpers.cmake b/cmake/QtQmakeHelpers.cmake
+diff --git a/qtbase/cmake/QtQmakeHelpers.cmake b/qtbase/cmake/QtQmakeHelpers.cmake
 index c618fa051096..6d92074abd17 100644
---- a/cmake/QtQmakeHelpers.cmake
-+++ b/cmake/QtQmakeHelpers.cmake
+--- a/qtbase/cmake/QtQmakeHelpers.cmake
++++ b/qtbase/cmake/QtQmakeHelpers.cmake
 @@ -46,7 +46,15 @@ function(qt_generate_qconfig_cpp in_file out_file)
      endif()
      file(RELATIVE_PATH from_lib_location_to_prefix
@@ -29,3 +29,4 @@ index c618fa051096..6d92074abd17 100644
  
      # Ensure Windows drive letter is prepended to the install prefix hardcoded
      # into qconfig.cpp, otherwise qmake can't find Qt modules in a static Qt
+
