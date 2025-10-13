@@ -1,9 +1,9 @@
 c_compiler_version:        # [unix]
   - 13                     # [linux]
-  - 17                     # [osx]
+  - 18                     # [osx]
 cxx_compiler_version:      # [unix]
   - 13                     # [linux]
-  - 17                     # [osx]
+  - 18                     # [osx]
 
 MACOSX_SDK_VERSION:        # [osx and x86_64]
   - '10.14'                # [osx and x86_64]
