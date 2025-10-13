@@ -12,5 +12,9 @@ target_link_libraries (hello Qt6::Core)
 add_executable (test_qmimedatabase test_qmimedatabase.cpp)
 target_link_libraries (test_qmimedatabase Qt6::Core)
 
+add_executable (test_qlibraryinfo_prefixpath test_qlibraryinfo_prefixpath.cpp)
+target_link_libraries (test_qlibraryinfo_prefixpath Qt6::Core)
+
 enable_testing ()
 add_test (NAME test_qmimedatabase COMMAND test_qmimedatabase)
+add_test (NAME test_qlibraryinfo_prefixpath COMMAND test_qlibraryinfo_prefixpath)
