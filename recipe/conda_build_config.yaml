@@ -1,6 +1,6 @@
 # https://doc.qt.io/qt-6/macos.html
 c_stdlib_version:          # [osx]
-  - 11.0                   # [osx]
+  - 13.0                   # [osx]
 MACOSX_SDK_VERSION:        # [osx]
   - '12.3'                 # [osx]
   
