@@ -14,6 +14,11 @@ if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
 fi
 
+if test `uname` = "Darwin"; then
+  # else cmake erroneously finds ${SDKROOT}/usr/lib/libnetwork.tbd
+  CMAKE_ARGS="${CMAKE_ARGS} -DFWNetworkInternal:FILEPATH=${SDKROOT}/System/Library/Frameworks/Network.framework"
+fi
+
 QT_SUBMODULES="qtbase;\
 qtdeclarative;\
 qtimageformats;\
