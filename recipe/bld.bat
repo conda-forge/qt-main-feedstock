@@ -1,14 +1,14 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
+rem  set "MODS=%MODS%;qtdeclarative"
+rem  set "MODS=%MODS%;qtimageformats"
+rem  set "MODS=%MODS%;qtshadertools"
+rem  set "MODS=%MODS%;qtsvg"
+rem  set "MODS=%MODS%;qttools"
+rem  set "MODS=%MODS%;qttranslations"
+rem  set "MODS=%MODS%;qt5compat"
+rem  set "MODS=%MODS%;qtwebchannel"
+rem  set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
