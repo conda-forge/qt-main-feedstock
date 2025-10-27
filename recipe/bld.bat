@@ -1,14 +1,14 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
+rem  set "MODS=%MODS%;qtdeclarative"
+rem  set "MODS=%MODS%;qtimageformats"
+rem  set "MODS=%MODS%;qtshadertools"
+rem  set "MODS=%MODS%;qtsvg"
+rem  set "MODS=%MODS%;qttools"
+rem  set "MODS=%MODS%;qttranslations"
+rem  set "MODS=%MODS%;qt5compat"
+rem  set "MODS=%MODS%;qtwebchannel"
+rem  set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
@@ -52,10 +52,10 @@ xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_BIN% || exit 1
 
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
 copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_BIN%\qmake6.exe || exit 1
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_BIN%\qtpaths6.exe || exit 1
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_BIN%\qtdiag6.exe || exit 1
-copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_BIN%\androiddeployqt6.exe || exit 1
-copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_BIN%\windeployqt6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_BIN%\qtpaths6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_BIN%\qtdiag6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_BIN%\androiddeployqt6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_BIN%\windeployqt6.exe || exit 1
 
 :: You can find the expected values of these files in the log
 :: For example Translations will be listed as
