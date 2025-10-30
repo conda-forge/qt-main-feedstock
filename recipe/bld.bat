@@ -51,11 +51,17 @@ if not exist %LIBRARY_BIN% mkdir %LIBRARY_BIN%
 xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_BIN% || exit 1
 
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_BIN%\qmake6.exe || exit 1
+rem copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_BIN%\qmake6.exe || exit 1
 rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_BIN%\qtpaths6.exe || exit 1
 rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_BIN%\qtdiag6.exe || exit 1
 rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_BIN%\androiddeployqt6.exe || exit 1
 rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_BIN%\windeployqt6.exe || exit 1
+
+echo "echo qmake6begin" > %LIBRARY_BIN%\qmake6.bat
+echo "start /wait \%~dp0\..\lib\qt6\bin\qmake.exe \%*"  >> %LIBRARY_BIN%\qmake6.bat
+echo "echo qmake6done" >> %LIBRARY_BIN%\qmake6.bat
+
+type %LIBRARY_BIN%\qmake6.bat
 
 :: You can find the expected values of these files in the log
 :: For example Translations will be listed as
