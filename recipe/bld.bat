@@ -1,21 +1,19 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
+rem  set "MODS=%MODS%;qtdeclarative"
+rem  set "MODS=%MODS%;qtimageformats"
+rem  set "MODS=%MODS%;qtshadertools"
+rem  set "MODS=%MODS%;qtsvg"
+rem  set "MODS=%MODS%;qttools"
+rem  set "MODS=%MODS%;qttranslations"
+rem  set "MODS=%MODS%;qt5compat"
+rem  set "MODS=%MODS%;qtwebchannel"
+rem  set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
 if not exist "%LIBRARY_BIN%" mkdir "%LIBRARY_BIN%"
-copy opengl32sw\opengl32sw.dll  %LIBRARY_BIN%\opengl32sw.dll
-if errorlevel 1 exit /b 1
-if not exist %LIBRARY_BIN%\opengl32sw.dll exit /b 1
+copy opengl32sw\opengl32sw.dll %LIBRARY_BIN%\opengl32sw.dll || exit 1
 
 set OPENGLVER=dynamic
 
@@ -46,20 +44,24 @@ cmake -LAH -G "Ninja" ^
     -B build .
 if errorlevel 1 exit 1
 
-cmake --build build --target install --config Release
-if errorlevel 1 exit 1
+cmake --build build --target install --config Release || exit 1
 
 :: we set INSTALL_BINDIR != /bin to avoid clobbering qt5 exes but still dlls in /bin
-xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
-if errorlevel 1 exit 1
+if not exist %LIBRARY_BIN% mkdir %LIBRARY_BIN%
+xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_BIN% || exit 1
 
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_PREFIX%\bin\qtpaths6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_PREFIX%\bin\qtdiag6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_PREFIX%\bin\androiddeployqt6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_PREFIX%\bin\windeployqt6.exe
-if errorlevel 1 exit 1
+rem copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_BIN%\qmake6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_BIN%\qtpaths6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_BIN%\qtdiag6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_BIN%\androiddeployqt6.exe || exit 1
+rem  copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_BIN%\windeployqt6.exe || exit 1
+
+echo "echo qmake6begin" > %LIBRARY_BIN%\qmake6.bat
+echo "start /wait \%~dp0\..\lib\qt6\bin\qmake.exe \%*"  >> %LIBRARY_BIN%\qmake6.bat
+echo "echo qmake6done" >> %LIBRARY_BIN%\qmake6.bat
+
+type %LIBRARY_BIN%\qmake6.bat
 
 :: You can find the expected values of these files in the log
 :: For example Translations will be listed as
@@ -86,4 +88,4 @@ echo HostBinaries = %LIBRARY_LIB:\=/%/qt6/bin                   >> %LIBRARY_BIN%
 echo HostLibraryExecutables = %LIBRARY_LIB:\=/%/qt6             >> %LIBRARY_BIN%\qt6.conf
 echo HostLibraries = %LIBRARY_LIB:\=/%                          >> %LIBRARY_BIN%\qt6.conf
 :: Some things go looking in the prefix root (pyqt, for example)
-copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
+copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf" || exit 1
