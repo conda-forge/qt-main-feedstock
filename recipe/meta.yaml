@@ -195,6 +195,8 @@ test:
     - test/test_qlibraryinfo_prefixpath.cpp
     - test/CMakeLists.txt
   commands:
+    - if not exist %PREFIX%\\Library\\lib\\qt6\\bin\\qmake.exe exit 1  # [win]
+    - start /wait "%PREFIX%\\Library\\lib\\qt6\\bin\\qmake.exe --version"
     - if not exist %PREFIX%\\Library\\bin\\qmake.exe exit 1  # [win]
     - where qmake
     - qmake --version

@@ -45,14 +45,21 @@ if errorlevel 1 exit 1
 xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
+echo "lib\qt6\bin\qmake..."
+%LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe --version
+
+echo "bin\qmake..."
 copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake.exe
 where qmake
 qmake --version
 
+
+echo "bin\qmake6..."
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
 copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
 if errorlevel 1 exit 1
 where qmake6
+qmake6 --version
 
 
 :: You can find the expected values of these files in the log
