@@ -1,26 +1,13 @@
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 94f3e60deba..65b87778779 100644
+index 87daa9b4c73..44ee15ff31c 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -105,21 +105,6 @@ static std::unique_ptr<QSettings> findConfiguration()
+@@ -108,7 +108,7 @@ static std::unique_ptr<QSettings> findConfiguration()
      QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
-     if (QFile::exists(qtconfig))
+     if (QResource(qtconfig, QLocale::c()).isValid())
          return std::make_unique<QSettings>(qtconfig, QSettings::IniFormat);
 -#ifdef Q_OS_DARWIN
--    CFBundleRef bundleRef = CFBundleGetMainBundle();
--    if (bundleRef) {
--        QCFType<CFURLRef> urlRef = CFBundleCopyResourceURL(bundleRef,
--                                                           QCFString("qt.conf"_L1),
--                                                           0,
--                                                           0);
--        if (urlRef) {
--            QCFString path = CFURLCopyFileSystemPath(urlRef, kCFURLPOSIXPathStyle);
--            qtconfig = QDir::cleanPath(path);
--            if (QFile::exists(qtconfig))
--                return std::make_unique<QSettings>(qtconfig, QSettings::IniFormat);
--        }
--    }
--#endif
-     if (QCoreApplication::instance()) {
-         QDir pwd(QCoreApplication::applicationDirPath());
-         qtconfig = pwd.filePath(u"qt" QT_STRINGIFY(QT_VERSION_MAJOR) ".conf"_s);
++#if 0
+     CFBundleRef bundleRef = CFBundleGetMainBundle();
+     if (bundleRef) {
+         QCFType<CFURLRef> urlRef = CFBundleCopyResourceURL(bundleRef,
