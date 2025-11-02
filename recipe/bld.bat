@@ -1,14 +1,5 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
@@ -55,10 +46,6 @@ if errorlevel 1 exit 1
 
 :: link public exes with suffix (mklink does not play well with new .conda zip format)
 copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_PREFIX%\bin\qtpaths6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_PREFIX%\bin\qtdiag6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_PREFIX%\bin\androiddeployqt6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_PREFIX%\bin\windeployqt6.exe
 if errorlevel 1 exit 1
 
 :: You can find the expected values of these files in the log
