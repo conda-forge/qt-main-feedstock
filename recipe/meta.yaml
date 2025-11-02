@@ -6,7 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+  - url: https://ftp.fau.de/qtproject/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+    # url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     # url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     md5: 1cbaf920517a11b345d0a33790b0b700
     patches:
