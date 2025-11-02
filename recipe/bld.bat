@@ -43,6 +43,7 @@ cmake -LAH -G "Ninja" ^
     -DFEATURE_vulkan=ON ^
     -DINPUT_opengl=%OPENGLVER% ^
     -DQT_BUILD_SUBMODULES="%MODS%" ^
+    -DQT_CREATE_VERSIONED_HARD_LINK=OFF ^
     -B build .
 if errorlevel 1 exit 1
 
