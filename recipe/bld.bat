@@ -54,13 +54,12 @@ if errorlevel 1 exit 1
 xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
-:: link public exes with suffix (mklink does not play well with new .conda zip format)
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtpaths.exe %LIBRARY_PREFIX%\bin\qtpaths6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\qtdiag.exe %LIBRARY_PREFIX%\bin\qtdiag6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\androiddeployqt.exe %LIBRARY_PREFIX%\bin\androiddeployqt6.exe
-copy %LIBRARY_PREFIX%\lib\qt6\bin\windeployqt.exe %LIBRARY_PREFIX%\bin\windeployqt6.exe
-if errorlevel 1 exit 1
+:: link public exe with a script (copied qmake6.exe fails to run for an unknown reason since 6.10)
+for %%F in (qmake qtpaths qtdiag androiddeployqt windeployqt) do (
+    echo @echo off > %LIBRARY_PREFIX%\bin\%%F6.bat
+    type %LIBRARY_PREFIX%\bin\%%F6.bat
+    echo %%~dp0..\lib\qt6\bin\%%F.exe %%* >> %LIBRARY_PREFIX%\bin\%%F6.bat
+)
 
 :: You can find the expected values of these files in the log
 :: For example Translations will be listed as
