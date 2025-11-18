@@ -7,16 +7,16 @@ Subject: [PATCH] Remove need to set QT_HOST_PATH for cross-compiled builds
  cmake/QtConfigDependencies.cmake.in | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qtbase/cmake/QtConfigDependencies.cmake.in b/cmake/QtConfigDependencies.cmake.in
-index e68e2954f9d..e64b663bb36 100644
+diff --git a/cmake/QtConfigDependencies.cmake.in b/cmake/QtConfigDependencies.cmake.in
+index b006f052f7f..1d05bd9f47a 100644
 --- a/qtbase/cmake/QtConfigDependencies.cmake.in
 +++ b/qtbase/cmake/QtConfigDependencies.cmake.in
 @@ -8,7 +8,7 @@ if(DEFINED QT_REQUIRE_HOST_PATH_CHECK)
  elseif(DEFINED ENV{QT_REQUIRE_HOST_PATH_CHECK})
      set(__qt_platform_requires_host_info_package "$ENV{QT_REQUIRE_HOST_PATH_CHECK}")
- else()
+ elseif(CMAKE_CROSSCOMPILING OR DEFINED QT_HOST_PATH)
 -    set(__qt_platform_requires_host_info_package "@platform_requires_host_info_package@")
 +    set(__qt_platform_requires_host_info_package "FALSE")
+ else()
+     set(__qt_platform_requires_host_info_package FALSE)
  endif()
- set(__qt_platform_initial_qt_host_path "@qt_host_path_absolute@")
- set(__qt_platform_initial_qt_host_path_cmake_dir "@qt_host_path_cmake_dir_absolute@")

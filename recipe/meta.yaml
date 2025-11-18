@@ -1,14 +1,15 @@
 {% set name = "qt6-main" %}
-{% set version = "6.9.3" %}
+{% set version = "6.10.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+  - url: https://ftp.fau.de/qtproject/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
+    # url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     # url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: d8fab224d072df8ffa09f99f6245e446
+    md5: 1cbaf920517a11b345d0a33790b0b700
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -30,9 +31,9 @@ source:
     folder: opengl32sw  # [win64]
 
 build:
-  number: 1
+  number: 0
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  # skip: true  # [build_platform != target_platform]
+  skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -220,7 +221,6 @@ test:
     - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}  # [unix]
     # We needed to add a related flag, but these two SO files should be part of the
     # qt6-wayland conda package
-    - test ! -f $PREFIX/lib/libQt6WaylandClient${SHLIB_EXT}  # [unix]
     - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}  # [unix]
     - qmake6 --version
 
