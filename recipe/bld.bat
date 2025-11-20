@@ -1,14 +1,14 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
+rem  set "MODS=%MODS%;qtdeclarative"
+rem  set "MODS=%MODS%;qtimageformats"
+rem  set "MODS=%MODS%;qtshadertools"
+rem  set "MODS=%MODS%;qtsvg"
+rem  set "MODS=%MODS%;qttools"
+rem  set "MODS=%MODS%;qttranslations"
+rem  set "MODS=%MODS%;qt5compat"
+rem  set "MODS=%MODS%;qtwebchannel"
+rem  set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
@@ -49,6 +49,31 @@ if errorlevel 1 exit 1
 
 cmake --build build --target install --config Release
 if errorlevel 1 exit 1
+
+echo "qmake --version ..."
+qmake --version
+echo "qmake --version done"
+
+copy %LIBRARY_BIN%\qmake.exe %LIBRARY_BIN%\qmake6.exe
+echo "qmake6 --version ..."
+qmake6 --version
+echo "qmake6 --version done"
+
+
+mkdir dependencies
+cd dependencies
+curl -LO https://github.com/lucasg/Dependencies/releases/download/v1.11.1/Dependencies_x64_Release.zip
+7za x Dependencies_x64_Release.zip
+cd ..
+echo "dependencies..."
+dir /p dependencies
+set PATH=%CD%\dependencies;%PATH%
+.\dependencies\Dependencies.exe -modules %LIBRARY_BIN%\qmake6.exe -depth=1
+echo "depth=2..." 
+.\dependencies\Dependencies.exe -modules %LIBRARY_BIN%\qmake6.exe -depth=2
+
+exit 1
+
 
 :: we move exes in bin/qt6 to avoid clobbering qt5 exes
 mkdir %LIBRARY_BIN%\qt6

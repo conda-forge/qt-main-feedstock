@@ -84,7 +84,7 @@ requirements:
     # explicit libxml2+icu
     - libxml2-devel                     # [build_platform != target_platform]
     - icu                               # [build_platform != target_platform]
-
+    - 7za
   host:
     - libdrm                             # [linux]
     - libgl-devel                        # [linux]
