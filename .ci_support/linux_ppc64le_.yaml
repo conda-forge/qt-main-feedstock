@@ -53,7 +53,7 @@ nspr:
 nss:
 - '3'
 openssl:
-- '3'
+- '3.5'
 postgresql:
 - '18'
 pulseaudio_client:
