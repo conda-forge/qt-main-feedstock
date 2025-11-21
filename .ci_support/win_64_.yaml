@@ -27,7 +27,7 @@ libpng:
 libsqlite:
 - '3'
 openssl:
-- '3'
+- '3.5'
 qt:
 - '5.15'
 target_platform:
