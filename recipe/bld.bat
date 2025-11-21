@@ -50,6 +50,9 @@ if errorlevel 1 exit 1
 cmake --build build --target install --config Release
 if errorlevel 1 exit 1
 
+
+set "QT_DEBUG_PLUGINS=1"
+
 echo "qmake --version ..."
 dir /p %LIBRARY_BIN%
 where qmake
