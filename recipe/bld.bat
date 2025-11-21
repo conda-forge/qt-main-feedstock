@@ -51,11 +51,15 @@ cmake --build build --target install --config Release
 if errorlevel 1 exit 1
 
 echo "qmake --version ..."
+dir /p %LIBRARY_BIN%
+where qmake
 qmake --version
 echo "qmake --version done"
 
 copy %LIBRARY_BIN%\qmake.exe %LIBRARY_BIN%\qmake6.exe
+dir /p %LIBRARY_BIN%
 echo "qmake6 --version ..."
+where qmake6
 qmake6 --version
 echo "qmake6 --version done"
 
