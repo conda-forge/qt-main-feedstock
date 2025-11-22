@@ -1,0 +1,89 @@
+diff --git a/qmake/main.cpp b/qmake/main.cpp
+index da2bd9eefb9..03e701df4a8 100644
+--- a/qtbase/qmake/main.cpp
++++ b/qtbase/qmake/main.cpp
+@@ -19,6 +19,7 @@
+ #include <fcntl.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#include <iostream>
+ 
+ #if defined(Q_OS_UNIX)
+ #include <errno.h>
+@@ -423,6 +424,7 @@ bool qmake_setpwd(const QString &p)
+ 
+ int runQMake(int argc, char **argv)
+ {
++    std::cout << "runQMake0"<<std::endl;
+     QHashSeed::setDeterministicGlobalSeed();
+ 
+     // stderr is unbuffered by default, but stdout buffering depends on whether
+@@ -437,6 +439,7 @@ int runQMake(int argc, char **argv)
+     if (argc >= 2 && !strcmp(argv[1], "-install"))
+         return doInstall(argc - 2, argv + 2);
+ 
++    std::cout << "runQMake1"<<std::endl;
+ #ifdef Q_OS_WIN
+     {
+         // Support running as Visual C++'s compiler
+@@ -453,6 +456,7 @@ int runQMake(int argc, char **argv)
+     QMakeGlobals globals;
+     Option::globals = &globals;
+ 
++    std::cout << "runQMake2"<<std::endl;
+     // parse command line
+     int ret = Option::init(argc, argv);
+     if(ret != Option::QMAKE_CMDLINE_SUCCESS) {
+@@ -461,6 +465,8 @@ int runQMake(int argc, char **argv)
+         return 0;
+     }
+ 
++    std::cout << "runQMake3"<<std::endl;
++
+     QString oldpwd = qmake_getpwd();
+ 
+     Option::output_dir = oldpwd; //for now this is the output dir
+@@ -482,6 +488,7 @@ int runQMake(int argc, char **argv)
+         Option::output.setFileName(absoluteFilePath.mid(Option::output_dir.size() + 1));
+     }
+ 
++    std::cout << "runQMake4"<<std::endl;
+     QMakeProperty prop;
+     switch (Option::qmake_mode) {
+     case Option::QMAKE_QUERY_PROPERTY:
+@@ -495,6 +502,7 @@ int runQMake(int argc, char **argv)
+         break;
+     }
+ 
++    std::cout << "runQMake5"<<std::endl;
+     globals.setQMakeProperty(&prop);
+ 
+     ProFileCache proFileCache;
+@@ -509,6 +517,10 @@ int runQMake(int argc, char **argv)
+         files << "(*hack*)"; //we don't even use files, but we do the for() body once
+     else
+         files = Option::mkfile::project_files;
++
++
++    std::cout << "runQMake6"<<std::endl;
++
+     for(QStringList::Iterator pfile = files.begin(); pfile != files.end(); pfile++) {
+         if(Option::qmake_mode == Option::QMAKE_GENERATE_MAKEFILE ||
+            Option::qmake_mode == Option::QMAKE_GENERATE_PRL) {
+@@ -565,6 +577,8 @@ int runQMake(int argc, char **argv)
+         delete mkfile;
+         mkfile = nullptr;
+     }
++    std::cout << "runQMake8"<<std::endl;
++
+     qmakeClearCaches();
+     return exit_val;
+ }
+@@ -573,6 +587,7 @@ QT_END_NAMESPACE
+ 
+ int main(int argc, char **argv)
+ {
++    std::cout << "qmake::main..."<<std::endl;
+     // Set name of the qmake application in QCoreApplication instance
+     QT_PREPEND_NAMESPACE(QCoreApplication) app(argc, argv);
+     return QT_PREPEND_NAMESPACE(runQMake)(argc, argv);
