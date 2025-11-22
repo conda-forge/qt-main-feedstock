@@ -54,7 +54,7 @@ if errorlevel 1 exit 1
 set "QT_DEBUG_PLUGINS=1"
 
 echo "qmake --version ..."
-dir /p %LIBRARY_BIN%
+::dir /p %LIBRARY_BIN%
 where qmake
 qmake --version
 echo "qmake --version done"
@@ -64,7 +64,7 @@ dir /p %LIBRARY_BIN%
 echo "qmake6 --version ..."
 where qmake6
 qmake6 --version
-echo "qmake6 --version done"
+echo "qmake6 --version done %errorlevel%"
 
 
 mkdir dependencies
@@ -73,7 +73,7 @@ curl -LO https://github.com/lucasg/Dependencies/releases/download/v1.11.1/Depend
 7za x Dependencies_x64_Release.zip
 cd ..
 echo "dependencies..."
-dir /p dependencies
+::dir /p dependencies
 set PATH=%CD%\dependencies;%PATH%
 .\dependencies\Dependencies.exe -modules %LIBRARY_BIN%\qmake6.exe -depth=1
 echo "depth=2..." 
