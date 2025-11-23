@@ -60,12 +60,13 @@ qmake --version
 echo "qmake --version done"
 
 copy %LIBRARY_BIN%\qmake.exe %LIBRARY_BIN%\qmake6.exe
-dir /p %LIBRARY_BIN%
+dir /p /q %LIBRARY_BIN%
 echo "qmake6 --version ..."
 where qmake6
 qmake6 --version
+echo "absolute"
+%LIBRARY_BIN%\qmake6.exe --version
 echo "qmake6 --version done %errorlevel%"
-
 
 mkdir dependencies
 cd dependencies
@@ -78,6 +79,12 @@ set PATH=%CD%\dependencies;%PATH%
 .\dependencies\Dependencies.exe -modules %LIBRARY_BIN%\qmake6.exe -depth=1
 echo "depth=2..." 
 .\dependencies\Dependencies.exe -modules %LIBRARY_BIN%\qmake6.exe -depth=2
+
+
+echo "icacls qmake..."
+icacls %LIBRARY_BIN%\qmake.exe
+echo "icacls qmake6..."
+icacls %LIBRARY_BIN%\qmake6.exe
 
 exit 1
 
