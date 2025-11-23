@@ -18,7 +18,7 @@ source:
       # - patches/0015-qt6-conf-osx.patch
 
       # Ensure that cross-compiled builds and native builds generated the same cmake config files
-      - patches/0020-remove-qt-host-path-check-in-cross-compiled-builds.patch
+      # - patches/0020-remove-qt-host-path-check-in-cross-compiled-builds.patch
 
       # Ensure that QLibraryInfo::path(QLibraryInfo::PrefixPath) returns the correct value on Windows
       # after .dll are copied from %CONDA_PREFIX%\Library\lib\qt6\bin to %CONDA_PREFIX%\bin
