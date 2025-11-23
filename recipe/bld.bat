@@ -1,14 +1,14 @@
 
 set "MODS=qtbase"
-set "MODS=%MODS%;qtdeclarative"
-set "MODS=%MODS%;qtimageformats"
-set "MODS=%MODS%;qtshadertools"
-set "MODS=%MODS%;qtsvg"
-set "MODS=%MODS%;qttools"
-set "MODS=%MODS%;qttranslations"
-set "MODS=%MODS%;qt5compat"
-set "MODS=%MODS%;qtwebchannel"
-set "MODS=%MODS%;qtwebsockets"
+rem  set "MODS=%MODS%;qtdeclarative"
+rem  set "MODS=%MODS%;qtimageformats"
+rem  set "MODS=%MODS%;qtshadertools"
+rem  set "MODS=%MODS%;qtsvg"
+rem  set "MODS=%MODS%;qttools"
+rem  set "MODS=%MODS%;qttranslations"
+rem  set "MODS=%MODS%;qt5compat"
+rem  set "MODS=%MODS%;qtwebchannel"
+rem  set "MODS=%MODS%;qtwebsockets"
 
 :: Support systems with neither capable OpenGL (desktop mode) nor DirectX 11 (ANGLE mode) drivers
 :: https://github.com/ContinuumIO/anaconda-issues/issues/9142
@@ -53,6 +53,21 @@ if errorlevel 1 exit 1
 :: we set INSTALL_BINDIR != /bin to avoid clobbering qt5 exes but still dlls in /bin
 xcopy /y /s %LIBRARY_PREFIX%\lib\qt6\bin\*.dll %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
+
+:: link public exes with suffix (mklink does not play well with new .conda zip format)
+copy %LIBRARY_PREFIX%\lib\qt6\bin\qmake.exe %LIBRARY_PREFIX%\bin\qmake6.exe
+
+echo "qmake6 ..."
+which qmake6
+qmake6 -- -version
+echo "qmake6 done %errorlevel%"
+
+exit 1
+
+
+
+
+
 
 :: link public exe with a script (copied qmake6.exe fails to run for an unknown reason since 6.10)
 for %%F in (qmake qtpaths qtdiag androiddeployqt windeployqt) do (
