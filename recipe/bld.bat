@@ -52,6 +52,7 @@ if errorlevel 1 exit 1
 
 
 set "QT_DEBUG_PLUGINS=1"
+cmake -E rm -rf %SRC_DIR%\build\qtbase\bin
 
 echo "qmake --version ..."
 ::dir /p %LIBRARY_BIN%
