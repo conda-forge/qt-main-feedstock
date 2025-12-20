@@ -9,7 +9,14 @@ test -f ${PREFIX}/bin/qt6.conf
 
 ls
 cd test
-cmake .
-make
-ctest --output-on-failure
-make clean
+
+# cmake
+cmake -B build .
+make -C build
+ctest --test-dir build --output-on-failure
+make -C build clean
+
+# qmake
+ln -sv ${CXX} ${PREFIX}/bin/g++
+export LDFLAGS="-L${PREFIX}/lib"
+qmake6 main.pro
