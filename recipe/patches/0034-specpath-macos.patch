@@ -1,0 +1,17 @@
+diff --git a/src/corelib/kernel/qcoreapplication.cpp b/src/corelib/kernel/qcoreapplication.cpp
+index fbadad594e7..0ea6f14c576 100644
+--- a/qtbase/src/corelib/kernel/qcoreapplication.cpp
++++ b/qtbase/src/corelib/kernel/qcoreapplication.cpp
+@@ -2465,10 +2465,12 @@ QString QCoreApplication::applicationFilePath()
+         return d->cachedApplicationFilePath;
+ 
+     QString absPath = qAppFileName();
++#if 0
+     if (Q_LIKELY(!absPath.isEmpty())) {   // Darwin, FreeBSD, Linux, Windows
+         // the OS has canonicalized for us
+         return d->cachedApplicationFilePath = std::move(absPath);
+     }
++#endif
+ 
+     if (const QStringList args = arguments(); !args.isEmpty()) {
+         const QString &argv0 = args[0];
