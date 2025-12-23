@@ -23,7 +23,7 @@ cxx_compiler_version:
 glib:
 - '2'
 icu:
-- '75'
+- '78'
 krb5:
 - '1.21'
 libjpeg_turbo:

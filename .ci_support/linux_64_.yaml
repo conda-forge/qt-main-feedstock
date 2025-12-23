@@ -29,7 +29,7 @@ freetype:
 glib:
 - '2'
 icu:
-- '75'
+- '78'
 krb5:
 - '1.21'
 libjpeg_turbo:
