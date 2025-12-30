@@ -2,10 +2,15 @@
 set -ex
 
 if [[ "$build_platform" != "$target_platform" ]]; then
-    # This flag is used in conjunction with QT_FORCE_BUILD_TOOLS=ON
-    # https://github.com/qt/qtbase/commit/acfbe3b7795c741b269fc23ed2c51c5937cd7f4f
-    export QT_HOST_PATH="$BUILD_PREFIX"
-    CMAKE_ARGS="${CMAKE_ARGS} -DQT_FORCE_BUILD_TOOLS=ON"
+  # This flag is used in conjunction with QT_FORCE_BUILD_TOOLS=ON
+  # https://github.com/qt/qtbase/commit/acfbe3b7795c741b269fc23ed2c51c5937cd7f4f
+  export QT_HOST_PATH="$BUILD_PREFIX"
+  CMAKE_ARGS="${CMAKE_ARGS} -DQT_FORCE_BUILD_TOOLS=ON"
+
+  # allows to run qmake on arm64 too: https://doc.qt.io/qt-6/macos.html
+  if test `uname` = "Darwin"; then
+    CMAKE_ARGS="${CMAKE_ARGS} -DCMAKE_OSX_ARCHITECTURES=x86_64;arm64"
+  fi
 fi
 
 if [[ $(uname) == "Linux" ]]; then
@@ -50,7 +55,7 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DFEATURE_linux_v4l=OFF \
   -DFEATURE_gssapi=OFF \
   -DFEATURE_enable_new_dtags=OFF \
-  -DFEATURE_openssl_linked=ON \
+  -DFEATURE_openssl_linked=OFF \
   -DQT_BUILD_SUBMODULES=${QT_SUBMODULES} \
   -B build .
 cmake --build build --target install
@@ -61,6 +66,7 @@ for links in ${SRC_DIR}/build/qt*/user_facing_tool_links.txt
 do
   while read _line; do ln -sf $_line; done < ${links}
 done
+qmake6 --version
 
 # You can find the expected values of these files in the log
 # For example Translations will be listed as
