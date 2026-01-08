@@ -44,8 +44,8 @@ libwebp:
 - '1'
 libxcb:
 - '1'
-libxml2:
-- '2.13'
+libxml2_devel:
+- '2.14'
 mysql_devel:
 - '9.5'
 openssl:
@@ -53,7 +53,7 @@ openssl:
 pcre2:
 - '10.47'
 postgresql:
-- '17'
+- '18'
 target_platform:
 - linux-aarch64
 zip_keys:
