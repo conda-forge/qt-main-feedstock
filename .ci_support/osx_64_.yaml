@@ -45,7 +45,7 @@ openssl:
 pcre2:
 - '10.47'
 postgresql:
-- '17'
+- '18'
 target_platform:
 - osx-64
 zip_keys:
