@@ -1,5 +1,5 @@
 {% set name = "qt6-main" %}
-{% set version = "6.10.1" %}
+{% set version = "6.10.2" %}
 
 package:
   name: {{ name|lower }}
@@ -9,7 +9,7 @@ source:
   - url: https://ftp.fau.de/qtproject/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     # url: https://qt-mirror.dannhauer.de/archive/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
     # url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/single/qt-everywhere-src-{{ version }}.tar.xz
-    md5: cb2c438c33e3f9e6a430d63c7ba0920a
+    md5: c888eeca204d8ee144d9c57c2df9f8f4
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -36,7 +36,7 @@ source:
 build:
   number: 4
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  # skip: true  # [build_platform != target_platform]
+  skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
