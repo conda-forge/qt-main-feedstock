@@ -78,7 +78,7 @@ requirements:
     # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
     # cannot be executed on x86_64 to locate libclang successfully
     - llvmdev                           # [build_platform != target_platform]
-    - clangdev >=9                      # [build_platform != target_platform]
+    - clangdev >=9,<21                  # [build_platform != target_platform]
     # circular dependency... but it helps when cross compiling
     - qt6-main   {{ version }}          # [build_platform != target_platform]
     # explicit libxml2+icu
@@ -114,7 +114,7 @@ requirements:
     # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
     # Only libclang is needed, but needs the full package for detection.
     - llvm
-    - clangdev >=9
+    - clangdev >=9,<21
     # Ensure that build and host have the same clang version on osx
     # otherwise qt6 may be out of sync compared to the pinned compiler
     # version
