@@ -29,9 +29,9 @@ freetype:
 glib:
 - '2'
 gstreamer:
-- '1.24'
+- '1.26'
 icu:
-- '75'
+- '78'
 krb5:
 - '1.21'
 libboost_headers:
@@ -53,7 +53,7 @@ nspr:
 nss:
 - '3'
 openssl:
-- '3'
+- '3.5'
 postgresql:
 - '18'
 pulseaudio_client:
