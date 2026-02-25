@@ -5,9 +5,6 @@ cxx_compiler_version:      # [unix]
   - 13                     # [linux]
   - 18                     # [osx]
 
-MACOSX_SDK_VERSION:        # [osx and x86_64]
-  - '10.14'                # [osx and x86_64]
-
 replacements:
   all_replacements:
     # These replacements avoid leakage of build time CONDA_BUILD_SYSROOT
