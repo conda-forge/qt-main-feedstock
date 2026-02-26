@@ -31,7 +31,7 @@ glib:
 icu:
 - '78'
 krb5:
-- '1.21'
+- '1.22'
 libjpeg_turbo:
 - '3'
 libpng:

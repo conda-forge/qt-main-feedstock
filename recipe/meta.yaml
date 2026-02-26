@@ -34,9 +34,9 @@ source:
     folder: opengl32sw  # [win64]
 
 build:
-  number: 4
+  number: 5
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  # skip: true  # [build_platform != target_platform]
+  skip: true  # [build_platform != target_platform]
   detect_binary_files_with_prefix: true
   run_exports:
     - {{ pin_subpackage('qt6-main', max_pin='x.x') }}
@@ -96,9 +96,10 @@ requirements:
     - libvulkan-loader                   # [not osx]
     # For pkg-config gl, fontconfig + freetype
     - pthread-stubs                      # [linux]
+    - brotli
     - dbus                               # [linux]
     - fontconfig                         # [linux]
-    - freetype                           # [linux]
+    - freetype                           # [not osx]
     - harfbuzz
     - glib
     - libxml2-devel                      # [linux]
