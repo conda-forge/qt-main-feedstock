@@ -99,7 +99,7 @@ requirements:
     - brotli
     - dbus                               # [linux]
     - fontconfig                         # [linux]
-    - freetype                           # [linux]
+    - freetype                           # [not osx]
     - harfbuzz
     - glib
     - libxml2-devel                      # [linux]
