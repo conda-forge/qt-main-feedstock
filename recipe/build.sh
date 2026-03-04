@@ -6,6 +6,8 @@ if [[ "$build_platform" != "$target_platform" ]]; then
     # https://github.com/qt/qtbase/commit/acfbe3b7795c741b269fc23ed2c51c5937cd7f4f
     export QT_HOST_PATH="$BUILD_PREFIX"
     CMAKE_ARGS="${CMAKE_ARGS} -DQT_FORCE_BUILD_TOOLS=ON"
+    # aarch64: fatal error: cannot write PCH file: No space left on device
+    CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
 if [[ $(uname) == "Linux" ]]; then
