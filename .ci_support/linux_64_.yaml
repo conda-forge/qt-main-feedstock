@@ -1,5 +1,7 @@
 alsa_lib:
 - '1.2'
+brotli:
+- '1.2'
 c_compiler:
 - gcc
 c_compiler_version:
@@ -50,6 +52,8 @@ openssl:
 - '3.5'
 pcre2:
 - '10.47'
+perl:
+- 5.32.1
 postgresql:
 - '18'
 target_platform:
