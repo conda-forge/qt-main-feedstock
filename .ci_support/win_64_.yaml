@@ -17,7 +17,7 @@ gstreamer:
 icu:
 - '78'
 krb5:
-- '1.21'
+- '1.22'
 libboost_headers:
 - '1.88'
 libjpeg_turbo:
