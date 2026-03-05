@@ -3,7 +3,7 @@ About qt6-main-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/qt-main-feedstock/blob/main/LICENSE.txt)
 
-Home: https://qt.io
+Home: https://qt.io/
 
 Package license: LGPL-3.0-only
 
@@ -15,7 +15,6 @@ Documentation: https://doc.qt.io/
 
 Qt helps you create connected devices, UIs & applications that run
 anywhere on any device, on any operating system at any time.
-
 
 Current build status
 ====================
