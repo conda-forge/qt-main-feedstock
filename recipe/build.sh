@@ -204,6 +204,14 @@ if [[ ${HOST} =~ .*darwin.* ]]; then
       # compatibility
       lipo -create $BUILD_PREFIX/lib/libc++.dylib $PREFIX/lib/libc++.dylib -output $PREFIX/lib/libc++.dylib
       lipo -create $BUILD_PREFIX/lib/libclang.dylib $PREFIX/lib/libclang.dylib -output $PREFIX/lib/libclang.dylib
+    else
+      if [[ "${target_platform}" == "osx-arm64" ]]; then
+        # We need to merge both libc++ and libclang in order to compile QDoc to have both x86_64 and arm64
+        # compatibility
+        CONDA_SUBDIR="osx-64" conda create -y --prefix "${SRC_DIR}/osx_64_clang" libcxx clangdev clang -c conda-forge
+        lipo -create ${SRC_DIR}/osx_64_clang/lib/libc++.dylib $PREFIX/lib/libc++.dylib -output $PREFIX/lib/libc++.dylib
+        lipo -create ${SRC_DIR}/osx_64_clang/lib/libclang.dylib $PREFIX/lib/libclang.dylib -output $PREFIX/lib/libclang.dylib
+      fi
     fi
     # On OSX, we use the native secure transport instead of openssl
     # https://forum.qt.io/topic/55853/openssl-and-mac-os-x/7
