@@ -1,3 +1,5 @@
+brotli:
+- '1.2'
 c_compiler:
 - vs2022
 c_stdlib:
@@ -10,6 +12,8 @@ curl:
 - '8'
 cxx_compiler:
 - vs2022
+freetype:
+- '2'
 glib:
 - '2'
 icu:
@@ -30,6 +34,8 @@ openssl:
 - '3.5'
 pcre2:
 - '10.47'
+perl:
+- 5.32.1
 target_platform:
 - win-64
 zlib:
