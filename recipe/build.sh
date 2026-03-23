@@ -14,6 +14,7 @@ if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_liburing=OFF"
 fi
 
 if test `uname` = "Darwin"; then
@@ -49,7 +50,6 @@ cmake -LAH -G "Ninja" ${CMAKE_ARGS} \
   -DINSTALL_EXAMPLESDIR=share/doc/qt6/examples \
   -DFEATURE_system_sqlite=ON \
   -DFEATURE_framework=OFF \
-  -DFEATURE_linux_v4l=OFF \
   -DFEATURE_gssapi=OFF \
   -DFEATURE_enable_new_dtags=OFF \
   -DFEATURE_openssl_linked=ON \

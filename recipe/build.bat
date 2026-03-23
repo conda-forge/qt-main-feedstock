@@ -25,7 +25,6 @@ set "PATH=%SRC_DIR%\build\qtbase\lib\qt6\bin;%PATH%"
 cmake %CMAKE_ARGS% -LAH -G "Ninja" ^
     -DCMAKE_UNITY_BUILD=ON -DCMAKE_UNITY_BUILD_BATCH_SIZE=32 ^
     -DINSTALL_BINDIR=lib/qt6/bin ^
-    -DINSTALL_PUBLICBINDIR=bin ^
     -DINSTALL_LIBEXECDIR=lib/qt6 ^
     -DINSTALL_DOCDIR=share/doc/qt6 ^
     -DINSTALL_ARCHDATADIR=lib/qt6 ^
