@@ -1,5 +1,5 @@
 context:
-  version: "6.10.2"
+  version: "6.11.0"
   maj_min: ${{ (version | split('.'))[:2] | join('.') }}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://ftp.fau.de/qtproject/official_releases/qt/${{ maj_min }}/${{ version }}/single/qt-everywhere-src-${{ version }}.tar.xz
-    md5: c888eeca204d8ee144d9c57c2df9f8f4
+    md5: a93e9f424a9d11ee8d67bf8fb1af4772
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -33,9 +33,9 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 6
+  number: 0
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  # skip: ${{ build_platform != target_platform }}
+  skip: ${{ build_platform != target_platform }}
 
 requirements:
   build:
