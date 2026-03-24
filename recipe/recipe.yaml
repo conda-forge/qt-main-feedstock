@@ -35,7 +35,12 @@ source:
 build:
   number: 0
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
-  skip: ${{ build_platform != target_platform }}
+  # Once should be careful and "merge" when the native CIs pass
+  # Then on main:
+  #   - let the native CIs pass
+  #   - wait 1-2 hours for the CDN to propagate our artefacts
+  #   - restart the builds on the failed CIs
+  # skip: ${{ build_platform != target_platform }}
 
 requirements:
   build:
