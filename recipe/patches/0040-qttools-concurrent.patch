@@ -1,0 +1,12 @@
+diff --git a/src/assistant/help/CMakeLists.txt b/src/assistant/help/CMakeLists.txt
+index 76dca7c91..448e6a409 100644
+--- a/qttools/src/assistant/help/CMakeLists.txt
++++ b/qttools/src/assistant/help/CMakeLists.txt
+@@ -28,6 +28,7 @@ qt_internal_add_module(Help
+     LIBRARIES
+         Qt::CorePrivate
+         Qt::Tools
++        Qt::Concurrent
+     PUBLIC_LIBRARIES
+         Qt::Core
+         Qt::Sql
