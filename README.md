@@ -13,7 +13,6 @@ Development: https://github.com/qt
 
 Documentation: https://doc.qt.io/
 
-
 Qt helps you create connected devices, UIs & applications that run
 anywhere on any device, on any operating system at any time.
 
