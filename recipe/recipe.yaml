@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 2
+  number: 3
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
   # Once should be careful and "merge" when the native CIs pass
   # Then on main:
@@ -73,14 +73,6 @@ requirements:
         - m2-patch
     - if: build_platform != target_platform
       then:
-        # libclang is required in order to enable simultaneous x86_64 and
-        # arm64 support for QDoc
-        - libclang >=17,<22
-        # Although these should be host-only dependencies, they are needed when
-        # cross-compiling arm64 binaries on x86_64 since llvm-config (host/arm64)
-        # cannot be executed on x86_64 to locate libclang successfully
-        - llvmdev >=17,<22
-        - clangdev >=17,<22
         # circular dependency... but it helps when cross compiling
         - qt6-main ==${{ version }}
         # explicit libxml2+icu
@@ -98,27 +90,13 @@ requirements:
     - pcre2
     - zlib
     - openssl
-    # For QDoc
-    # http://doc.qt.io/Qt-5/qdoc-guide-clang.html
-    # Only libclang is needed, but needs the full package for detection.
-    - llvm >=17,<22
-    - clangdev >=17,<22
-    # Ensure that build and host have the same clang version on osx
-    # otherwise qt6 may be out of sync compared to the pinned compiler
-    # version
     - zstd
     - krb5
     - double-conversion
     - libtiff
     - libwebp
-    - if: osx
-      then:
-        - libclang ${{ cxx_compiler_version }}.*
-        - libclang-cpp ${{ cxx_compiler_version }}.*
     - if: not osx
       then:
-        - libclang >=17,<22
-        - libclang-cpp >=17,<22
         - libvulkan-headers
         - libvulkan-loader
         - freetype
