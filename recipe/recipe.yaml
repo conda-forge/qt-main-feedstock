@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 3
+  number: 4
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
   # Once should be careful and "merge" when the native CIs pass
   # Then on main:
@@ -161,6 +161,10 @@ requirements:
         - xcb-util-image
         - xcb-util-renderutil
         - xcb-util-cursor
+        # these are useful for a devel package if ever created
+        - libgl-devel
+        - libegl-devel
+
   run_constraints:
     - qt ==${{ version }}
   run_exports:
