@@ -1,7 +1,9 @@
 azure:
   free_disk_space: true
 workflow_settings:
-  build_workspace_dir: C:\bld\
+  build_workspace_dir:
+    - value: C:\bld\
+      os: win
 bot:
   abi_migration_branches:
   - qt5
