@@ -1,14 +1,12 @@
 azure:
   free_disk_space: true
-  settings_win:
-    variables:
-      CONDA_BLD_PATH: C:\bld\
+workflow_settings:
+  build_workspace_dir:
+    - value: C:\bld\
+      os: win
 bot:
   abi_migration_branches:
   - qt5
-build_platform:
-  linux_aarch64: linux_64
-  osx_arm64: osx_64
 conda_build:
   pkg_format: '2'
 conda_build_tool: rattler-build
@@ -17,6 +15,6 @@ github:
   branch_name: main
   tooling_branch_name: main
 provider:
-  linux_64: azure
-  linux_aarch64: azure
+  linux_aarch64: default
+  osx_arm64: default
 test: native_and_emulated

@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 0
+  number: 1
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
   # Once should be careful and "merge" when the native CIs pass
   # Then on main:
@@ -168,7 +168,19 @@ requirements:
   run_constraints:
     - qt ==${{ version }}
   run_exports:
-    - ${{ pin_subpackage('qt6-main', upper_bound='x.x') }}
+    # Qt 6 guarantees backwards binary (ABI) compatibility across the entire
+    # 6.x series: an application compiled against an earlier Qt 6 release runs
+    # with any later Qt 6 release (same toolchain/config, dynamic builds). So we
+    # only need to pin the major version. See "Qt Releases":
+    # https://doc.qt.io/qt-6/qt-releases.html
+    #   "Qt aims to keep backwards binary compatibility with previous Qt
+    #    releases of the same major version. That is, an application compiled
+    #    against Qt 6.0.0 should still run with any other Qt 6 release, but not
+    #    necessarily the other way around."
+    #   "There is no universal C++ standard for Application Binary Interfaces
+    #    (ABIs), so this promise only applies when using the same toolchain
+    #    (compiler) and system environment for both versions."
+    - ${{ pin_subpackage('qt6-main', upper_bound='x') }}
 
 tests:
   - script:
