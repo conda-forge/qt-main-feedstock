@@ -20,6 +20,7 @@ fi
 if test `uname` = "Darwin"; then
   # else cmake erroneously finds ${SDKROOT}/usr/lib/libnetwork.tbd
   CMAKE_ARGS="${CMAKE_ARGS} -DFWNetworkInternal:FILEPATH=${SDKROOT}/System/Library/Frameworks/Network.framework"
+  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
 fi
 
 QT_SUBMODULES="qtbase;\
