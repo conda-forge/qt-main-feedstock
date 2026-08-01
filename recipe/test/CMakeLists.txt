@@ -4,7 +4,7 @@ set (CMAKE_BUILD_TYPE "Release" CACHE STRING "build type")
 
 project (qt-main-test CXX)
 
-find_package (Qt6 CONFIG REQUIRED COMPONENTS Core)
+find_package (Qt6 CONFIG REQUIRED COMPONENTS Core Gui)
 
 add_executable (hello main.cpp)
 target_link_libraries (hello Qt6::Core)
@@ -15,6 +15,10 @@ target_link_libraries (test_qmimedatabase Qt6::Core)
 add_executable (test_qlibraryinfo_prefixpath test_qlibraryinfo_prefixpath.cpp)
 target_link_libraries (test_qlibraryinfo_prefixpath Qt6::Core)
 
+add_executable (test_qvulkaninstance test_qvulkaninstance.cpp)
+target_link_libraries (test_qvulkaninstance Qt6::Gui)
+
 enable_testing ()
 add_test (NAME test_qmimedatabase COMMAND test_qmimedatabase)
 add_test (NAME test_qlibraryinfo_prefixpath COMMAND test_qlibraryinfo_prefixpath)
+add_test (NAME test_qvulkaninstance COMMAND test_qvulkaninstance)

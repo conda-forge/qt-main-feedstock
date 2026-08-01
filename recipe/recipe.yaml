@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 1
+  number: 2
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
   # Once should be careful and "merge" when the native CIs pass
   # Then on main:
@@ -95,10 +95,13 @@ requirements:
     - double-conversion
     - libtiff
     - libwebp
+    - libvulkan-headers
+    - libvulkan-loader
+    - if: osx
+      then:
+        - moltenvk
     - if: not osx
       then:
-        - libvulkan-headers
-        - libvulkan-loader
         - freetype
     - if: not win
       then:
@@ -221,6 +224,10 @@ tests:
         then:
           - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so
           - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so
+      - if: osx
+        then:
+          - test -f $PREFIX/include/qt6/QtGui/QVulkanInstance
+          - test -f $PREFIX/lib/qt6/plugins/platforms/libqcocoa${SHLIB_EXT}
       - if: unix
         then:
           - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}
@@ -252,6 +259,7 @@ tests:
         - test/qrc_qml.cpp
         - test/test_qmimedatabase.cpp
         - test/test_qlibraryinfo_prefixpath.cpp
+        - test/test_qvulkaninstance.cpp
         - test/CMakeLists.txt
         - test/main.pro
 
