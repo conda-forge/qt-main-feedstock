@@ -100,8 +100,7 @@ requirements:
     - if: osx
       then:
         - moltenvk
-    - if: not osx
-      then:
+      else:
         - freetype
     - if: not win
       then:
@@ -204,6 +203,7 @@ tests:
           - test -f $PREFIX/lib/libQt6Quick${SHLIB_EXT}
           - test -f $PREFIX/lib/libQt6Widgets${SHLIB_EXT}
           - test -f $PREFIX/lib/libQt6Xml${SHLIB_EXT}
+          - test -f $PREFIX/include/qt6/QtGui/QVulkanInstance
         else:
           - if not exist %PREFIX%\\Library\\include\\qt6\\QtCore exit 1
           - if not exist %PREFIX%\\Library\\lib\\Qt6Core.lib exit 1
@@ -226,7 +226,6 @@ tests:
           - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so
       - if: osx
         then:
-          - test -f $PREFIX/include/qt6/QtGui/QVulkanInstance
           - test -f $PREFIX/lib/qt6/plugins/platforms/libqcocoa${SHLIB_EXT}
       - if: unix
         then:
@@ -235,11 +234,21 @@ tests:
           # We needed to add a related flag, but these two SO files should be part of the
           # qt6-wayland conda package
           - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}
+      - if: unix
+        then:
+          - cmake -S test -B test-build
+          - cmake --build test-build
+          - ctest --test-dir test-build --output-on-failure
+        else:
+          - cmake -G"NMake Makefiles" -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" -S test -B test-build
+          - cmake --build test-build --config Release
+          - ctest --test-dir test-build -C Release --output-on-failure
     requirements:
       run:
         - ${{ compiler('cxx') }}
         - ${{ stdlib('c') }}
         - cmake >=3.16
+        - libvulkan-headers
         - if: unix
           then: make
         - if: linux

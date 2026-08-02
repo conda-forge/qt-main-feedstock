@@ -10,9 +10,10 @@ if [[ "$build_platform" != "$target_platform" ]]; then
     CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_WITH_PCH=OFF"
 fi
 
+CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
+
 if [[ $(uname) == "Linux" ]]; then
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_egl=ON -DFEATURE_eglfs=ON -DFEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DFEATURE_xkbcommon=ON"
-  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_wayland=ON"
   CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_liburing=OFF"
 fi
@@ -20,7 +21,6 @@ fi
 if test `uname` = "Darwin"; then
   # else cmake erroneously finds ${SDKROOT}/usr/lib/libnetwork.tbd
   CMAKE_ARGS="${CMAKE_ARGS} -DFWNetworkInternal:FILEPATH=${SDKROOT}/System/Library/Frameworks/Network.framework"
-  CMAKE_ARGS="${CMAKE_ARGS} -DFEATURE_vulkan=ON"
 fi
 
 QT_SUBMODULES="qtbase;\
