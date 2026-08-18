@@ -1,5 +1,5 @@
 context:
-  version: "6.11.1"
+  version: "6.11.2"
   maj_min: ${{ (version | split('.'))[:2] | join('.') }}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://ftp.fau.de/qtproject/official_releases/qt/${{ maj_min }}/${{ version }}/single/qt-everywhere-src-${{ version }}.tar.xz
-    md5: 25d4d1dd74c92b978f164e8f20805985
+    md5: 669c1f3a41c37fdda389094882044d7a
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 2
+  number: 0
   # bumping qt version requires a 2-staged build as cross builds require the native package with the same version
   # Once should be careful and "merge" when the native CIs pass
   # Then on main:
@@ -64,7 +64,7 @@ requirements:
         - ruby >=2.5
         - bison
         - flex
-        - gperf   
+        - gperf
     - if: win
       then:
         - m2-gperf
@@ -234,8 +234,6 @@ tests:
           # We needed to add a related flag, but these two SO files should be part of the
           # qt6-wayland conda package
           - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}
-      - if: unix
-        then:
           - cmake -S test -B test-build
           - cmake --build test-build
           - ctest --test-dir test-build --output-on-failure
