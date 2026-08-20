@@ -1,8 +1,10 @@
 # https://doc.qt.io/qt-6/macos.html
-c_stdlib_version:          # [osx]
-  - 11.0                   # [osx]
 MACOSX_SDK_VERSION:        # [osx]
   - '12.3'                 # [osx]
-  
-c_stdlib_version:          # [linux]
-  - 2.17                   # [linux]
+
+# clang 21+ is not supported
+c_compiler_version:         # [osx]
+  - 19                      # [osx]
+cxx_compiler_version:       # [osx]
+  - 19                      # [osx]
+
