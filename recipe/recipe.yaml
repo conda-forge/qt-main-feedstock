@@ -64,7 +64,7 @@ requirements:
         - ruby >=2.5
         - bison
         - flex
-        - gperf   
+        - gperf
     - if: win
       then:
         - m2-gperf
@@ -234,8 +234,6 @@ tests:
           # We needed to add a related flag, but these two SO files should be part of the
           # qt6-wayland conda package
           - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}
-      - if: unix
-        then:
           - cmake -S test -B test-build
           - cmake --build test-build
           - ctest --test-dir test-build --output-on-failure
