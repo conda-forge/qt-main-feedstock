@@ -1,0 +1,38 @@
+c_compiler:
+- vs2022
+c_stdlib:
+- vs
+channel_sources:
+- conda-forge
+channel_targets:
+- conda-forge main
+curl:
+- '8'
+cxx_compiler:
+- vs2022
+glib:
+- '2'
+gstreamer:
+- '1.26'
+icu:
+- '78'
+krb5:
+- '1.22'
+libboost_headers:
+- '1.88'
+libjpeg_turbo:
+- '3'
+libpng:
+- '1.6'
+libsqlite:
+- '3'
+openssl:
+- '3.5'
+qt:
+- '5.15'
+target_platform:
+- win-arm64
+zlib:
+- '1'
+zstd:
+- '1.5'
