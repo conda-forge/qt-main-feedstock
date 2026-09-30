@@ -178,55 +178,50 @@ requirements:
     - ${{ pin_subpackage('qt6-main', upper_bound='x') }}
 
 tests:
+  - package_contents:
+      include:
+        - qt6/QtCore/qobject.h
+        - qt6/QtGui/QVulkanInstance
+      lib:
+        exists:
+          - Qt6Core
+          - Qt6Gui
+          - Qt6Network
+          - Qt6OpenGL
+          - Qt6OpenGLWidgets
+          - Qt6PrintSupport
+          - Qt6ShaderTools
+          - Qt6Svg
+          - Qt6Test
+          - Qt6Qml
+          - Qt6Quick
+          - Qt6Widgets
+          - Qt6Xml
+        not_exists:
+          # We needed to add a related flag, but this SO file should be part of the
+          # qt6-wayland conda package
+          - Qt6WaylandCompositor
+      bin:
+        - qmake6
+      files:
+        # `$PREFIX/bin/qt6.conf` on unix, `%PREFIX%\Library\bin\qt6.conf` on Windows
+        - "{bin,Library/bin}/qt6.conf"
+        - if: unix
+          then:
+            - lib/qt6/bin/qmake*
+            - lib/qt6/mkspecs/*
+            - lib/qt6/qml/QtQuick/*
+            - lib/qt6/plugins/sqldrivers/libqsqlite.{so,dylib}
+            - lib/qt6/plugins/imageformats/libqtiff.{so,dylib}
+        - if: linux
+          then:
+            - lib/qt6/plugins/platforms/libqxcb.so
+            - lib/qt6/plugins/platforms/libqeglfs.so
+        - if: osx
+          then:
+            - lib/qt6/plugins/platforms/libqcocoa.dylib
   - script:
       - qmake6 --version
-      - if: unix
-        then:
-          - test -d $PREFIX/include/qt6/QtCore
-          - test -f $PREFIX/lib/libQt6Core${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Gui${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Network${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6OpenGL${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6OpenGLWidgets${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6PrintSupport${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6ShaderTools${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Svg${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Test${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Qml${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Quick${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Widgets${SHLIB_EXT}
-          - test -f $PREFIX/lib/libQt6Xml${SHLIB_EXT}
-          - test -f $PREFIX/include/qt6/QtGui/QVulkanInstance
-        else:
-          - if not exist %PREFIX%\\Library\\include\\qt6\\QtCore exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Core.lib exit 1
-          - if not exist %PREFIX%\\Library\\bin\\Qt6Core.dll exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Gui.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Network.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6OpenGL.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6OpenGLWidgets.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6PrintSupport.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6ShaderTools.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Svg.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Test.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Qml.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Quick.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Widgets.lib exit 1
-          - if not exist %PREFIX%\\Library\\lib\\Qt6Xml.lib exit 1
-      - if: linux
-        then:
-          - test -f $PREFIX/lib/qt6/plugins/platforms/libqxcb.so
-          - test -f $PREFIX/lib/qt6/plugins/platforms/libqeglfs.so
-      - if: osx
-        then:
-          - test -f $PREFIX/lib/qt6/plugins/platforms/libqcocoa${SHLIB_EXT}
-      - if: unix
-        then:
-          - test -f $PREFIX/lib/qt6/plugins/sqldrivers/libqsqlite${SHLIB_EXT}
-          - test -f $PREFIX/lib/qt6/plugins/imageformats/libqtiff${SHLIB_EXT}
-          # We needed to add a related flag, but these two SO files should be part of the
-          # qt6-wayland conda package
-          - test ! -f $PREFIX/lib/libQt6WaylandCompositor${SHLIB_EXT}
       - if: unix
         then:
           - cmake -S test -B test-build
