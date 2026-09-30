@@ -1,12 +1,12 @@
 diff --git a/src/corelib/global/qlibraryinfo.cpp b/src/corelib/global/qlibraryinfo.cpp
-index 87daa9b4c73..44ee15ff31c 100644
+index 5945d5eea2d..61c4e9d6945 100644
 --- a/qtbase/src/corelib/global/qlibraryinfo.cpp
 +++ b/qtbase/src/corelib/global/qlibraryinfo.cpp
-@@ -108,7 +108,7 @@ static std::unique_ptr<QSettings> findConfiguration()
+@@ -214,7 +214,7 @@ static std::unique_ptr<QSettings> findConfiguration()
      QString qtconfig = QStringLiteral(":/qt/etc/qt.conf");
      if (QResource(qtconfig, QLocale::c()).isValid())
          return std::make_unique<QSettings>(qtconfig, QSettings::IniFormat);
--#ifdef Q_OS_DARWIN
+-#if defined(Q_OS_APPLE)
 +#if 0
      CFBundleRef bundleRef = CFBundleGetMainBundle();
      if (bundleRef) {
