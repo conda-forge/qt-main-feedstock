@@ -88,6 +88,7 @@ echo HostLibraries = %LIBRARY_LIB:\=/%                          >> %LIBRARY_BIN%
 :: Some things go looking in the prefix root (pyqt, for example)
 copy "%LIBRARY_BIN%\qt6.conf" "%PREFIX%\qt6.conf"
 if errorlevel 1 exit 1
+
 :: Other things look at where Qt originally installed qmake.exe (cmake, for example)
 copy "%LIBRARY_BIN%\qt6.conf" "%LIBRARY_PREFIX%\lib\qt6\bin\qt6.conf"
 if errorlevel 1 exit 1
