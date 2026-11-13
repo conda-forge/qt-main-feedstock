@@ -53,7 +53,7 @@ libxml2_devel:
 openssl:
 - '3.5'
 pcre2:
-- '10.47'
+- '10.49'
 perl:
 - 5.32.1
 postgresql:
