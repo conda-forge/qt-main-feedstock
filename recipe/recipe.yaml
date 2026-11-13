@@ -50,7 +50,7 @@ requirements:
     - if: unix
       then:
         # For fontconfig + freetype
-        - pkg-config
+        - pkgconf
         - make
     - if: linux
       then:
