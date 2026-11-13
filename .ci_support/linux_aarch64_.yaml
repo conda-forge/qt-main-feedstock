@@ -1,3 +1,5 @@
+DOCKER_PLATFORM:
+- linux/aarch64
 alsa_lib:
 - '1.2'
 c_compiler:
@@ -19,7 +21,7 @@ cxx_compiler_version:
 dbus:
 - '1'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64:alma9
+- quay.io/condaforge/linux-anvil-aarch64:alma10
 expat:
 - '2'
 fontconfig:
@@ -47,7 +49,7 @@ libsqlite:
 libxcb:
 - '1'
 libxml2_devel:
-- '2.14'
+- '2.15'
 nspr:
 - '4'
 nss:
