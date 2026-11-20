@@ -1,7 +1,9 @@
 brotli:
 - '1.2'
 c_compiler:
-- vs2022
+- vs
+c_compiler_version:
+- '2022'
 c_stdlib:
 - vs
 channel_sources:
@@ -11,7 +13,9 @@ channel_targets:
 curl:
 - '8'
 cxx_compiler:
-- vs2022
+- vs
+cxx_compiler_version:
+- '2022'
 freetype:
 - '2'
 glib:
