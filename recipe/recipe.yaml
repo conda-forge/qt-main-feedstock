@@ -1,5 +1,5 @@
 context:
-  version: "6.12.0"
+  version: "6.12.1"
   maj_min: ${{ (version | split('.'))[:2] | join('.') }}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://ftp.fau.de/qtproject/official_releases/qt/${{ maj_min }}/${{ version }}/single/qt-everywhere-src-${{ version }}.tar.xz
-    md5: ac677cc64158740f257fd37a5b4c5ffb
+    md5: c15b83ce17cb804cc71ec054afc5c87e
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -28,15 +28,12 @@ source:
       # qmake fails configuring qwt on osx: Could not find qmake spec 'macx-clang'
       - patches/0034-specpath-macos.patch
 
-      # https://qt-project.atlassian.net/issues/QTBUG-145230
-      - patches/0040-qttools-concurrent.patch
-
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15
     target_directory: opengl32sw
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
