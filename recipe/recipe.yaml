@@ -1,5 +1,5 @@
 context:
-  version: "6.12.0"
+  version: "6.12.1"
   maj_min: ${{ (version | split('.'))[:2] | join('.') }}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://ftp.fau.de/qtproject/official_releases/qt/${{ maj_min }}/${{ version }}/single/qt-everywhere-src-${{ version }}.tar.xz
-    md5: ac677cc64158740f257fd37a5b4c5ffb
+    md5: c15b83ce17cb804cc71ec054afc5c87e
     patches:
       # qtbase
       - patches/0003-qtbase-use-better-clang-optimize-size.patch
@@ -36,7 +36,7 @@ source:
     target_directory: opengl32sw
 
 build:
-  number: 3
+  number: 0
 
 requirements:
   build:
