@@ -33,7 +33,7 @@ freetype:
 glib:
 - '2'
 icu:
-- '78'
+- '79'
 krb5:
 - '1.22'
 libjpeg_turbo:
@@ -66,4 +66,4 @@ zip_keys:
 zlib:
 - '1'
 zstd:
-- '1.5'
+- '1.6'
