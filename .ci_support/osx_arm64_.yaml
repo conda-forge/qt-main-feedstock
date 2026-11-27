@@ -5,7 +5,7 @@ brotli:
 c_compiler:
 - clang
 c_compiler_version:
-- '21'
+- '22'
 c_stdlib:
 - macosx_deployment_target
 c_stdlib_version:
@@ -19,7 +19,7 @@ curl:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '21'
+- '22'
 glib:
 - '2'
 icu:
@@ -54,4 +54,4 @@ zip_keys:
 zlib:
 - '1'
 zstd:
-- '1.5'
+- '1.6'
