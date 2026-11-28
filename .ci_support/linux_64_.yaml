@@ -33,7 +33,7 @@ glib:
 gstreamer:
 - '1.26'
 icu:
-- '78'
+- '79'
 krb5:
 - '1.22'
 libboost_headers:
@@ -70,4 +70,4 @@ zip_keys:
 zlib:
 - '1'
 zstd:
-- '1.5'
+- '1.6'
