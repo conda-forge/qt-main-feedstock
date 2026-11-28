@@ -1,0 +1,86 @@
+From cb022d979cf8b1afa154a5a841012b35f9173d40 Mon Sep 17 00:00:00 2001
+From: Mark Harfouche <mark.harfouche@gmail.com>
+Date: Thu, 26 Nov 2026 08:46:09 -0500
+Subject: [PATCH 42/44] Move native child windows when a non-native ancestor
+ moves
+
+A native child widget's window is positioned relative to its native
+parent window. QWidgetPrivate::setGeometry_sys() updates that position
+when the native widget itself is moved or resized, but not when a
+non-native widget between it and its native parent moves. The native
+window then stays where it was while the widgets around it move on, for
+example when a layout recenters a fixed-size container that holds a
+native widget created with Qt::WA_DontCreateNativeAncestors.
+
+When a non-native widget moves, reposition the native child windows of
+its native parent that belong to widgets inside it.
+
+Change-Id: Ia49f6e9f657d143b3ec6f881025be1f93c85e2e6
+---
+ src/widgets/kernel/qwidget.cpp                   | 15 +++++++++++++++
+ .../auto/widgets/kernel/qwidget/tst_qwidget.cpp  | 16 ++++++++++++++++
+ 2 files changed, 31 insertions(+)
+
+diff --git a/qtbase/src/widgets/kernel/qwidget.cpp b/qtbase/src/widgets/kernel/qwidget.cpp
+index 13688714..2429862b 100644
+--- a/qtbase/src/widgets/kernel/qwidget.cpp
++++ b/qtbase/src/widgets/kernel/qwidget.cpp
+@@ -7330,6 +7330,21 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
+ 
+                 if (needsShow)
+                     show_sys();
++            } else if (isMove) {
++                // A native child window is positioned relative to its native
++                // parent window, so when a non-native widget moves, the native
++                // windows inside it have to be moved along with it.
++                if (QWidget *nativeParent = q->nativeParentWidget()) {
++                    if (QWindow *nativeParentWindow = nativeParent->windowHandle()) {
++                        const QObjectList childWindows = nativeParentWindow->children();
++                        for (QObject *object : childWindows) {
++                            auto *childWindow = qobject_cast<QWidgetWindow *>(object);
++                            QWidget *childWidget = childWindow ? childWindow->widget() : nullptr;
++                            if (childWidget && !childWidget->isWindow() && q->isAncestorOf(childWidget))
++                                childWindow->setPosition(childWidget->mapTo(nativeParent, QPoint()));
++                        }
++                    }
++                }
+             }
+ 
+             if (!q->isWindow()) {
+diff --git a/qtbase/tests/auto/widgets/kernel/qwidget/tst_qwidget.cpp b/qtbase/tests/auto/widgets/kernel/qwidget/tst_qwidget.cpp
+index 619a6e6f..942c186e 100644
+--- a/qtbase/tests/auto/widgets/kernel/qwidget/tst_qwidget.cpp
++++ b/qtbase/tests/auto/widgets/kernel/qwidget/tst_qwidget.cpp
+@@ -346,6 +346,7 @@ private slots:
+     void alienWidgets();
+     void nativeWindowPosition_data();
+     void nativeWindowPosition();
++    void nativeWindowFollowsNonNativeAncestorMove();
+     void adjustSize();
+     void adjustSize_data();
+     void updateGeometry();
+@@ -9559,6 +9560,21 @@ void tst_QWidget::nativeWindowPosition()
+     QCOMPARE(grandChild.pos(), QPoint(10, 10));
+ }
+ 
++void tst_QWidget::nativeWindowFollowsNonNativeAncestorMove()
++{
++    QWidget topLevel;
++    QWidget child(&topLevel);
++    QWidget grandChild(&child);
++    grandChild.setAttribute(Qt::WA_DontCreateNativeAncestors);
++    grandChild.setAttribute(Qt::WA_NativeWindow);
++    grandChild.move(10, 10);
++    topLevel.show();
++    QVERIFY(QTest::qWaitForWindowExposed(&topLevel));
++
++    child.move(5, 5);
++    QCOMPARE(grandChild.windowHandle()->position(), QPoint(15, 15));
++}
++
+ class ASWidget : public QWidget
+ {
+ public:
+-- 
+2.56.1
+

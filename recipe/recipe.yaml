@@ -31,12 +31,28 @@ source:
       # https://qt-project.atlassian.net/issues/QTBUG-145230
       - patches/0040-qttools-concurrent.patch
 
+      # Wayland: native child widgets (e.g. after winId()) showed a copy of the
+      # client-side title bar instead of their content
+      # https://bugreports.qt.io/browse/QTBUG-147856
+      - patches/0041-wayland-Skip-decoration-margins-when-flushing-native.patch
+
+      # Native child windows stayed behind when a non-native ancestor moved
+      - patches/0042-Move-native-child-windows-when-a-non-native-ancestor.patch
+
+      # Wayland: a sub-surface covered by its own child gets no frame callbacks on
+      # some compositors (e.g. GNOME), which made Qt stop painting its children
+      - patches/0043-wayland-Keep-sub-surfaces-exposed-when-frame-callbac.patch
+
+      # GNOME: the settings portal's first reply caused up to three theme changes,
+      # and full repaints of every widget, without any setting having changed
+      - patches/0044-QGnomePortalInterface-Only-report-settings-that-chan.patch
+
   - url: https://download.qt.io/development_releases/prebuilt/llvmpipe/windows/opengl32sw-64-mesa_12_0_rc2.7z
     sha256: 2a0d2f92c60e0962ef5f6039d3793424c6f39e49ba27ac04a5b21ca4ae012e15
     target_directory: opengl32sw
 
 build:
-  number: 4
+  number: 5
 
 requirements:
   build:
