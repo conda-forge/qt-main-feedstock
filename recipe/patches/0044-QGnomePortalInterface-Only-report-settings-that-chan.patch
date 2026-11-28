@@ -1,0 +1,155 @@
+From e853ce3acf82c991555530154acc9c0c328fe25b Mon Sep 17 00:00:00 2001
+From: Mark Harfouche <mark.harfouche@gmail.com>
+Date: Fri, 27 Nov 2026 21:28:52 -0500
+Subject: [PATCH 44/44] QGnomePortalInterface: Only report settings that change
+
+The color scheme, contrast and motion preferences start out unset, and
+the getters return a fallback until the settings portal answers. The
+first answer was always reported as a change, even when it was the same
+as the fallback, for example "no preference" for all three. QGnomeTheme
+turns each of these signals into a theme change, so on GNOME every
+application repainted all its widgets up to three times shortly after
+startup without anything having changed. This also made tests that
+count paint events, such as tst_QWidget::update(), fail on GNOME.
+
+Report a setting only when the value the getter returns changes.
+
+Change-Id: Idbd1acf0b4e4110b44959141d2bb224613d86725
+---
+ .../platform/unix/qgnomeportalinterface.cpp   | 18 +++----
+ tests/auto/gui/platform/CMakeLists.txt        |  3 ++
+ .../qgnomeportalinterface/CMakeLists.txt      | 16 +++++++
+ .../tst_qgnomeportalinterface.cpp             | 47 +++++++++++++++++++
+ 4 files changed, 75 insertions(+), 9 deletions(-)
+ create mode 100644 tests/auto/gui/platform/qgnomeportalinterface/CMakeLists.txt
+ create mode 100644 tests/auto/gui/platform/qgnomeportalinterface/tst_qgnomeportalinterface.cpp
+
+diff --git a/qtbase/src/gui/platform/unix/qgnomeportalinterface.cpp b/qtbase/src/gui/platform/unix/qgnomeportalinterface.cpp
+index 316bbd4d..ac6c8b60 100644
+--- a/qtbase/src/gui/platform/unix/qgnomeportalinterface.cpp
++++ b/qtbase/src/gui/platform/unix/qgnomeportalinterface.cpp
+@@ -165,26 +165,26 @@ void QGnomePortalInterface::querySettings()
+ 
+ void QGnomePortalInterface::updateColorScheme(Qt::ColorScheme colorScheme)
+ {
+-    if (m_colorScheme.has_value() && (m_colorScheme.value() == colorScheme))
+-        return;
++    const bool changed = this->colorScheme() != colorScheme;
+     m_colorScheme = colorScheme;
+-    emit colorSchemeChanged(colorScheme);
++    if (changed)
++        emit colorSchemeChanged(colorScheme);
+ }
+ 
+ void QGnomePortalInterface::updateContrast(Qt::ContrastPreference contrast)
+ {
+-    if (m_contrast.has_value() && (m_contrast.value() == contrast))
+-        return;
++    const bool changed = contrastPreference() != contrast;
+     m_contrast = contrast;
+-    emit contrastChanged(contrast);
++    if (changed)
++        emit contrastChanged(contrast);
+ }
+ 
+ void QGnomePortalInterface::updateMotion(Qt::MotionPreference motion)
+ {
+-    if (m_motion.has_value() && (m_motion.value() == motion))
+-        return;
++    const bool changed = motionPreference() != motion;
+     m_motion = motion;
+-    emit motionChanged(motion);
++    if (changed)
++        emit motionChanged(motion);
+ }
+ 
+ void QGnomePortalInterface::dbusSettingChanged(QDBusListener::Provider provider,
+diff --git a/qtbase/tests/auto/gui/platform/CMakeLists.txt b/qtbase/tests/auto/gui/platform/CMakeLists.txt
+index 4b2cee20..78850fd2 100644
+--- a/qtbase/tests/auto/gui/platform/CMakeLists.txt
++++ b/qtbase/tests/auto/gui/platform/CMakeLists.txt
+@@ -4,3 +4,6 @@
+ if(QT_FEATURE_xcb)
+     add_subdirectory(qx11info)
+ endif()
++if(TARGET Qt::DBus AND UNIX AND (QT_FEATURE_xcb OR NOT MACOS) AND (QT_FEATURE_xcb OR NOT UIKIT))
++    add_subdirectory(qgnomeportalinterface)
++endif()
+diff --git a/qtbase/tests/auto/gui/platform/qgnomeportalinterface/CMakeLists.txt b/qtbase/tests/auto/gui/platform/qgnomeportalinterface/CMakeLists.txt
+new file mode 100644
+index 00000000..6f244e39
+--- /dev/null
++++ b/qtbase/tests/auto/gui/platform/qgnomeportalinterface/CMakeLists.txt
+@@ -0,0 +1,16 @@
++# Copyright (C) 2026 The Qt Company Ltd.
++# SPDX-License-Identifier: BSD-3-Clause
++
++if(NOT QT_BUILD_STANDALONE_TESTS AND NOT QT_BUILDING_QT)
++    cmake_minimum_required(VERSION 3.16)
++    project(tst_qgnomeportalinterface LANGUAGES CXX)
++    find_package(Qt6BuildInternals REQUIRED COMPONENTS STANDALONE_TEST)
++endif()
++
++qt_internal_add_test(tst_qgnomeportalinterface
++    SOURCES
++        tst_qgnomeportalinterface.cpp
++    LIBRARIES
++        Qt::DBus
++        Qt::GuiPrivate
++)
+diff --git a/qtbase/tests/auto/gui/platform/qgnomeportalinterface/tst_qgnomeportalinterface.cpp b/qtbase/tests/auto/gui/platform/qgnomeportalinterface/tst_qgnomeportalinterface.cpp
+new file mode 100644
+index 00000000..b30cf87b
+--- /dev/null
++++ b/qtbase/tests/auto/gui/platform/qgnomeportalinterface/tst_qgnomeportalinterface.cpp
+@@ -0,0 +1,47 @@
++// Copyright (C) 2026 The Qt Company Ltd.
++// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
++
++#include <QtTest/qtest.h>
++#include <QtTest/qsignalspy.h>
++
++#include <QtGui/private/qgnomeportalinterface_p.h>
++
++class tst_QGnomePortalInterface : public QObject
++{
++    Q_OBJECT
++private slots:
++    void settingChangedSignals();
++};
++
++// A setting that keeps the effective value, such as "no preference" in the
++// portal's first reply, must not be reported as a change
++void tst_QGnomePortalInterface::settingChangedSignals()
++{
++    QGnomePortalInterface portal;
++    QSignalSpy colorSchemeSpy(&portal, &QGnomePortalInterface::colorSchemeChanged);
++    QSignalSpy contrastSpy(&portal, &QGnomePortalInterface::contrastChanged);
++    QSignalSpy motionSpy(&portal, &QGnomePortalInterface::motionChanged);
++    // QDBusListener is not exported, so its enums are passed by name
++    auto setting = [&portal](QDBusListener::Setting setting, const QVariant &value) {
++        const auto provider = QDBusListener::Provider::Gnome;
++        QVERIFY(QMetaObject::invokeMethod(&portal, "dbusSettingChanged",
++                                          QGenericArgument("QDBusListener::Provider", &provider),
++                                          QGenericArgument("QDBusListener::Setting", &setting),
++                                          QGenericArgument("QVariant", &value)));
++    };
++
++    setting(QDBusListener::Setting::ColorScheme, QVariant::fromValue(Qt::ColorScheme::Unknown));
++    setting(QDBusListener::Setting::Contrast, QVariant::fromValue(Qt::ContrastPreference::NoPreference));
++    setting(QDBusListener::Setting::Motion, QVariant::fromValue(Qt::MotionPreference::NoPreference));
++    QCOMPARE(colorSchemeSpy.size(), 0);
++    QCOMPARE(contrastSpy.size(), 0);
++    QCOMPARE(motionSpy.size(), 0);
++
++    setting(QDBusListener::Setting::ColorScheme, QVariant::fromValue(Qt::ColorScheme::Dark));
++    setting(QDBusListener::Setting::ColorScheme, QVariant::fromValue(Qt::ColorScheme::Dark));
++    QCOMPARE(colorSchemeSpy.size(), 1);
++    QCOMPARE(portal.colorScheme(), Qt::ColorScheme::Dark);
++}
++
++QTEST_GUILESS_MAIN(tst_QGnomePortalInterface)
++#include "tst_qgnomeportalinterface.moc"
+-- 
+2.56.1
+

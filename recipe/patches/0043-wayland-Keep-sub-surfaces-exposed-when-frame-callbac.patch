@@ -1,0 +1,99 @@
+From 0a795b957fe91281e9c8a50d09e7fce06275030f Mon Sep 17 00:00:00 2001
+From: Mark Harfouche <mark.harfouche@gmail.com>
+Date: Thu, 26 Nov 2026 10:15:54 -0500
+Subject: [PATCH 43/44] wayland: Keep sub-surfaces exposed when frame callbacks
+ stop
+
+A window whose frame callback does not arrive in time is marked as not
+exposed, so that a top-level the compositor has hidden stops rendering.
+calculateExposure() applied that to sub-surfaces too, and
+updateExposure() passes the result on to their own sub-surfaces.
+
+Compositors may stop sending frame callbacks to a sub-surface that is
+fully covered, for example a native widget whose only child is a native
+widget of the same size. The covered sub-surface then becomes
+unexposed, and so does the child on top of it, which is fully visible.
+Widgets in it are no longer painted. With a native widget that renders
+with Vulkan or OpenGL in such a hierarchy, rendering stops after the
+first resize.
+
+Take a sub-surface's exposure from its parent before looking at the
+frame callback timeout.
+
+Change-Id: I2a71674bd0014b1b0138b8bd83c542654d09c0e9
+---
+ .../platforms/wayland/qwaylandwindow.cpp      | 11 ++++++---
+ tests/auto/wayland/surface/tst_surface.cpp    | 23 +++++++++++++++++++
+ 2 files changed, 31 insertions(+), 3 deletions(-)
+
+diff --git a/qtbase/src/plugins/platforms/wayland/qwaylandwindow.cpp b/qtbase/src/plugins/platforms/wayland/qwaylandwindow.cpp
+index 4279d9c2..f8f157a0 100644
+--- a/qtbase/src/plugins/platforms/wayland/qwaylandwindow.cpp
++++ b/qtbase/src/plugins/platforms/wayland/qwaylandwindow.cpp
+@@ -1607,15 +1607,20 @@ bool QWaylandWindow::calculateExposure() const
+     if (!window()->isVisible())
+         return false;
+ 
++    // A sub-surface is visible whenever its parent is. Compositors may stop
++    // sending frame callbacks to a sub-surface that is fully covered, for
++    // example by a child sub-surface of its own, so a missing frame callback
++    // says nothing about whether the sub-surface, or anything stacked on top
++    // of it, can be seen.
++    if (mSubSurfaceWindow)
++        return mSubSurfaceWindow->parent()->isExposed();
++
+     if (mFrameCallbackTimedOut)
+         return false;
+ 
+     if (mShellSurface)
+         return mShellSurface->isExposed();
+ 
+-    if (mSubSurfaceWindow)
+-        return mSubSurfaceWindow->parent()->isExposed();
+-
+     return !(shouldCreateShellSurface() || shouldCreateSubSurface());
+ }
+ 
+diff --git a/qtbase/tests/auto/wayland/surface/tst_surface.cpp b/qtbase/tests/auto/wayland/surface/tst_surface.cpp
+index cd78d42c..8d78734d 100644
+--- a/qtbase/tests/auto/wayland/surface/tst_surface.cpp
++++ b/qtbase/tests/auto/wayland/surface/tst_surface.cpp
+@@ -28,6 +28,7 @@ private slots:
+     void createSubsurfaceForHiddenParent();
+     void changeToSubsurface();
+     void subsurfaceFocus();
++    void subsurfaceExposedWithoutFrameCallback();
+ };
+ 
+ tst_surface::tst_surface()
+@@ -331,5 +332,27 @@ void tst_surface::subsurfaceFocus()
+     QCOMPARE(subWindow.keyPressEventCount, 1); // unchanged
+ }
+ 
++// A covered sub-surface may get no frame callbacks, but it is exposed while its parent is
++void tst_surface::subsurfaceExposedWithoutFrameCallback()
++{
++    QRasterWindow window;
++    window.resize(200, 200);
++    QRasterWindow subWindow(&window);
++    subWindow.resize(64, 64);
++    window.show();
++    subWindow.show();
++
++    QCOMPOSITOR_TRY_VERIFY(xdgToplevel());
++    exec([&] { xdgToplevel()->sendCompleteConfigure(); });
++    QTRY_VERIFY(subWindow.isExposed());
++
++    // Answer the toplevel's frame callback, never the sub-surface's
++    QCOMPOSITOR_TRY_VERIFY(!surface(1)->m_waitingFrameCallbacks.empty());
++    exec([&] { xdgToplevel()->surface()->sendFrameCallbacks(); });
++
++    QTest::qWait(300); // longer than the frame callback timeout of 100 ms
++    QVERIFY(subWindow.isExposed());
++}
++
+ QCOMPOSITOR_TEST_MAIN(tst_surface)
+ #include "tst_surface.moc"
+-- 
+2.56.1
+

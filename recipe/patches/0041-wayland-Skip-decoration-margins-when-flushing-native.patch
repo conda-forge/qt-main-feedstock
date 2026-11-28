@@ -1,0 +1,88 @@
+From 1ecf304ff4ae67f15baf62eb0ca6d6340bdb30fa Mon Sep 17 00:00:00 2001
+From: Mark Harfouche <mark.harfouche@gmail.com>
+Date: Wed, 25 Nov 2026 19:43:36 -0500
+Subject: [PATCH 41/44] wayland: Skip decoration margins when flushing native
+ child windows
+
+QWaylandShmBackingStore::flush() fills a native child window, such as
+a widget on which winId() was called, by copying its rectangle out of
+the top-level's back buffer. With client-side decorations that buffer
+also holds the decoration margins, but the copy took the child's offset
+relative to the buffer's top-left corner instead of the content area.
+Every native child therefore showed a piece of the window decoration,
+typically a second title bar, shifted by the margins.
+
+Copy from contentSurface(), the part of the back buffer inside the
+margins, which is where the widgets were painted.
+
+dev no longer has the bug: since commit
+94f96210518db5990197c15fe9801860306aea76 the decoration lives in its
+own subsurface and the back buffer holds no margins.
+
+Fixes: QTBUG-147856
+Task-number: QTBUG-133919
+Change-Id: I4f23c2e3ff814a1d870c09e0ce4e4dde09b33aa4
+---
+ .../wayland/qwaylandshmbackingstore.cpp       |  2 +-
+ tests/auto/wayland/client/tst_client.cpp      | 25 +++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/qtbase/src/plugins/platforms/wayland/qwaylandshmbackingstore.cpp b/qtbase/src/plugins/platforms/wayland/qwaylandshmbackingstore.cpp
+index 79106a94..7f595aff 100644
+--- a/qtbase/src/plugins/platforms/wayland/qwaylandshmbackingstore.cpp
++++ b/qtbase/src/plugins/platforms/wayland/qwaylandshmbackingstore.cpp
+@@ -311,7 +311,7 @@ void QWaylandShmBackingStore::flush(QWindow *window, const QRegion &region, cons
+         newBuffer->setDeleteOnRelease(true);
+         QRect sourceRect(offset * scale, window->size() * scale);
+         QPainter painter(newBuffer->image());
+-        painter.drawImage(QPoint(0, 0), *mBackBuffer->image(), sourceRect);
++        painter.drawImage(QPoint(0, 0), *contentSurface(), sourceRect);
+         waylandWindow->safeCommit(newBuffer, region);
+         return;
+     }
+diff --git a/qtbase/tests/auto/wayland/client/tst_client.cpp b/qtbase/tests/auto/wayland/client/tst_client.cpp
+index 5c7026a2..550e18f7 100644
+--- a/qtbase/tests/auto/wayland/client/tst_client.cpp
++++ b/qtbase/tests/auto/wayland/client/tst_client.cpp
+@@ -163,6 +163,7 @@ private slots:
+     void activeWindowFollowsKeyboardFocus();
+     void events();
+     void backingStore();
++    void backingStoreFlushToChildWindow();
+     void touchDrag();
+     void mouseDrag();
+     void dontCrashOnMultipleCommits();
+@@ -318,6 +319,30 @@ void tst_WaylandClient::backingStore()
+     QCOMPOSITOR_TRY_VERIFY(!surface());
+ }
+ 
++// The child must show the flushed content, not the decoration around it
++void tst_WaylandClient::backingStoreFlushToChildWindow()
++{
++    QWindow window;
++    window.resize(100, 100);
++    QWindow childWindow(&window);
++    childWindow.resize(window.size());
++    window.show();
++    childWindow.show();
++
++    QBackingStore backingStore(&window);
++    const QRect rect(QPoint(), window.size());
++    backingStore.resize(rect.size());
++    backingStore.beginPaint(rect);
++    QPainter(backingStore.paintDevice()).fillRect(rect, Qt::red);
++    backingStore.endPaint();
++    backingStore.flush(rect, &childWindow);
++
++    // surface() only returns mapped shell surfaces, and the child is not one
++    auto childSurface = [&] { return get<WlCompositor>()->m_surfaces.value(1); };
++    QCOMPOSITOR_TRY_VERIFY(childSurface() && !childSurface()->m_image.isNull());
++    QCOMPOSITOR_COMPARE(childSurface()->m_image.pixelColor(0, 0), QColor(Qt::red));
++}
++
+ class DndWindow : public QWindow
+ {
+     Q_OBJECT
+-- 
+2.56.1
+
